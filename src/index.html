@@ -6,44 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./style/main.css"></link>
 </head>
 <body>
     <header id="header">
-        <div class="header-content">
+        <div class="container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-nested" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z"/>
+              </svg>
             <h2>To Do List</h2>
         </div>
     </header>
     <main id="main">
-        <div id="sidebar">
-            <ul class="sidebar-tabs">
-                <div class="inbox">
-                    <i class="bi bi-inbox"></i>
-                    <h3>Inbox</h3>
-                </div>
-                <div class="today">
-                    <i class="bi bi-calendar-event"></i>
-                    <h3>Today</h3>
-                </div>
-                <div class="upcoming">
-                    <i class="bi bi-calendar-week"></i>
-                    <h3>Upcoming</h3>
-                </div>
-            </ul>
+        <section id="sidebar">
+            <div class="sidebar-tabs">
+                <ul>
+                    <div class="inbox">
+                        <i class="bi bi-inbox"></i>
+                        <h3>Inbox</h3>
+                    </div>
+                    <div class="today">
+                        <i class="bi bi-calendar-event"></i>
+                        <h3>Today</h3>
+                    </div>
+                    <div class="upcoming">
+                        <i class="bi bi-calendar-week"></i>
+                        <h3>Upcoming</h3>
+                    </div>
+                </ul>
+            </div>
             <div class="projects">
                 <h3>Projects</h3>
                 <ul class="project-list">
                     <li>Test</li>
                 </ul>
                 <div class="add-project-container">
-                    <i></i>
+                    <i class="bi bi-plus-square-dotted"></i>
                     <button class="add-project-btn">Add Project</button>
                 </div>
             </div>
-        </div>
-        <div id="content-container"></div>
+        </section>
+        <section class="tasks-container">
+            <div class="title-container">
+                <h2 class="title">Test</h2>
+            </div>
+            <div class="task-grid"></div>
+        </section>
     </main>
     <footer id="footer">
-        <div class="content">
+        <div class="container">
             <h4>Created by Jackie247</h4>
         </div>
     </footer>
