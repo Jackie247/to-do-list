@@ -1,0 +1,32 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "serve": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jackie247/to-do-list.git"
+  },
+  "author": "Jackie247",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jackie247/to-do-list/issues"
+  },
+  "homepage": "https://github.com/Jackie247/to-do-list#readme",
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "lodash": "^4.17.21",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.1.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.9.1"
+  }
+}
