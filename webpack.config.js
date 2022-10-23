@@ -1,15 +1,20 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
   mode: 'production',
   entry: {
     index: {import: './src/index.js', dependOn:'shared'},
+    interface: {import: './src/interface.js', dependOn:'shared'},
+    project:{import:'./src/project.js',dependOn:'shared'},
+    task:{import:'./src/task.js',dependOn:'shared'},
     shared:'lodash'
   },
   output: {
-    filename: '[name].js',
+    filename: '[name].[hash].js',
     path: path.resolve(__dirname,'dist'),
     clean:true,
+    assetModuleFilename: '[name][ext]',
   },
   module: {
     rules: [
@@ -36,8 +41,8 @@ module.exports = {
                 outputPath: 'webfonts',
                 publicPath: '../webfonts',
             },
-        }
-    }
+        },
+    },
     ],
   },
   optimization:{
@@ -45,4 +50,11 @@ module.exports = {
       chunks:'all'
     }
   },
+  plugins:[
+    new HtmlWebpackPlugin({
+        title: 'To-Do-List',
+        filename: 'index.html',
+        template:'src/index.html',
+      })
+  ],
 };
