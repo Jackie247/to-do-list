@@ -1,17 +1,27 @@
 export default class Task{
-    constructor(name){
-        this.name = name;    
+    constructor(name,completed = false, dueDate = null){
+        this.name = name;
+        this.completed = completed;
+        this.dueDate = dueDate;
     }
-
-    static setTaskName(name){
+    // GETTERS AND SETTERS //
+    setTaskName(name){
         this.name = name;
     }
-
-    static getTaskName(){
+    getTaskName(){
         return this.name;
     }
-
-    static updateTaskName(updatedName){
-        this.name = updatedName;
+    setCompleted(boolean){
+        this.completed = boolean;
     }
+    getCompleted(){
+        return this.completed;
+    }
+    setDate(newDate){
+        this.date = newDate;
+    }
+    getDate(){
+        return this.date;
+    }
+    // METHODS //
 }
