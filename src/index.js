@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import "./style/main.scss"
 import Interface from "./interface";
-console.log('loaded');
-document.addEventListener('DOMContentLoaded',Interface.initProjectButtons());
+
+console.log(_.join(['Index','module','loaded'], ' '));
+document.addEventListener('DOMContentLoaded',Interface.initProjectButtons);

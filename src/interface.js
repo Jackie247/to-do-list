@@ -8,7 +8,7 @@ export default class Interface{
     }
 
     static initProjectButtons(){
-        Interface.addProjectBtn();
+        this.addProjectBtn();
     }
 
     static addProjectBtn(){

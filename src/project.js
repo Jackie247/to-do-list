@@ -14,7 +14,7 @@ export default class Project{
     }
 
     getTaskIndex(task){
-        // either returns the index of -1 if not in list
+        // either returns the index or -1 if not in list
         return this.taskList.indexOf(task);
     }
 }
