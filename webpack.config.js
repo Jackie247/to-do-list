@@ -54,7 +54,15 @@ module.exports = {
     new HtmlWebpackPlugin({
         title: 'To-Do-List',
         filename: 'index.html',
-        template:'src/index.html',
+        template:'src/template.html',
       })
   ],
+  devtool: 'source-map',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    compress: true,
+    port: 3000,
+  },
 };

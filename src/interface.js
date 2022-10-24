@@ -1,3 +1,6 @@
+import Project from './project.js';
+import Storage from './storage.js';
+
 export default class Interface{
     constructor(){}
     static displayNav(){
@@ -6,48 +9,48 @@ export default class Interface{
     static updateInterface(){
 
     }
-
     static initProjectButtons(){
-        this.addProjectBtn();
+        Interface.addProjectBtn();
     }
+    static loadProjects(){
+        const projectList = document.getElementById('project-list');
+        const projects = Project.getTaskList();
 
-    static addProjectBtn(){
-        const container = document.querySelector('.add-project-container');
-        const button = document.getElementById('add-project-btn');
-        const projectName = document.createElement('input');
-        button.addEventListener('click',()=>{
-            button.classList.add('hidden');
-            container.appendChild(projectName);
-            container.appendChild(this.createAcceptButton());
-            container.appendChild(this.createCancelButton());
+        projects.array.forEach(element => {
+            
         });
     }
+    static addProjectBtn(){
+        const addBtn = document.getElementById('add-project-btn');
+        const icon = document.getElementById('plus')
+        const container = document.querySelector('.add-project-container');
+        const projectName = document.createElement('input');
+        const buttons = document.createElement('div');
+        const acceptBtn = Interface.createAcceptButton();
+        const cancelBtn = Interface.createCancelButton();
+        acceptBtn.addEventListener('click',()=>{
+            let project = new Project(projectName.value);
+            Storage.addProject(project);
+            console.log(Storage.getProjectList());
+        })
+        buttons.appendChild(acceptBtn);
+        buttons.appendChild(cancelBtn);
 
-    static createAcceptButton(){
-        const container = document.createElement('div');
-        const acceptBtn = document.createElement('button');
-
-        container.setAttribute('id','btn-container');
-        acceptBtn.setAttribute('id','accept-btn');
-
-        acceptBtn.textContent = 'Accept';
-
-        container.appendChild(acceptBtn);
-
-        return container;
+        addBtn.addEventListener('click',()=>{
+            addBtn.classList.add('hidden');
+            icon.classList.add('hidden');
+            container.appendChild(projectName);
+            container.appendChild(buttons);
+        });
     }
-
+    static createAcceptButton(){
+        const acceptBtn = document.createElement('button');
+        acceptBtn.textContent = 'Accept';
+        return acceptBtn;
+    }
     static createCancelButton(){
-        const container = document.createElement('div');
         const cancelBtn = document.createElement('button');
-
-        container.setAttribute('id','btn-container');
-        cancelBtn.setAttribute('id','cancel-btn');
-
         cancelBtn.textContent = 'Cancel';
-        
-        container.appendChild(cancelBtn);
-
-        return container;
+        return cancelBtn;
     }
 }

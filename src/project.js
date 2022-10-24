@@ -19,14 +19,22 @@ export default class Project{
     }
     // METHODS //
     addTask(task){
-        taskList.append(task);
+        taskList.push(task);
     }
     deleteTask(task){
-        var index = this.getTaskIndex(task);
-        this.taskList.splice(index, 1);
+        try{
+            var index = this.getTaskIndex(task);
+            this.taskList.splice(index, 1);
+        }catch(error){
+            console.error(error);
+        }
     }
     getTask(task){
-        return taskList[this.getTaskIndex(task)];
+        try{
+            return taskList[this.getTaskIndex(task)];
+        }catch(error){
+            console.error(error);
+        }
     } 
     // HELPER //
     getTaskIndex(task){

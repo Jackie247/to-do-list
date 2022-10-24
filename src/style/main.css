@@ -106,12 +106,22 @@ main {
   grid-template-columns: 1fr 1fr;
   height: calc(100vh - 150px);
 }
+main #sidebar {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+main #sidebar .sidebar-tabs ul {
+  display: flex;
+  flex-flow: column;
+}
 main #sidebar .sidebar-tabs ul div {
   display: flex;
   flex-flow: row;
   align-items: center;
 }
 main #sidebar .projects {
+  flex: 1;
   display: flex;
   flex-flow: column;
 }

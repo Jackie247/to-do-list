@@ -95,7 +95,13 @@ main{
     grid-template-columns: 1fr 1fr;
     height:calc(100vh - 150px);
     #sidebar{
+        display:flex;
+        flex-flow:column;
+        height:100%;
+
         .sidebar-tabs ul{
+            display:flex;
+            flex-flow:column;
             div{
                 display:flex;
                 flex-flow:row;
@@ -103,6 +109,7 @@ main{
             }
         }
         .projects{
+            flex: 1;
             display:flex;
             flex-flow:column;
             .add-project-container{
