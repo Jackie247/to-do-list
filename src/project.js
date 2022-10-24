@@ -22,23 +22,21 @@ export default class Project{
         taskList.push(task);
     }
     deleteTask(task){
-        try{
+        if(this.taskListContains(task)){
             var index = this.getTaskIndex(task);
             this.taskList.splice(index, 1);
-        }catch(error){
-            console.error(error);
         }
+        return;
     }
     getTask(task){
-        try{
+        if(this.taskListContains(task)){
             return taskList[this.getTaskIndex(task)];
-        }catch(error){
-            console.error(error);
         }
+        return;
     } 
     // HELPER //
-    getTaskIndex(task){
-        // either returns the index or -1 if not in list
-        return this.taskList.indexOf(task);
+    taskListContains(task){
+        // returns true if found, false if not.
+        return this.projectList.some(project => project.name === projectName);
     }
 }
