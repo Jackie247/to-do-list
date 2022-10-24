@@ -23,5 +23,4 @@ export default class Task{
     getDate(){
         return this.date;
     }
-    // METHODS //
 }
