@@ -1,6 +1,6 @@
 import Project from "./project.js";
 
-export default class App{
+export default class ProjectList{
     constructor(){
         this.projectList = [];
         this.projectList.push(new Project('Inbox'));

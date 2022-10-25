@@ -1,5 +1,5 @@
 import Project from './project.js';
-import Storage from './storage.js';
+import App from './projectList.js';
 
 export default class Interface{
     constructor(){}
@@ -15,7 +15,6 @@ export default class Interface{
     static loadProjects(){
         const projectList = document.getElementById('project-list');
         const projects = Project.getTaskList();
-
         projects.array.forEach(element => {
             
         });
@@ -30,8 +29,8 @@ export default class Interface{
         const cancelBtn = Interface.createCancelButton();
         acceptBtn.addEventListener('click',()=>{
             let project = new Project(projectName.value);
-            Storage.addProject(project);
-            console.log(Storage.getProjectList());
+            App.addProject(project);
+            console.log(App.getProjectList());
         })
         buttons.appendChild(acceptBtn);
         buttons.appendChild(cancelBtn);
