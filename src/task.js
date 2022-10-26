@@ -21,6 +21,19 @@ export default class Task{
         this.date = newDate;
     }
     getDate(){
-        return this.date;
+        if(date !== null){
+            return this.date;
+        }
+        return;
     }
+    // METHODS //
+    getFormattedDate(){
+        if(date !== null){
+            const day = this.dueDate.split('-')[0];
+            const month = this.dueDate.split('-')[1];
+            const year = this.dueDate.split('-')[2];
+            return `${day}/${month}/${year}`;
+        }        
+    }
+
 }
