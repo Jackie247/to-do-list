@@ -57,7 +57,27 @@ export default class ProjectList{
         
     }
     updateUpcoming(){
-        while(this.getProject('Upcoming'))
+        while(this.getProject('Upcoming').getTaskList().length > 0){
+            this.getProject('Upcoming').pop();
+        }
+        // update incoming with only tasks that are within a week range.
+        this.projectList.forEach((project)=>{
+            // skip today since they will be in today inbox and skip upcoming since empty list.
+            if(project.getProjectName() === 'Today' || project.getProjectName() === 'Upcoming'){
+                return;
+            }
+            // create new tasks for upcoming. 
+            this.getProject('Upcoming').getTaskList().forEach((task) => {
+                const newTask = `${project.getProjectName()} ${task.getTaskName()}`;
+                this.getProject('Upcoming').addTask(new Task(newTask, task.getDate()));
+            })
+        })
+        this.getProject('Upcoming').setTaskList(
+            this.getProject('Upcoming').getTaskList().sort((taskOne,taskTwo) =>{
+                const first = new Date(taskOne);
+                const second = new Date(taskTwo);
+                return first - second;
+        }))
     }
     // HELPERS // 
     projectListContains(projectName){
