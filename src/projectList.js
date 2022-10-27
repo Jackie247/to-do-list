@@ -56,8 +56,8 @@ export default class ProjectList{
         })
         
     }
-    updateWeek(){
-
+    updateUpcoming(){
+        while(this.getProject('Upcoming'))
     }
     // HELPERS // 
     projectListContains(projectName){
