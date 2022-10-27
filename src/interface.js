@@ -1,5 +1,5 @@
 import Project from './project.js';
-import App from './projectList.js';
+import ProjectList from './projectList.js';
 
 export default class Interface{
     constructor(){}

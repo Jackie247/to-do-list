@@ -1,4 +1,5 @@
 import Project from "./project.js";
+import Task from "./task.js";
 
 export default class ProjectList{
     constructor(){
@@ -35,6 +36,28 @@ export default class ProjectList{
                     getProject(projectName)),1);
         }
         return;
+    }
+    updateToday(){
+        // clear the tasks from today project list
+        while(this.getProject('Today').getTaskList().length > 0){
+            this.getProject('Today').pop();
+        }
+        // update the today list with only tasks that have todays date
+        // check every project for tasks that have due date today
+        this.projectList.forEach((project) => {
+            // skip project today since its empty, and skip upcoming so we dont get duplicates
+            if(project.getProjectName() === 'Today' || project.getProjectName() === 'Upcoming'){
+                return;
+            }
+            this.getProject('Today').getTaskList().forEach((task)=>{
+                const newTask = `(${project.getProjectName()}) ${task.getTaskName()}`;
+                this.getProject('Today').addTask(new Task(newTask, task.getDate()));
+            })
+        })
+        
+    }
+    updateWeek(){
+
     }
     // HELPERS // 
     projectListContains(projectName){

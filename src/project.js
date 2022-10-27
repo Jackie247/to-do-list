@@ -10,12 +10,12 @@ export default class Project{
     getProjectName(){
         return this.name;
     }
-    getTaskList(){
-        return this.taskList;
-    }
     setTaskList(newTaskList){
         // sets this.taskList as a reference to new list;
         this.taskList = newTaskList;
+    }
+    getTaskList(){
+        return this.taskList;
     }
     // METHODS //
     addTask(task){
