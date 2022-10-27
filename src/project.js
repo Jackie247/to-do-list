@@ -19,7 +19,10 @@ export default class Project{
     }
     // METHODS //
     addTask(task){
-        taskList.push(task);
+        if(this.taskListContains(task)){
+            return;
+        }
+        this.taskList.push(task);
     }
     deleteTask(task){
         if(this.taskListContains(task)){
@@ -30,13 +33,13 @@ export default class Project{
     }
     getTask(task){
         if(this.taskListContains(task)){
-            return taskList[this.getTaskIndex(task)];
+            return this.taskList[this.getTaskIndex(task)];
         }
         return;
     } 
     // HELPER //
-    taskListContains(task){
+    taskListContains(taskName){
         // returns true if found, false if not.
-        return this.projectList.some(project => project.name === projectName);
+        return this.projectList.some(task => task.getName() === taskName);
     }
 }

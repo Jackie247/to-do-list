@@ -8,7 +8,7 @@ module.exports = {
     interface: {import: './src/interface.js', dependOn:'shared'},
     project:{import:'./src/project.js',dependOn:'shared'},
     task:{import:'./src/task.js',dependOn:'shared'},
-    app:{import:'./src/app.js',dependOn:'shared'},
+    app:{import:'./src/localStorage.js',dependOn:'shared'},
     shared:'lodash'
   },
   output: {
