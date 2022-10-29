@@ -5,7 +5,7 @@ import LocalStorage from './localStorage.js';
 export default class Interface{
     // DISPLAYING CONTENT TO SCREEN //
     static displayHome(){
-        
+        Interface.loadSavedProjects();
     }
     static loadSavedProjects(){
         LocalStorage.getSavedProjectList().getProjectList().forEach((project) => {
@@ -70,7 +70,7 @@ export default class Interface{
         projectList.appendChild(newProjectContainer);
     }
     static createTask(taskName, date){
-        const taskList = document.getElementById('task-grid');
+        const taskList = document.getElementById('task-list');
         const taskContainer = document.createElement('div');
         const checkBox = document.createElement('input');
         const details = document.createElement('button');
