@@ -3,16 +3,19 @@ import ProjectList from './projectList.js';
 import LocalStorage from './localStorage.js';
 
 export default class Interface{
-    // METHODS //
+    // DISPLAYING CONTENT TO SCREEN //
     static displayHome(){
         
     }
-    static loadProjects(){
+    static loadSavedProjects(){
         LocalStorage.getSavedProjectList().getProjectList().forEach((project) => {
             if(project.name !== 'Inbox' && project.name !== 'Today' && project.name !== 'Upcoming'){
                 Interface.createProject(project.name);
             }
         })
+    }
+    static loadSavedTasks(project){
+        LocalStorage.getSavedProjectList().getProject(project).getTaskList();
     }
     static initProjectButtons(){
         Interface.addProjectBtn();
@@ -41,7 +44,7 @@ export default class Interface{
             container.appendChild(buttons);
         });
     }
-    // HELPER //
+    // CREATING HTML ELEMENTS TO DISPLAY ON SCREEN //
     static createProject(projectName){
         const projectList = document.getElementById('project-list');
         const newProjectContainer = document.createElement('button');
@@ -65,6 +68,28 @@ export default class Interface{
         newProjectContainer.appendChild(left);
         newProjectContainer.appendChild(right)
         projectList.appendChild(newProjectContainer);
+    }
+    static createTask(taskName, date){
+        const taskList = document.getElementById('task-grid');
+        const taskContainer = document.createElement('div');
+        const checkBox = document.createElement('input');
+        const details = document.createElement('button');
+        const deleteBtn = document.createElement('button');
+        const name = document.createElement('p');
+        name.textContent = taskName;
+        const dateText = document.createElement('p');
+        const dateInput = document.createElement('input');
+        dateInput.setAttribute('type','date');
+        dateText.textContent = 'No date';
+
+        taskContainer.appendChild(checkbox);
+        taskContainer.appendChild(name);
+        taskContainer.appendChild(dateInput);
+        taskContainer.appendChild(dateText);
+        taskContainer.appendChild(details);
+        taskContainer.appendChild(deleteBtn);
+
+        taskList.appendChild(taskContainer);
     }
     static initProjectButton(){
         const projectList = document.querySelectorAll('.project');
