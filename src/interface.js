@@ -1,14 +1,19 @@
 import Project from './project.js';
 import ProjectList from './projectList.js';
 import LocalStorage from './localStorage.js';
-
+/**
+ * Handles user interaction with to-do-list interface,
+ * methods to handle creating project, tasks, editing tasks, delete project/task
+ */
 export default class Interface{
-    // DISPLAYING CONTENT TO SCREEN //
+    /** Disply content to screen  */
+    /** Calls methods to load homepage content  */
     static displayHome(){
         Interface.loadSavedProjects();
     }
+
     static loadSavedProjects(){
-        LocalStorage.getSavedProjectList().getProjectList().forEach((project) => {
+        LocalStorage.getSavedProjectList().getProjects().forEach((project) => {
             if(project.name !== 'Inbox' && project.name !== 'Today' && project.name !== 'Upcoming'){
                 Interface.createProject(project.name);
             }
@@ -31,8 +36,8 @@ export default class Interface{
         const cancelBtn = Interface.createCancelButton();
         acceptBtn.addEventListener('click',()=>{
             let project = new Project(projectName.value);
-            App.addProject(project);
-            console.log(App.getProjectList());
+            ProjectList.addProject(project);
+            console.log(ProjectList.getProjects());
         })
         buttons.appendChild(acceptBtn);
         buttons.appendChild(cancelBtn);
@@ -44,7 +49,8 @@ export default class Interface{
             container.appendChild(buttons);
         });
     }
-    // CREATING HTML ELEMENTS TO DISPLAY ON SCREEN //
+    /** Content creation */
+    /** Creates the HTML elements for projects to be displayed. */ 
     static createProject(projectName){
         const projectList = document.getElementById('project-list');
         const newProjectContainer = document.createElement('button');
@@ -69,6 +75,7 @@ export default class Interface{
         newProjectContainer.appendChild(right)
         projectList.appendChild(newProjectContainer);
     }
+    /** Creates the HTML elements for tasks to be displayed. */ 
     static createTask(taskName, date){
         const taskList = document.getElementById('task-list');
         const taskContainer = document.createElement('div');
@@ -108,5 +115,22 @@ export default class Interface{
         const cancelBtn = document.createElement('button');
         cancelBtn.textContent = 'Cancel';
         return cancelBtn;
+    }
+    /** Content manipulation */
+
+    /** Clears all project and task content from the display */
+    static clearDisplay(){
+        Interface.clearProjectList();
+        Interface.clearTaskList();
+    }
+    /** Clears the projects from the display */
+    static clearProjectList(){
+        const projectList = document.getElementById('project-list');
+        projectList.textContent = '';
+    }
+    /** Clears the tasks from the display */
+    static clearTaskList(){
+        const taskList = document.getElementById('task-list');
+        taskList.textContent = '';
     }
 }
