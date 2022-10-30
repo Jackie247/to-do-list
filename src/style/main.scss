@@ -69,6 +69,12 @@ select {
 .hidden{
     display:none;
 }
+.project-h{
+  text-decoration: underline;
+}
+.btn-h:hover{
+  color:#60a5fa;
+}
 // ** Base Styles ** //
 header{
     background-color: var(--headerBg);
@@ -105,20 +111,37 @@ main{
           border:none;
           background-color: inherit;
           align-items: flex-start;
+          cursor: pointer;
+          i{
+            margin-right:1em;
+          }
+        }
+        button:nth-child(n){
+          margin-right:1em;
         }
       }
       .project-list{
         display:flex;
         flex-flow:column;
+        button:hover{
+          text-decoration: underline;
+        }
       }
       .add-project-btn{
         display:flex;
         flex-flow:row;
         border:none;
         background-color: inherit;
+        cursor: pointer;
+        i{
+          margin-right:1em;
+        }
       }
     }
     .tasks-container{
+      display:flex;
+      flex-flow:column;
+      align-items: center;
       .task-title{
         
       }
@@ -130,7 +153,15 @@ main{
         flex-flow:row;
         border:none;
         background-color: inherit;
+        cursor: pointer;
+        button:hover{
+          text-decoration: underline;
+        }
+        i{
+          margin-right:1em;
+        }
       }
+
     }
 }
 footer{
