@@ -10,26 +10,24 @@ export default class LocalStorage{
     }
     static getSavedProjectList(){
         // parse the array from local memory into a variable
-        const objectData = JSON.parse(localStorage.getItem('Projects'));
         // use standardized function object.assign to copy all enumerable properties to a target object.
         // in this case, a new project list. 
-        var savedProjectList = Object.assign(new ProjectList(),objectData);
+        const projectList = Object.assign(new ProjectList(),JSON.parse(localStorage.getItem('Projects')))
         // since the parsed objects are just in string form. we need to turn them back into objects.
         // repeat this for the projects in the project list and for each task within each project
-        savedProjectList.setProjectList(
-            savedProjectList.getProjectList().map(
-                project=>{Object.assign(new Project(), project)
-                }
-            )
-        );
-        savedProjectList.getProjectList().forEach(
-            project => project.setTaskList(
-                project.getTaskList().map(
-                    task => Object.assign(new Task(), task)
+        projectList.setProjects(
+            projectList
+              .getProjects()
+              .map((project) => Object.assign(new Project(), project))
+          )
+        projectList
+            .getProjects()
+            .forEach(project => {
+                project.setTaskList(
+                    project.getTaskList().map(task => Object.assign(new Task(), task))
                 )
-            )
-        );          
-        return savedProjectList;
+            })         
+        return projectList;
     }
     static addProject(project){
         const savedProjectList = LocalStorage.getSavedProjectList();

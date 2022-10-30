@@ -22,33 +22,7 @@ export default class Interface{
     static loadSavedTasks(project){
         LocalStorage.getSavedProjectList().getProject(project).getTaskList();
     }
-    static initProjectButtons(){
-        Interface.addProjectBtn();
-    }
-
-    static addProjectBtn(){
-        const addBtn = document.getElementById('add-project-btn');
-        const icon = document.getElementById('plus')
-        const container = document.querySelector('.add-project-container');
-        const projectName = document.createElement('input');
-        const buttons = document.createElement('div');
-        const acceptBtn = Interface.createAcceptButton();
-        const cancelBtn = Interface.createCancelButton();
-        acceptBtn.addEventListener('click',()=>{
-            let project = new Project(projectName.value);
-            ProjectList.addProject(project);
-            console.log(ProjectList.getProjects());
-        })
-        buttons.appendChild(acceptBtn);
-        buttons.appendChild(cancelBtn);
-
-        addBtn.addEventListener('click',()=>{
-            addBtn.classList.add('hidden');
-            icon.classList.add('hidden');
-            container.appendChild(projectName);
-            container.appendChild(buttons);
-        });
-    }
+    
     /** Content creation */
     /** Creates the HTML elements for projects to be displayed. */ 
     static createProject(projectName){
@@ -98,14 +72,7 @@ export default class Interface{
 
         taskList.appendChild(taskContainer);
     }
-    static initProjectButton(){
-        const projectList = document.querySelectorAll('.project');
-        projectList.forEach((project) => {
-            project.addEventListener('click',() => {
-
-            })
-        })
-    }
+    
     static createAcceptButton(){
         const acceptBtn = document.createElement('button');
         acceptBtn.textContent = 'Accept';
@@ -132,5 +99,34 @@ export default class Interface{
     static clearTaskList(){
         const taskList = document.getElementById('task-list');
         taskList.textContent = '';
+    }
+
+    /** Event listeners for project creating and deletion */
+    static initProjectButtons(){
+        Interface.addProjectBtn();
+    }
+
+    static addProjectBtn(){
+        const addBtn = document.getElementById('add-project-btn');
+        const icon = document.getElementById('plus')
+        const container = document.querySelector('.add-project-container');
+        const projectName = document.createElement('input');
+        const buttons = document.createElement('div');
+        const acceptBtn = Interface.createAcceptButton();
+        const cancelBtn = Interface.createCancelButton();
+        acceptBtn.addEventListener('click',()=>{
+            let project = new Project(projectName.value);
+            ProjectList.addProject(project);
+            console.log(ProjectList.getProjects());
+        })
+        buttons.appendChild(acceptBtn);
+        buttons.appendChild(cancelBtn);
+
+        addBtn.addEventListener('click',()=>{
+            addBtn.classList.add('hidden');
+            icon.classList.add('hidden');
+            container.appendChild(projectName);
+            container.appendChild(buttons);
+        });
     }
 }

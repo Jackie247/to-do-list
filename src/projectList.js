@@ -9,11 +9,11 @@ export default class ProjectList{
         this.projectList.push(new Project('Upcoming'));
     }
     // GETTERS AND SETTERS //
-    getProjectList(){
+    getProjects(){
         return this.projectList;
     }
-    setProjectList(newList){
-        this.projectList = newList;
+    setProjects(projectList){
+        this.projectList = projectList;
     }
     getProject(projectName){
         // returns the first element that satisfies the condition
