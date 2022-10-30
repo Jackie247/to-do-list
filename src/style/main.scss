@@ -1,7 +1,7 @@
 :root{
-    --headerBg:#e44232;
-    --sidebarBg:black;
-    --footerBg:#e44232;
+    --headerBg:#3b82f6;
+    --sidebarBg:#d4d4d4;
+    --footerBg:#3b82f6;
 }
 // https://piccalil.li/blog/a-modern-css-reset
 // CSS Reset //
@@ -78,9 +78,6 @@ header{
         display:flex;
         flex-flow:row;
         align-items:center;
-        svg{
-            margin:0 0.5em;
-        }
         h1{
             flex-grow:2;
         }
@@ -91,34 +88,49 @@ header{
     }
 }
 main{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
+    display:flex;
+    flex-flow:column;
     height:calc(100vh - 150px);
-    #sidebar{
+    .projects-tab{
+      display:block;
+      height:auto;
+      padding: 0 1em;
+      background-color:var(--sidebarBg);
+      .default-projects{
         display:flex;
         flex-flow:column;
-        height:100%;
-        .sidebar-tabs ul{
-            display:flex;
-            flex-flow:column;
-            div{
-                display:flex;
-                flex-flow:row;
-                align-items: center;
-            }
+        button{
+          display:flex;
+          flex-flow:row;
+          border:none;
+          background-color: inherit;
+          align-items: flex-start;
         }
-        .projects{
-            flex: 1;
-            display:flex;
-            flex-flow:column;
-            .add-project-container{
-                button{
-                    border:none;
-                    background-color: inherit;
-                    cursor:pointer;
-                }
-            }
-        }
+      }
+      .project-list{
+        display:flex;
+        flex-flow:column;
+      }
+      .add-project-btn{
+        display:flex;
+        flex-flow:row;
+        border:none;
+        background-color: inherit;
+      }
+    }
+    .tasks-container{
+      .task-title{
+        
+      }
+      .task-list{
+
+      }
+      .add-task-btn{
+        display:flex;
+        flex-flow:row;
+        border:none;
+        background-color: inherit;
+      }
     }
 }
 footer{
