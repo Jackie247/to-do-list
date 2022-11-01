@@ -1,6 +1,7 @@
 import Project from './project.js';
 import ProjectList from './projectList.js';
 import LocalStorage from './localStorage.js';
+import { container } from 'webpack';
 /**
  * Handles user interaction with to-do-list interface,
  * methods to handle creating project, tasks, editing tasks, delete project/task
@@ -11,6 +12,7 @@ export default class Interface{
     static displayHome(){
         Interface.loadSavedProjects();
         Interface.initProjectButtons();
+        Interface.initTaskButtons();
     }
     static loadSavedProjects(){
         LocalStorage.getSavedProjectList()
@@ -191,5 +193,44 @@ export default class Interface{
     /** -------------Event listeners for tasks---------------*/    
     static initTaskButtons(){
         Interface.addTaskBtn();
+    }
+    static addTaskBtn(){
+        const addBtn = document.getElementById('add-task');
+        addBtn.addEventListener('click', Interface.createTaskPopupModal);
+    }
+
+    static createTaskPopupModal(){
+        const section = document.getElementById('task-popup');
+        section.innerHTML = `
+        <div class="modal" id="task-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>Add a new task.</h1>
+                    <button id='close-task-popup'class="close-btn">
+                    <i class="bi bi-x-circle"></i>
+                    </button>
+                </div>
+                <div class='new-task-title-textarea'>
+                    <textarea placeholder="Title: New task" maxlength="40" id="new-task-title" required></textarea>
+                </div>
+                <div class='new-task-details-textarea'>
+                    <textarea placeholder='Details:e.g shopping, gym, deadlines'></textarea>
+                </div>
+                <div class='new-task-due-date'>
+                    <input type='date' class='new-task-date' required>
+                </div>
+                <div class='new-task-completion'>
+                    <label for='complete'>Completed:</label>
+                    <input type='checkbox' class='task-complete' name='complete'>
+                </div>
+                <button>Add Task</button>
+            </div>
+        </div>`;
+        const closeBtn = document.getElementById('close-task-popup');
+        const container = document.getElementById('modal-content');
+        closeBtn.addEventListener('click', () => {
+            container.style.display = 'none';
+        })
+        section.appendChild(container);
     }
 }

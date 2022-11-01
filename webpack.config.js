@@ -1,8 +1,7 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: {
     index: {import: './src/index.js', dependOn:'shared'},
     interface: {import: './src/interface.js', dependOn:'shared'},
@@ -51,19 +50,7 @@ module.exports = {
       chunks:'all'
     }
   },
-  plugins:[
-    new HtmlWebpackPlugin({
-        title: 'To-Do-List',
-        filename: 'index.html',
-        template:'src/template.html',
-      })
-  ],
-  devtool: 'source-map',
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    compress: true,
-    port: 3000,
+  stats:{
+    errorDetails:true
   },
 };

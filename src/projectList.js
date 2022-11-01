@@ -17,7 +17,7 @@ export default class ProjectList{
     }
     getProject(projectName){
         // returns the first element that satisfies the condition
-        return this.projectList.find((project) => project.name === projectName.name);
+        return this.projectList.find((project) => project.getName() === projectName);
     }
     // METHODS //
     addProject(newProject){
