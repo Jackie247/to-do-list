@@ -4,15 +4,15 @@ export default class Project{
         this.taskList = [];
     }
     // GETTERS AND SETTERS //
-    setProjectName(name){
+    setName(name){
         this.name = name;
     }
-    getProjectName(){
+    getName(){
         return this.name;
     }
-    setTaskList(taskList){
+    setTaskList(tasks){
         // sets this.taskList as a reference to new list;
-        this.taskList = taskList;
+        this.taskList = tasks;
     }
     getTaskList(){
         return this.taskList;
