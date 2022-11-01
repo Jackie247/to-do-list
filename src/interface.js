@@ -155,39 +155,27 @@ export default class Interface{
     }
     static createProjectPopupModal(){
         const section = document.getElementById('project-popup');
-        section.innerHTML = '';
-        const container = document.createElement('div');
-        const content = document.createElement('div');
-        const contentHeader = document.createElement('div');
-        const title = document.createElement('h1');
-        const closeBtn = document.createElement('button');
-        const closeBtnIcon = document.createElement('i');
-        const projectNameContainer = document.createElement('div');
-        const projectNameInput = document.createElement('input');
-        const acceptBtn = document.createElement('button');
-
-        container.classList.add('modal');
-        content.classList.add('modal-content');
-        contentHeader.classList.add('modal-header');
-        closeBtn.classList.add('close-btn');
-        closeBtnIcon.classList.add('bi','bi-x-circle');
-        container.setAttribute('id','project-modal');
-
-        title.textContent = 'Add a new project.'
-
-        container.appendChild(content);
-        content.appendChild(contentHeader);
-        content.appendChild(projectNameContainer);
-        content.appendChild(acceptBtn);
-        contentHeader.appendChild(title);
-        contentHeader.appendChild(closeBtn);
-        projectNameContainer.appendChild(projectNameInput);
-        closeBtn.appendChild(closeBtnIcon);
-        
+        section.innerHTML = `
+        <div class="modal" id="project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>Add a new project.</h1>
+                    <button id='close-project-popup' class="close-btn">
+                        <i class="bi bi-x-circle">
+                    </i></button>
+                </div>
+                <div class='new-project-title-textarea'>
+                    <textarea placeholder="Title: New task" maxlength="40" id="new-project-title" required></textarea>
+                </div>
+                <button>Add Project</button>
+            </div>
+        </div>
+        `;
+        const closeBtn = document.getElementById('close-project-popup');
+        const container = document.getElementById('project-modal')
         closeBtn.addEventListener('click', () => {
             container.style.display = 'none';
         })
-        section.appendChild(container);
     }
     /** -------------Event listeners for tasks---------------*/    
     static initTaskButtons(){
@@ -197,7 +185,6 @@ export default class Interface{
         const addBtn = document.getElementById('add-task');
         addBtn.addEventListener('click', Interface.createTaskPopupModal);
     }
-
     static createTaskPopupModal(){
         const section = document.getElementById('task-popup');
         section.innerHTML = `
@@ -205,7 +192,7 @@ export default class Interface{
             <div class="modal-content">
                 <div class="modal-header">
                     <h1>Add a new task.</h1>
-                    <button id='close-task-popup'class="close-btn">
+                    <button id='close-task-popup' class="close-btn">
                     <i class="bi bi-x-circle"></i>
                     </button>
                 </div>
@@ -226,10 +213,9 @@ export default class Interface{
             </div>
         </div>`;
         const closeBtn = document.getElementById('close-task-popup');
-        const container = document.getElementById('modal-content');
+        const container = document.getElementById('task-modal')
         closeBtn.addEventListener('click', () => {
             container.style.display = 'none';
         })
-        section.appendChild(container);
     }
 }
