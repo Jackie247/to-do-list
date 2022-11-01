@@ -3,16 +3,19 @@ import Task from "./task";
 import ProjectList from "./projectList";
 
 export default class LocalStorage{
-    static updateStorage(projectsData){
+    static updateStorage(data){
         // updates the object array with current project list objects
         // stringify maintains the data's formatting, instead of just turning data into strings.
-        localStorage.setItem('Projects',JSON.stringify(projectsData));
+        localStorage.setItem('Projects',JSON.stringify(data));
     }
     static getSavedProjectList(){
         // parse the array from local memory into a variable
         // use standardized function object.assign to copy all enumerable properties to a target object.
         // in this case, a new project list. 
-        const projectList = Object.assign(new ProjectList(),JSON.parse(localStorage.getItem('Projects')))
+        const projectList = Object.assign(
+            new ProjectList(),
+            JSON.parse(localStorage.getItem('Projects'))
+        )
         // since the parsed objects are just in string form. we need to turn them back into objects.
         // repeat this for the projects in the project list and for each task within each project
         projectList.setProjects(
