@@ -1,7 +1,6 @@
 import Project from './project.js';
 import ProjectList from './projectList.js';
 import LocalStorage from './localStorage.js';
-import { container } from 'webpack';
 /**
  * Handles user interaction with to-do-list interface,
  * methods to handle creating project, tasks, editing tasks, delete project/task
