@@ -1,7 +1,7 @@
 :root {
-  --headerBg:#e44232;
-  --sidebarBg:black;
-  --footerBg:#e44232;
+  --headerBg:#3b82f6;
+  --sidebarBg:#d4d4d4;
+  --footerBg:#3b82f6;
 }
 
 /* Box sizing rules */
@@ -80,6 +80,14 @@ select {
   display: none;
 }
 
+.btn-h:hover {
+  text-decoration: underline;
+}
+
+button:hover {
+  color: #60a5fa;
+}
+
 header {
   background-color: var(--headerBg);
   width: 100%;
@@ -90,9 +98,6 @@ header .container {
   flex-flow: row;
   align-items: center;
 }
-header .container svg {
-  margin: 0 0.5em;
-}
 header .container h1 {
   flex-grow: 2;
 }
@@ -102,36 +107,103 @@ header .container i {
 }
 
 main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-flow: column;
   height: calc(100vh - 150px);
 }
-main #sidebar {
+main .projects-tab {
+  display: block;
+  height: auto;
+  padding: 0 1em;
+  background-color: var(--sidebarBg);
+}
+main .projects-tab .default-projects {
   display: flex;
   flex-flow: column;
-  height: 100%;
 }
-main #sidebar .sidebar-tabs ul {
-  display: flex;
-  flex-flow: column;
-}
-main #sidebar .sidebar-tabs ul div {
+main .projects-tab .default-projects button {
   display: flex;
   flex-flow: row;
-  align-items: center;
+  border: none;
+  background-color: inherit;
+  align-items: flex-start;
+  cursor: pointer;
 }
-main #sidebar .projects {
-  flex: 1;
+main .projects-tab .default-projects button i {
+  margin-right: 1em;
+}
+main .projects-tab .default-projects button:nth-child(n) {
+  margin-right: 1em;
+}
+main .projects-tab .project-list {
   display: flex;
   flex-flow: column;
 }
-main #sidebar .projects .add-project-container button {
+main .projects-tab .project-list button:hover {
+  text-decoration: underline;
+}
+main .projects-tab .add-project-btn {
+  display: flex;
+  flex-flow: row;
   border: none;
   background-color: inherit;
   cursor: pointer;
+}
+main .projects-tab .add-project-btn i {
+  margin-right: 1em;
+}
+main .tasks-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+main .tasks-container .add-task-btn {
+  display: flex;
+  flex-flow: row;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+main .tasks-container .add-task-btn button:hover {
+  text-decoration: underline;
+}
+main .tasks-container .add-task-btn i {
+  margin-right: 1em;
 }
 
 footer {
   height: 50px;
   background-color: var(--footerBg);
+}
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal .modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+.modal .modal-content .modal-header .close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.modal .modal-content .modal-header .close-btn:hover,
+.modal .modal-content .modal-header .close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */
