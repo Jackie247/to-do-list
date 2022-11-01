@@ -13,48 +13,42 @@
         <div class="container">
             <i class="bi bi-card-text"></i>
             <h1>To Do List</h1>
-            <div class="dropdown">
+            <button type="button" id='nav-dropdown' class="dropdown">
                 <i class="bi bi-list"></i>
-            </div>
+            </button>
         </div>
     </header>
     <main id="main">
-        <section id="sidebar">
-            <div class="sidebar-tabs">
-                <ul>
-                    <div class="inbox">
-                        <i class="bi bi-inbox"></i>
-                        <h3>Inbox</h3>
-                    </div>
-                    <div class="today">
-                        <i class="bi bi-calendar-event"></i>
-                        <h3>Today</h3>
-                    </div>
-                    <div class="upcoming">
-                        <i class="bi bi-calendar-week"></i>
-                        <h3>Upcoming</h3>
-                    </div>
-                </ul>
-            </div>
-            <div class="projects">
-                <h3>Projects</h3>
-                <ul id='project-list' class="project-list">
-                    <li>Test</li>
-                </ul>
-                <button type='button' id='add-project-btn' class="add-project-btn">
-                    <i class="bi bi-plus-square"></i>
-                    <p>Add Project</p>
+        <section id="project-popup"></section>
+        <section id="task-popup"></section>
+        <section class="projects-tab">
+            <div class="default-projects">
+                <button id='inbox' class="project project-h">
+                    <i class="bi bi-inbox"></i>
+                    <h3>Inbox</h3>
+                </button>
+                <button id='today' class="project project-h">
+                    <i class="bi bi-calendar-event"></i>
+                    <h3>Today</h3>
+                </button>
+                <button id='upcoming' class="project project-h">
+                    <i class="bi bi-calendar-week"></i>
+                    <h3>Upcoming</h3>
                 </button>
             </div>
+            <h1 class="project-title">Projects</h1>
+            <div class="project-list"></div>
+            <button type='button' id='add-project' class="add-project-btn">
+                <i id='add-project-icon'class="bi bi-plus-square"></i>
+                <p id='add-project-text'>Add Project</p>
+            </button>
         </section>
-        <section class="tasks-container">
-            <div class="title-container">
-                <h2 class="title">Test</h2>
-            </div>
+        <section id='project-tasks' class="tasks-container">
+            <h2 class="project-title"></h2>
             <div class="task-list"></div>
-            <button type="button">
-                <i class="bi bi-plus-square"></i>
-                <p>Add Task</p>
+            <button type="button" id='add-task' class="add-task-btn">
+                <i id='add-task-icon' class="bi bi-plus-square"></i>
+                <p id='add-task-text'>Add Task</p>
             </button>
         </section>
     </main>
