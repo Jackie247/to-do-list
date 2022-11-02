@@ -1,3 +1,9 @@
+@font-face{
+  font-family: 'NotoSans';
+  src:url('../assets/NotoSerif-Regular.ttf');
+  font-weight: 600;
+  font-style:normal;
+}
 :root{
     --primary:#3b82f6;
     --secondary:#d4d4d4;
@@ -33,6 +39,7 @@ html,body{
 body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  font-family: 'NotoSans';
 }
 /* A elements that don't have a class get default styles */
 a:not([class]) {
@@ -67,7 +74,7 @@ select {
     scroll-behavior: auto !important;
   }
 }
-.hidden{
+.active{
     display:none;
 }
 .btn-h:hover{
@@ -186,6 +193,17 @@ footer{
     width: 80%; 
     background-color: #fff;
     border-radius:1rem 1rem 1rem 1rem;
+    .new-project-title-textarea{
+      textarea{
+        font-size: 1.4rem;
+        height:2rem;
+        outline:none;
+        width:100%;
+        resize:none;
+        border:none;
+        overflow:hidden;
+      }
+    }
     .modal-header{
       display:flex;
       flex-flow:row;
@@ -210,6 +228,7 @@ footer{
     }
     .modal-main{
       padding: 0 0.5rem;
+      
       .new-task-title-textarea{
         textarea{
           font-size: 1.4rem;
@@ -248,6 +267,19 @@ footer{
       flex-flow:row;
       padding:0;
       width:100%;
+      .add-project-container{
+        display:flex;
+        width:100%;
+        padding:0;
+        justify-content: center;
+        background-color: transparent;
+        border:none;
+        height:auto;
+      }
+      .add-project-container:hover{
+        border-radius:0 0 1rem 1rem;
+        background-color:var(--secondary);
+      }
       .add-task-container{
         display:flex;
         justify-content: center;
