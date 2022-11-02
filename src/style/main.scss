@@ -186,20 +186,21 @@ footer{
     margin: 15% auto; /* 15% from the top and centered */
     width: 80%; 
     background-color: #fff;
-    border-radius:1rem 1rem 1rem 1rem;
+    border-radius:0.5rem 0.5rem 0.5rem 0.5rem;
     .modal-header{
       display:flex;
       justify-content:space-between;
+      align-items: center;
       background-color:var(--primary);
-      border-radius:1rem 1rem 0 0;
+      border-radius:0.5rem 0.5rem 0 0;
       h2{
-        padding-left:0.5rem;
+        padding-left:1rem;
       }
       .close-btn {
         font-size: 24px;
         border:none;
         background-color: inherit;
-        margin-right: 0.5rem;
+        margin-right: 1rem;
       }
       .close-btn:hover,
       .close-btn:focus {
@@ -210,7 +211,7 @@ footer{
     }
     .new-project-title-textarea{
       textarea{
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         outline:none;
         width:100%;
         resize:none;
@@ -218,8 +219,10 @@ footer{
       }
     }
     .modal-main{
-      padding: 0 0.5rem;
+      padding: 0 1rem;
       .new-task-title-textarea{
+        padding-top:1rem;
+        border-bottom: 1px solid black;
         textarea{
           font-size: 1.4rem;
           height:2rem;
@@ -231,8 +234,9 @@ footer{
         }
       }
       .new-task-details-textarea{
+        padding:1rem 0;
         textarea{
-          height:12rem;
+          height:10rem;
           outline:none;
           width:100%;
           resize:none;
@@ -241,19 +245,21 @@ footer{
       }
       .new-task-due-date{
         display:flex;
+        justify-content: center;
         align-items: center;
-        p{
+        h3{
           margin-right:1rem;
         }
         input{ 
-          color:#3b82f6;
           border-radius: 0.5rem;
+          padding:0 0.5rem;
         }
       }
     }
     .modal-footer{
       display:flex;
       margin-top:1rem;
+      border-top:1px solid black;
       .add-project-container{
         display:flex;
         width:100%;
@@ -264,28 +270,37 @@ footer{
         height:auto;
       }
       .add-project-container:hover{
-        border-radius:0 0 1rem 1rem;
+        border-radius:0 0 0.5rem 0.5rem;
         background-color:var(--secondary);
       }
       .add-task-container{
         display:flex;
         justify-content: center;
+        align-items: center;
+        padding:0.5rem 0;
         width:50%;
         background-color: transparent;
         border:none;
-        padding:1rem 0;
+        border-right:1px solid black;
+        i{
+          font-size:24px;
+        }
       }
       .add-task-container:hover{
-        border-radius:0 0 0 1rem;
+        border-radius:0 0 0 0.5rem;
         background-color:var(--secondary);
       }
       .task-complete-container{
         display:flex;
         justify-content: center;
+        align-items: center;
+        padding:0.5rem 0;
         width:50%;
         background-color: transparent;
         border:none;
-        margin:1rem 0;
+        i{
+          font-size:24px;
+        }
       }
     }
   }
