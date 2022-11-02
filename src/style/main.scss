@@ -1,7 +1,8 @@
 :root{
-    --headerBg:#3b82f6;
-    --sidebarBg:#d4d4d4;
-    --footerBg:#3b82f6;
+    --primary:#3b82f6;
+    --secondary:#d4d4d4;
+    --buttonBg: ;
+    --buttonText: ;
 }
 // https://piccalil.li/blog/a-modern-css-reset
 // CSS Reset //
@@ -77,7 +78,7 @@ button:hover{
 }
 // ** Base Styles ** //
 header{
-    background-color: var(--headerBg);
+    background-color: var(--primary);
     width:100%;
     height:100px;
     .container{
@@ -101,7 +102,7 @@ main{
       display:block;
       height:auto;
       padding: 0 1em;
-      background-color:var(--sidebarBg);
+      background-color:var(--secondary);
       .default-projects{
         display:flex;
         flex-flow:column;
@@ -166,7 +167,7 @@ main{
 }
 footer{
     height:50px;
-    background-color: var(--footerBg);
+    background-color: var(--primary);
 }
 .modal{
   display:block;
@@ -175,29 +176,97 @@ footer{
   left:0;
   top:0;
   width:100%;
-  height:100%;
   overflow:auto;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
   .modal-content{
-    background-color: #fefefe;
+    display:flex;
+    flex-flow:column;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%; 
+    background-color: #fff;
+    border-radius:1rem 1rem 1rem 1rem;
     .modal-header{
-      .close-btn {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
+      display:flex;
+      flex-flow:row;
+      justify-content:space-between;
+      background-color:var(--primary);
+      border-radius:1rem 1rem 0 0;
+      h2{
+        padding-left:0.5rem;
       }
-      
+      .close-btn {
+        font-size: 24px;
+        border:none;
+        background-color: inherit;
+        margin-right: 0.5rem;
+      }
       .close-btn:hover,
       .close-btn:focus {
         color: black;
         text-decoration: none;
         cursor: pointer;
+      }
+    }
+    .modal-main{
+      padding: 0 0.5rem;
+      .new-task-title-textarea{
+        textarea{
+          font-size: 1.4rem;
+          height:2rem;
+          outline:none;
+          width:100%;
+          resize:none;
+          border:none;
+          overflow:hidden;
+        }
+      }
+      .new-task-details-textarea{
+        textarea{
+          height:12rem;
+          outline:none;
+          width:100%;
+          resize:none;
+          border:none;
+        }
+      }
+      .new-task-due-date{
+        display:flex;
+        flex-flow:row;
+        align-items: center;
+        p{
+          margin-right:1rem;
+        }
+        input{ 
+          color:#3b82f6;
+          border-radius: 1rem;
+        }
+      }
+    }
+    .modal-footer{
+      display:flex;
+      flex-flow:row;
+      padding:0;
+      width:100%;
+      .add-task-container{
+        display:flex;
+        justify-content: center;
+        width:50%;
+        background-color: transparent;
+        border:none;
+        padding:1rem 0;
+      }
+      .add-task-container:hover{
+        border-radius:0 0 0 1rem;
+        background-color:var(--secondary);
+      }
+      .task-complete-container{
+        display:flex;
+        justify-content: center;
+        width:50%;
+        background-color: transparent;
+        border:none;
+        margin:1rem 0;
       }
     }
   }

@@ -1,7 +1,8 @@
 :root {
-  --headerBg:#3b82f6;
-  --sidebarBg:#d4d4d4;
-  --footerBg:#3b82f6;
+  --primary:#3b82f6;
+  --secondary:#d4d4d4;
+  --buttonBg: ;
+  --buttonText: ;
 }
 
 /* Box sizing rules */
@@ -89,7 +90,7 @@ button:hover {
 }
 
 header {
-  background-color: var(--headerBg);
+  background-color: var(--primary);
   width: 100%;
   height: 100px;
 }
@@ -115,7 +116,7 @@ main .projects-tab {
   display: block;
   height: auto;
   padding: 0 1em;
-  background-color: var(--sidebarBg);
+  background-color: var(--secondary);
 }
 main .projects-tab .default-projects {
   display: flex;
@@ -173,7 +174,7 @@ main .tasks-container .add-task-btn i {
 
 footer {
   height: 50px;
-  background-color: var(--footerBg);
+  background-color: var(--primary);
 }
 
 .modal {
@@ -183,27 +184,94 @@ footer {
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
   overflow: auto;
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
 }
 .modal .modal-content {
-  background-color: #fefefe;
+  display: flex;
+  flex-flow: column;
   margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%;
+  background-color: #fff;
+  border-radius: 1rem 1rem 1rem 1rem;
+}
+.modal .modal-content .modal-header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  background-color: var(--primary);
+  border-radius: 1rem 1rem 0 0;
+}
+.modal .modal-content .modal-header h2 {
+  padding-left: 0.5rem;
 }
 .modal .modal-content .modal-header .close-btn {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 24px;
+  border: none;
+  background-color: inherit;
+  margin-right: 0.5rem;
 }
 .modal .modal-content .modal-header .close-btn:hover,
 .modal .modal-content .modal-header .close-btn:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+.modal .modal-content .modal-main {
+  padding: 0 0.5rem;
+}
+.modal .modal-content .modal-main .new-task-title-textarea textarea {
+  font-size: 1.4rem;
+  height: 2rem;
+  outline: none;
+  width: 100%;
+  resize: none;
+  border: none;
+  overflow: hidden;
+}
+.modal .modal-content .modal-main .new-task-details-textarea textarea {
+  height: 12rem;
+  outline: none;
+  width: 100%;
+  resize: none;
+  border: none;
+}
+.modal .modal-content .modal-main .new-task-due-date {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+.modal .modal-content .modal-main .new-task-due-date p {
+  margin-right: 1rem;
+}
+.modal .modal-content .modal-main .new-task-due-date input {
+  color: #3b82f6;
+  border-radius: 1rem;
+}
+.modal .modal-content .modal-footer {
+  display: flex;
+  flex-flow: row;
+  padding: 0;
+  width: 100%;
+}
+.modal .modal-content .modal-footer .add-task-container {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  background-color: transparent;
+  border: none;
+  padding: 1rem 0;
+}
+.modal .modal-content .modal-footer .add-task-container:hover {
+  border-radius: 0 0 0 1rem;
+  background-color: var(--secondary);
+}
+.modal .modal-content .modal-footer .task-complete-container {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  background-color: transparent;
+  border: none;
+  margin: 1rem 0;
 }/*# sourceMappingURL=main.css.map */

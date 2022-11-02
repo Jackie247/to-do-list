@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Jackie247/to-do-list#readme",
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
     "lodash": "^4.17.21",
     "sass": "^1.55.0",
     "sass-loader": "^13.1.0",

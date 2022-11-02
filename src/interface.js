@@ -122,6 +122,11 @@ export default class Interface{
         projectButton.classList.add('active');
         Interface.loadProjectTasks(projectName);
     }
+    /**
+     * 
+     * @param {*} projectName 
+     * @param {*} button 
+     */
     static deleteProject(projectName,button){
         if(button.classList.contains('active')){
             Interface.clearTaskList()
@@ -148,11 +153,16 @@ export default class Interface{
         })
         Interface.addProjectBtn();
     }
-    /** Creates */
+    /**
+     * 
+     */
     static addProjectBtn(){
         const addBtn = document.getElementById('add-project');
         addBtn.addEventListener('click', Interface.createProjectPopupModal);
     }
+    /**
+     * 
+     */
     static createProjectPopupModal(){
         const section = document.getElementById('project-popup');
         section.innerHTML = `
@@ -167,7 +177,7 @@ export default class Interface{
                 <div class='new-project-title-textarea'>
                     <textarea placeholder="Title: New task" maxlength="40" id="new-project-title" required></textarea>
                 </div>
-                <button>Add Project</button>
+                <button class='confirm-form-btn'>Add Project</button>
             </div>
         </div>
         `;
@@ -191,25 +201,33 @@ export default class Interface{
         <div class="modal" id="task-modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1>Add a new task.</h1>
+                    <h2>Create task.</h2>
                     <button id='close-task-popup' class="close-btn">
                     <i class="bi bi-x-circle"></i>
                     </button>
                 </div>
-                <div class='new-task-title-textarea'>
-                    <textarea placeholder="Title: New task" maxlength="40" id="new-task-title" required></textarea>
+                <div class='modal-main'>
+                    <div class='new-task-title-textarea'>
+                        <textarea placeholder="Title: New task" maxlength="40" id="new-task-title" required></textarea>
+                    </div>
+                    <div class='new-task-details-textarea'>
+                        <textarea placeholder='Details: e.g shopping, gym, deadlines'></textarea>
+                    </div>
+                    <div class='new-task-due-date'>
+                        <p>Due date: </p>
+                        <input type='date' class='new-task-date' required>
+                    </div>
                 </div>
-                <div class='new-task-details-textarea'>
-                    <textarea placeholder='Details:e.g shopping, gym, deadlines'></textarea>
+                <div class='modal-footer'>
+                    <button class='add-task-container'>
+                        <i class='bi bi-x'></i>
+                        <p class='confirm-form'>Add Task</p>
+                    </button>
+                    <button class='task-complete-container'>
+                        <i class='bi bi-check'></i>
+                        <p class='task-completion'>Mark as done</p>
+                    </button>
                 </div>
-                <div class='new-task-due-date'>
-                    <input type='date' class='new-task-date' required>
-                </div>
-                <div class='new-task-completion'>
-                    <label for='complete'>Completed:</label>
-                    <input type='checkbox' class='task-complete' name='complete'>
-                </div>
-                <button>Add Task</button>
             </div>
         </div>`;
         const closeBtn = document.getElementById('close-task-popup');
