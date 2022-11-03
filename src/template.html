@@ -21,27 +21,29 @@
     <main id="main">
         <section id="project-popup"></section>
         <section id="task-popup"></section>
-        <section class="projects-tab">
-            <div class="default-projects">
-                <button id='inbox' class="project project-h">
-                    <i class="bi bi-inbox"></i>
-                    <h3>Inbox</h3>
-                </button>
-                <button id='today' class="project project-h">
-                    <i class="bi bi-calendar-event"></i>
-                    <h3>Today</h3>
-                </button>
-                <button id='upcoming' class="project project-h">
-                    <i class="bi bi-calendar-week"></i>
-                    <h3>Upcoming</h3>
+        <section id='navbar' class="projects-tab active">
+            <div id="navbar-projects">
+                <div class="default-projects">
+                    <button id='inbox' class="project project-h">
+                        <i class="bi bi-inbox"></i>
+                        <h3>Inbox</h3>
+                    </button>
+                    <button id='today' class="project project-h">
+                        <i class="bi bi-calendar-event"></i>
+                        <h3>Today</h3>
+                    </button>
+                    <button id='upcoming' class="project project-h">
+                        <i class="bi bi-calendar-week"></i>
+                        <h3>Upcoming</h3>
+                    </button>
+                </div>
+                <h1 class="project-title">Projects</h1>
+                <div class="project-list"></div>
+                <button type='button' id='add-project' class="add-project-btn">
+                    <i id='add-project-icon'class="bi bi-plus-square"></i>
+                    <p id='add-project-text'>Add Project</p>
                 </button>
             </div>
-            <h1 class="project-title">Projects</h1>
-            <div class="project-list"></div>
-            <button type='button' id='add-project' class="add-project-btn">
-                <i id='add-project-icon'class="bi bi-plus-square"></i>
-                <p id='add-project-text'>Add Project</p>
-            </button>
         </section>
         <section id='project-tasks' class="tasks-container">
             <h2 class="project-title"></h2>
@@ -57,6 +59,5 @@
             <h4>Created by Jackie247</h4>
         </div>
     </footer>
-    <script src="./index.js"></script>
 </body>
 </html>
