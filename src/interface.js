@@ -113,8 +113,21 @@ export default class Interface{
         const taskList = document.getElementById('task-list');
         taskList.textContent = '';
     }
-
-    /** -------------Event listeners for project---------------*/
+    static closeTaskPopupModal(){
+        const container = document.getElementById('task-modal')
+        if(container.style.display == 'block'){
+            container.style.display == 'none';
+        }
+        return;
+    }
+    static closeProjectPopupModal(){
+        const container = document.getElementById('project-modal')
+        if(container.style.display == 'block'){
+            container.style.display == 'none';
+        }
+        return;
+    }
+    /** -------------Event listeners for projects---------------*/
     static openProject(projectName, projectButton){
         const projects = document.querySelectorAll('.project');
         const buttons = [projects];
@@ -139,19 +152,17 @@ export default class Interface{
         const inboxBtn = document.getElementById('inbox')
         const todayBtn = document.getElementById('today');
         const upcomingBtn = document.getElementById('upcoming');
-        const dropdownBtn = document.getElementById('nav-dropdown')
-        const projectsNav = document.querySelector('.projects-tab');
-
+        const dropDownBtn = document.getElementById('nav-dropdown');
         inboxBtn.addEventListener('click',Interface.loadProjectTasks('Inbox'))
         todayBtn.addEventListener('click',Interface.loadProjectTasks('Today'))
         upcomingBtn.addEventListener('click',Interface.loadProjectTasks('Upcoming'))
 
-        dropdownBtn.addEventListener('click', () => {
-            projectsNav.style.display == 'block' ? 
-            projectsNav.style.display == 'none' : 
-            projectsNav.style.display == 'block';
-        })
         Interface.addProjectBtn();
+        dropDownBtn.addEventListener('click',Interface.dropDownButton);
+    }
+    static dropDownButton(){
+        const projectList = document.getElementById('navbar');
+        projectList.classList.toggle('active');
     }
     /**
      * 
@@ -169,7 +180,7 @@ export default class Interface{
         <div class="modal" id="project-modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1>Add a new project.</h1>
+                    <h2>Add a new project.</h2>
                     <button id='close-project-popup' class="close-btn">
                         <i class="bi bi-x-circle">
                     </i></button>
@@ -177,7 +188,12 @@ export default class Interface{
                 <div class='new-project-title-textarea'>
                     <textarea placeholder="Title: New task" maxlength="40" id="new-project-title" required></textarea>
                 </div>
-                <button class='confirm-form-btn'>Add Project</button>
+                <div class='modal-footer'>
+                    <button class='add-project-container'>
+                        <i class='bi bi-check'></i>
+                        <p class='confirm-project'>Add Project</p>
+                    </button>
+                </div>
             </div>
         </div>
         `;
@@ -214,14 +230,14 @@ export default class Interface{
                         <textarea placeholder='Details: e.g shopping, gym, deadlines'></textarea>
                     </div>
                     <div class='new-task-due-date'>
-                        <p>Due date: </p>
+                        <h3>Due: </h3>
                         <input type='date' class='new-task-date' required>
                     </div>
                 </div>
                 <div class='modal-footer'>
                     <button class='add-task-container'>
                         <i class='bi bi-x'></i>
-                        <p class='confirm-form'>Add Task</p>
+                        <p class='confirm-task'>Add Task</p>
                     </button>
                     <button class='task-complete-container'>
                         <i class='bi bi-check'></i>
@@ -235,5 +251,6 @@ export default class Interface{
         closeBtn.addEventListener('click', () => {
             container.style.display = 'none';
         })
+
     }
 }
