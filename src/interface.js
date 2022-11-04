@@ -136,7 +136,6 @@ export default class Interface{
         Interface.loadProjectTasks(projectName);
     }
     /**
-     * 
      * @param {*} projectName 
      * @param {*} button 
      */
@@ -152,13 +151,12 @@ export default class Interface{
         const inboxBtn = document.getElementById('inbox')
         const todayBtn = document.getElementById('today');
         const upcomingBtn = document.getElementById('upcoming');
-        const dropDownBtn = document.getElementById('nav-dropdown');
+
         inboxBtn.addEventListener('click',Interface.loadProjectTasks('Inbox'))
         todayBtn.addEventListener('click',Interface.loadProjectTasks('Today'))
         upcomingBtn.addEventListener('click',Interface.loadProjectTasks('Upcoming'))
-
-        Interface.addProjectBtn();
-        dropDownBtn.addEventListener('click',Interface.dropDownButton);
+        
+        Interface.initAddProjectBtn();
     }
     static dropDownButton(){
         const projectList = document.getElementById('navbar');
@@ -167,41 +165,33 @@ export default class Interface{
     /**
      * 
      */
-    static addProjectBtn(){
-        const addBtn = document.getElementById('add-project');
-        addBtn.addEventListener('click', Interface.createProjectPopupModal);
+    static initAddProjectBtn(){
+        const dropDownBtn = document.getElementById('nav-dropdown');
+        const addProjectBtn = document.getElementById('add-project-btn');
+        const cancelBtn = document.getElementById('project-form-cancel')
+
+        dropDownBtn.addEventListener('click',Interface.dropDownButton);
+        addProjectBtn.addEventListener('click', Interface.openAddProjectForm);
+        cancelBtn.addEventListener('click', Interface.closeAddProjectForm);
     }
     /**
      * 
      */
-    static createProjectPopupModal(){
-        const section = document.getElementById('project-popup');
-        section.innerHTML = `
-        <div class="modal" id="project-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Add a new project.</h2>
-                    <button id='close-project-popup' class="close-btn">
-                        <i class="bi bi-x-circle">
-                    </i></button>
-                </div>
-                <div class='new-project-title-textarea'>
-                    <textarea placeholder="Title: New task" maxlength="40" id="new-project-title" required></textarea>
-                </div>
-                <div class='modal-footer'>
-                    <button class='add-project-container'>
-                        <i class='bi bi-check'></i>
-                        <p class='confirm-project'>Add Project</p>
-                    </button>
-                </div>
-            </div>
-        </div>
-        `;
-        const closeBtn = document.getElementById('close-project-popup');
-        const container = document.getElementById('project-modal')
-        closeBtn.addEventListener('click', () => {
-            container.style.display = 'none';
-        })
+    static openAddProjectForm(){
+        const addProjectForm = document.getElementById('add-project-form');
+        const addProjectBtn = document.getElementById('add-project-btn');
+
+        addProjectForm.style.display = 'block';
+        addProjectBtn.classList.add('active');
+    }
+    static closeAddProjectForm(){
+        const addProjectForm = document.getElementById('add-project-form');
+        const addProjectBtn = document.getElementById('add-project-btn');
+        const addProjectTitleInput = document.getElementById('add-project-title');
+
+        addProjectForm.style.display = 'none';
+        addProjectBtn.classList.remove('active'); 
+        addProjectTitleInput.value = '';
     }
     /** -------------Event listeners for tasks---------------*/    
     static initTaskButtons(){
