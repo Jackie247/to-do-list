@@ -75,10 +75,10 @@ select {
     scroll-behavior: auto !important;
   }
 }
-.projects-tab.active{
+.projects-tab.active,.add-project-form.active{
     display:block;
-    height:auto;
 }
+
 .btn-h:hover{
   text-decoration: underline;
 }
@@ -207,6 +207,27 @@ main{
           cursor: pointer;
           i{
             margin-right:1em;
+          }
+          font-size: 18px;
+        }
+        .add-project-form{
+          margin-bottom:1rem;
+          padding:0 1rem;
+          .add-project-title{
+            width:100%;
+            margin-bottom:10px;
+            padding:7.5px 5px;
+            border-radius:5px;
+            border: 1px solid #aaa;
+          }
+          .add-project-buttons{
+            display:flex;
+            justify-content: center;
+            gap:20px;
+            button{
+              width:100%;
+              padding:5px 10px;
+            }
           }
         }
       }
