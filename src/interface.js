@@ -126,13 +126,11 @@ export default class Interface{
         const inboxBtn = document.getElementById('inbox')
         const todayBtn = document.getElementById('today');
         const upcomingBtn = document.getElementById('upcoming');
-        const projectButtons = document.querySelectorAll('.project');
         const dropDownBtn = document.getElementById('nav-dropdown');
-
+        
         inboxBtn.addEventListener('click',Interface.openInbox);
         todayBtn.addEventListener('click',Interface.openToday);
         upcomingBtn.addEventListener('click',Interface.openUpcoming);
-
         dropDownBtn.addEventListener('click',Interface.toggleNavbarDisplay);
     }
     static openInbox(){
