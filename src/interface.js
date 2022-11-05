@@ -3,7 +3,7 @@ import ProjectList from './projectList.js';
 import LocalStorage from './localStorage.js';
 
 export default class Interface{
-    /** -------------Display content to screen------------------- */
+    /** -------------Loading content to screen------------------- */
     static displayHome(){
         Interface.loadSavedProjects();
         Interface.initProjectButtons();
@@ -30,7 +30,6 @@ export default class Interface{
     }
     static loadProjectTasks(projectName){
         const projectTasks = document.getElementById('project-tasks');
-        const addTaskBtn = document.getElementById('add-task');
         projectTasks.innerHTML = `
             <h2 class="project-title">${projectName}</h2>
             <div class="task-list"></div>`;
@@ -44,33 +43,138 @@ export default class Interface{
         }
         Interface.loadTasks(projectName);
     }
-    /** -------------Content creation------------------- */
+    /** -----------------Content manipulation------------------- */
+    static clearDisplay(){
+        Interface.clearProjectList();
+        Interface.clearTaskList();
+    }
+    static clearProjectList(){
+        const projectList = document.getElementById('project-list');
+        projectList.textContent = '';
+    }
+    static clearTaskList(){
+        const taskList = document.getElementById('task-list');
+        taskList.textContent = '';
+    }
+    static closeTaskPopupModal(){
+        const container = document.getElementById('task-popup')
+        if(container.style.display == 'block'){
+            container.style.display == 'none';
+        }
+        return;
+    }
+    static closeAllForms(){
+        Interface.closeAddProjectForm();
+        if(document.getElementById('add-task')){
+            Interface.closeTaskPopupModal();
+        }
+        if(document.getElementById('task-list') && document.getElementById('task-list').innerHTML !== ''){
+            Interface.closeInputs();
+        }
+    }
+    static closeInputs(){
+
+    }
+    /** -------------Adding project content--------------- */
     static createProject(projectName){
         const projectList = document.getElementById('project-list');
-        const newProjectContainer = document.createElement('button');
-        const left = document.createElement('div');
-        const icon = document.createElement('i');
-        const name = document.createElement('p');
-        const right = document.createElement('div');
-        const cancel = document.createElement('i');
-
-        icon.classList.add('bi','bi-list-task');
-        newProjectContainer.classList.add('project');
-        left.classList.add('left-div');
-        right.classList.add('right-div');
-        name.classList.add('project-name');
-        cancel.classList.add('bi','bi-x-circle','project-cancel-btn');
-        name.textContent = `${projectName}`;
-
-        left.appendChild(icon);
-        left.appendChild(name);
-        right.appendChild(cancel);
-        newProjectContainer.appendChild(left);
-        newProjectContainer.appendChild(right)
-        projectList.appendChild(newProjectContainer);
-
+        projectList.innerHTML += `
+            <button class='project'>
+                <div class='left-div'>
+                    <i class='bi bi-list-task'></i>
+                    <p class='project-name'>${projectName}</p>
+                </div>
+                <div class='right-div'>
+                    <i class='bi bi-x-circle'></i>
+                </div>
+            </button>
+        `;
         Interface.initProjectButtons();
     }
+    static addProjectToList(){
+        const addProjectTitleInput = document.getElementById('add-project-title'); 
+        const projectName = addProjectTitleInput.value;
+        if(projectName === ''){
+            alert('Enter project name');
+            return;
+        }
+        if(LocalStorage.getSavedProjectList().projectListContains(projectName)){
+            addProjectTitleInput.value == '';
+            alert('Project already exists');
+            return;
+        }
+        LocalStorage.addProject(new Project(projectName));
+        Interface.createProject(projectName);
+        Interface.closeAddProjectForm();
+    }
+    /** -------------Event listeners for projects---------------*/
+    static openProject(projectName){
+        const projects = document.querySelectorAll('.project');
+        projects.forEach((button) => button.classList.remove('active'));
+        Interface.closeAddProjectForm();
+        Interface.loadProjectTasks(projectName);
+    }
+    static deleteProject(projectName,button){
+        if(button.classList.contains('active')){
+            Interface.clearTaskList()
+        };
+        LocalStorage.deleteProject(projectName);
+        Interface.clearProjectList();
+        Interface.loadSavedProjects();
+    }
+    static initProjectButtons(){
+        const inboxBtn = document.getElementById('inbox')
+        const todayBtn = document.getElementById('today');
+        const upcomingBtn = document.getElementById('upcoming');
+        const projectButtons = document.querySelectorAll('.project');
+        const dropDownBtn = document.getElementById('nav-dropdown');
+
+        inboxBtn.addEventListener('click',Interface.openInbox);
+        todayBtn.addEventListener('click',Interface.openToday);
+        upcomingBtn.addEventListener('click',Interface.openUpcoming);
+
+        dropDownBtn.addEventListener('click',Interface.toggleNavbarDisplay);
+    }
+    static openInbox(){
+        Interface.openProject('Inbox',this);
+    }
+    static openToday(){
+        LocalStorage.updateToday();
+        Interface.openProject('Today',this);
+    }
+    static openUpcoming(){
+        LocalStorage.updateUpcoming();
+        Interface.openProject('Upcoming',this);
+    }
+    static toggleNavbarDisplay(){
+        const projectList = document.getElementById('navbar');
+        projectList.classList.toggle('active');
+    }
+    static initAddProjectBtn(){
+        const addProjectBtn = document.getElementById('add-project-btn');
+        const cancelBtn = document.getElementById('project-form-cancel')
+        const acceptBtn = document.getElementById('project-form-accept');
+        addProjectBtn.addEventListener('click', Interface.openAddProjectForm);
+        cancelBtn.addEventListener('click', Interface.closeAddProjectForm);
+        acceptBtn.addEventListener('click',Interface.addProjectToList);
+    }
+    static openAddProjectForm(){
+        const addProjectForm = document.getElementById('add-project-form');
+        const addProjectBtn = document.getElementById('add-project-btn');
+        Interface.closeAllForms();
+        addProjectForm.style.display = 'block';
+        addProjectBtn.style.display = 'none';
+    }
+    static closeAddProjectForm(){
+        const addProjectForm = document.getElementById('add-project-form');
+        const addProjectBtn = document.getElementById('add-project-btn');
+        const addProjectTitleInput = document.getElementById('add-project-title');
+
+        addProjectForm.style.display = 'none';
+        addProjectBtn.style.display = 'flex';
+        addProjectTitleInput.value = '';
+    }
+    /** -------------Adding task content-------------*/
     static createTask(taskName, date){
         const taskList = document.getElementById('task-list');
         const taskContainer = document.createElement('div');
@@ -94,83 +198,6 @@ export default class Interface{
         taskList.appendChild(taskContainer);
 
         Interface.initTaskButtons();
-    }
-    /** -----------------Content manipulation------------------- */
-    static clearDisplay(){
-        Interface.clearProjectList();
-        Interface.clearTaskList();
-    }
-    static clearProjectList(){
-        const projectList = document.getElementById('project-list');
-        projectList.textContent = '';
-    }
-    static clearTaskList(){
-        const taskList = document.getElementById('task-list');
-        taskList.textContent = '';
-    }
-    static closeTaskPopupModal(){
-        const container = document.getElementById('task-modal')
-        if(container.style.display == 'block'){
-            container.style.display == 'none';
-        }
-        return;
-    }
-    /** -------------Event listeners for projects---------------*/
-    static openProject(projectName){
-        const projects = document.querySelectorAll('.project');
-        projects.forEach((button) => button.classList.remove('active'));
-        Interface.closeAddProjectForm();
-        Interface.loadProjectTasks(projectName);
-    }
-    static deleteProject(projectName,button){
-        if(button.classList.contains('active')){
-            Interface.clearTaskList()
-        };
-        LocalStorage.deleteProject(projectName);
-        Interface.clearProjectList();
-        Interface.loadSavedProjects();
-    }
-    static initProjectButtons(){
-        const inboxBtn = document.getElementById('inbox')
-        const todayBtn = document.getElementById('today');
-        const upcomingBtn = document.getElementById('upcoming');
-        const dropDownBtn = document.getElementById('nav-dropdown');
-        inboxBtn.addEventListener('click',Interface.openProject('Inbox'));
-        todayBtn.addEventListener('click',Interface.openProject('Today'))
-        upcomingBtn.addEventListener('click',Interface.openProject('Upcoming'))
-        dropDownBtn.addEventListener('click',Interface.toggleNavbarDisplay);
-
-        Interface.initAddProjectBtn();
-    }
-    static toggleNavbarDisplay(){
-        const projectList = document.getElementById('navbar');
-        projectList.classList.toggle('active');
-    }
-    static initAddProjectBtn(){
-        const addProjectBtn = document.getElementById('add-project-btn');
-        const cancelBtn = document.getElementById('project-form-cancel')
-        const acceptBtn = document.getElementById('project-form-accept');
-        addProjectBtn.addEventListener('click', Interface.openAddProjectForm);
-        cancelBtn.addEventListener('click', Interface.closeAddProjectForm);
-        acceptBtn.addEventListener('click',this.createProject);
-    }
-    static openAddProjectForm(){
-        const addProjectForm = document.getElementById('add-project-form');
-        const addProjectBtn = document.getElementById('add-project-btn');
-        addProjectForm.style.display = 'block';
-        addProjectBtn.style.display = 'none';
-    }
-    static closeAddProjectForm(){
-        const addProjectForm = document.getElementById('add-project-form');
-        const addProjectBtn = document.getElementById('add-project-btn');
-        const addProjectTitleInput = document.getElementById('add-project-title');
-
-        addProjectForm.style.display = 'none';
-        addProjectBtn.style.display = 'flex';
-        addProjectTitleInput.value = '';
-    }
-    static addProjectToList(){
-        const addProjectTitleInput = document.getElementById('add-project-title'); 
     }
     /** -------------Event listeners for tasks---------------*/    
     static initTaskButtons(){
