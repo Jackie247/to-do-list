@@ -19,10 +19,10 @@
         </div>
     </header>
     <main id="main">
-        <section id="project-popup"></section>
         <section id="task-popup"></section>
-        <section id='navbar' class="projects-tab active">
-            <div id="navbar-projects">
+        <section id='navbar' class="projects-tab">
+            <!-- Inbox, Today, Upcoming Projects -->
+            <div class="navbar-projects slide-in-left">
                 <div class="default-projects">
                     <button id='inbox' class="project project-h">
                         <i class="bi bi-inbox"></i>
@@ -38,16 +38,26 @@
                     </button>
                 </div>
                 <h1 class="project-title">Projects</h1>
-                <div class="project-list"></div>
-                <button type='button' id='add-project' class="add-project-btn">
+                <!-- User Created Projects -->
+                <div id='project-list' class="project-list"></div>
+                <!-- Add Project Button -->
+                <button type='button' id='add-project-btn' class="add-project-btn">
                     <i id='add-project-icon'class="bi bi-plus-square"></i>
                     <p id='add-project-text'>Add Project</p>
                 </button>
+                <!-- Add Project Form -->
+                <div id='add-project-form' class="add-project-form">
+                    <input id='add-project-title' class='add-project-title' placeholder="Project Title" maxlength="30">
+                    <div class="add-project-buttons">
+                        <button id='project-form-accept' class="add-project-accept">Add</button>
+                        <button id='project-form-cancel' class="add-project-cancel">Cancel</button>
+                    </div>
+                </div>
             </div>
         </section>
         <section id='project-tasks' class="tasks-container">
             <h2 class="project-title"></h2>
-            <div class="task-list"></div>
+            <div id='task-list' class="task-list"></div>
             <button type="button" id='add-task' class="add-task-btn">
                 <i id='add-task-icon' class="bi bi-plus-square"></i>
                 <p id='add-task-text'>Add Task</p>
