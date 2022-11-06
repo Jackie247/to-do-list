@@ -1,16 +1,3 @@
-@font-face{
-  font-family: 'NotoSans';
-  src:url('../assets/NotoSerif-Regular.ttf');
-  font-weight: 600;
-  font-style:normal;
-}
-:root{
-    --primary:#3b82f6;
-    --secondary:#d4d4d4;
-    --confirmBtn: ;
-    --buttonBg: ;
-    --buttonText: ;
-}
 // https://piccalil.li/blog/a-modern-css-reset
 // CSS Reset //
 /* Box sizing rules */
@@ -75,18 +62,22 @@ select {
     scroll-behavior: auto !important;
   }
 }
+// END OF CSS RESET // 
+:root{
+  --primary:#3b82f6;
+  --secondary:#d4d4d4;
+  --confirmBtn: ;
+  --buttonBg: ;
+  --buttonText: ;
+}
+@font-face{
+  font-family: 'NotoSans';
+  src:url('../assets/NotoSerif-Regular.ttf');
+  font-weight: 600;
+  font-style:normal;
+}
 .projects-tab.active{
   display:block;
-}
-.add-project-btn.active{
-  // only toggled when btn is pressed
-  display:none; 
-}
-.add-project-form.active{
-  display:block;
-}
-.btn-h:hover{
-  text-decoration: underline;
 }
 /** Animation for navbar */
 .slide-in-left {
@@ -183,17 +174,39 @@ main{
         }
         .project-title{
           padding-left:1rem;
-          margin-top: 1rem;
+          margin: 1rem 0;
         }
         .project-list{
           display:flex;
           flex-flow:column;
+          .project{
+            display:flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            margin-bottom:0.5rem;
+            font-size:20px;
+            border:none;
+            background-color: inherit;
+            cursor:pointer;
+            .left-div{
+              display:flex;
+              p{
+                margin-left: 1rem;
+              }
+            }
+            .right-div{
+              i{
+                
+              }
+            }
+          }
           button:hover{
             border-radius:0.5rem;
             background-color:var(--secondary);
           }
         }
         .add-project-btn{
+          display:flex;
           border:none;
           background-color: inherit;
           padding-left:1rem;
