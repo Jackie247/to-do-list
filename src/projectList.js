@@ -46,7 +46,7 @@ export default class ProjectList{
         // check every project for tasks that have due date today
         this.projectList.forEach((project) => {
             // skip project today since its empty, and skip upcoming so we dont get duplicates
-            if(project.getProjectName() === 'Today' || project.getProjectName() === 'Upcoming'){
+            if(project.getName() === 'Today' || project.getName() === 'Upcoming'){
                 return;
             }
             this.getProject('Today').getTaskList().forEach((task)=>{
@@ -63,7 +63,7 @@ export default class ProjectList{
         // update incoming with only tasks that are within a week range.
         this.projectList.forEach((project)=>{
             // skip today since they will be in today inbox and skip upcoming since empty list.
-            if(project.getProjectName() === 'Today' || project.getProjectName() === 'Upcoming'){
+            if(project.getName() === 'Today' || project.getName() === 'Upcoming'){
                 return;
             }
             // create new tasks for upcoming. 
