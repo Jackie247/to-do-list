@@ -32,7 +32,7 @@ export default class Interface{
         const projectTasks = document.getElementById('project-tasks');
         projectTasks.innerHTML = `
             <h2 class="project-title">${projectName}</h2>
-            <div class="task-list"></div>`;
+            <div id='task-list' class="task-list"></div>`;
         if(projectName !== 'Today' && projectName !== 'Upcoming'){
             projectTasks.innerHTML += `
             <button type="button" id='add-task' class="add-task-btn">
@@ -46,11 +46,16 @@ export default class Interface{
     /** -----------------Content manipulation------------------- */
     static clearDisplay(){
         Interface.clearProjectList();
+        Interface.clearProjectSection();        
         Interface.clearTaskList();
     }
     static clearProjectList(){
         const projectList = document.getElementById('project-list');
         projectList.textContent = '';
+    }
+    static clearProjectSection(){
+        const projectSection = document.getElementById('project-tasks');
+        projectSection.textContent = '';
     }
     static clearTaskList(){
         const taskList = document.getElementById('task-list');
@@ -120,7 +125,7 @@ export default class Interface{
     }
     static deleteProject(projectName,button){
         if(button.classList.contains('active')){
-            Interface.clearTaskList()
+            Interface.clearTaskList();
         };
         LocalStorage.deleteProject(projectName);
         Interface.clearProjectList();
