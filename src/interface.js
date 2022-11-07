@@ -79,7 +79,7 @@ export default class Interface{
     static createProject(projectName){
         const projectList = document.getElementById('project-list');
         projectList.innerHTML += `
-            <button class='project'>
+            <button class='new-project'>
                 <div class='left-div'>
                     <i class='bi bi-list-task'></i>
                     <p class='project-name'>${projectName}</p>
@@ -131,11 +131,13 @@ export default class Interface{
         const todayBtn = document.getElementById('today');
         const upcomingBtn = document.getElementById('upcoming');
         const dropDownBtn = document.getElementById('nav-dropdown');
-        const projectButtons = document.querySelectorAll('.project');
+        const projectButtons = document.querySelectorAll('.new-project');
+
         inboxBtn.addEventListener('click',Interface.openInbox);
         todayBtn.addEventListener('click',Interface.openToday);
         upcomingBtn.addEventListener('click',Interface.openUpcoming);
         dropDownBtn.addEventListener('click',Interface.toggleNavbarDisplay);
+        projectButtons.forEach((project) => project.addEventListener('click', Interface.handleUserProjects))
     }
     static openInbox(){
         Interface.openProject('Inbox',this);
@@ -151,6 +153,14 @@ export default class Interface{
     static toggleNavbarDisplay(){
         const projectList = document.getElementById('navbar');
         projectList.classList.toggle('active');
+    }
+    static handleUserProjects(e){
+        const projectName = this.children[0].children[1].textContent;
+        if(e.target.classList.contains('bi-x-circle')){
+            Interface.deleteProject(projectName,this);
+            return;
+        }
+        Interface.openProject(projectName,this);
     }
     static initAddProjectBtn(){
         const addProjectBtn = document.getElementById('add-project-btn');
