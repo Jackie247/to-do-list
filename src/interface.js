@@ -108,9 +108,13 @@ export default class Interface{
         Interface.closeAddProjectForm();
     }
     /** -------------Event listeners for projects---------------*/
-    static openProject(projectName){
-        const projects = document.querySelectorAll('.project');
+    static openProject(projectName, projectButton){
+        const defaultProjects = document.querySelectorAll('.default-project');
+        const userProjects = document.querySelectorAll('.new-project');
+        const projects = [...defaultProjects, ...userProjects];
+
         projects.forEach((button) => button.classList.remove('active'));
+        projectButton.classList.add('active');
         Interface.closeAddProjectForm();
         Interface.loadProjectTasks(projectName);
     }
@@ -127,7 +131,7 @@ export default class Interface{
         const todayBtn = document.getElementById('today');
         const upcomingBtn = document.getElementById('upcoming');
         const dropDownBtn = document.getElementById('nav-dropdown');
-        
+        const projectButtons = document.querySelectorAll('.project');
         inboxBtn.addEventListener('click',Interface.openInbox);
         todayBtn.addEventListener('click',Interface.openToday);
         upcomingBtn.addEventListener('click',Interface.openUpcoming);
