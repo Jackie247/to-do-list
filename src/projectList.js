@@ -33,7 +33,7 @@ export default class ProjectList{
         if(this.projectListContains(projectName)){
             this.projectList.splice(
                 this.projectList.indexOf(
-                    getProject(projectName)),1);
+                    this.getProject(projectName)),1);
         }
         return;
     }
@@ -82,6 +82,6 @@ export default class ProjectList{
     // HELPERS // 
     projectListContains(projectName){
         // returns true if found, false if not.
-        return this.projectList.some(project => project.name === projectName);
+        return this.projectList.some(project => project.getName() === projectName);
     }
 }
