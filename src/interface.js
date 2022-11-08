@@ -199,11 +199,13 @@ export default class Interface{
         const details = document.createElement('button');
         const deleteBtn = document.createElement('button');
         const name = document.createElement('p');
-        name.textContent = taskName;
         const dateText = document.createElement('p');
         const dateInput = document.createElement('input');
-        dateInput.setAttribute('type','date');
+        
+        taskContainer.classList.add('task');
+        name.textContent = taskName;
         dateText.textContent = date;
+        dateInput.setAttribute('type','date');
 
         taskContainer.appendChild(checkBox);
         taskContainer.appendChild(name);
@@ -216,54 +218,54 @@ export default class Interface{
 
         Interface.initTaskButtons();
     }
-    /** -------------Event listeners for tasks---------------*/    
-    static initTaskButtons(){
-        Interface.addTaskBtn();
-    }
-    static addTaskBtn(){
+    /** -------------Event listeners for task creation---------------*/    
+    static initAddTaskButton(){
         const addBtn = document.getElementById('add-task');
-        addBtn.addEventListener('click', Interface.createTaskPopupModal);
-    }
-    static createTaskPopupModal(){
-        const section = document.getElementById('task-popup');
-        section.innerHTML = `
-        <div class="modal" id="task-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Create task.</h2>
-                    <button id='close-task-popup' class="close-btn">
-                    <i class="bi bi-x-circle"></i>
-                    </button>
-                </div>
-                <div class='modal-main'>
-                    <div class='new-task-title-textarea'>
-                        <textarea placeholder="Title: New task" maxlength="40" id="new-task-title" required></textarea>
-                    </div>
-                    <div class='new-task-details-textarea'>
-                        <textarea placeholder='Details: e.g shopping, gym, deadlines'></textarea>
-                    </div>
-                    <div class='new-task-due-date'>
-                        <h3>Due: </h3>
-                        <input type='date' class='new-task-date' required>
-                    </div>
-                </div>
-                <div class='modal-footer'>
-                    <button class='add-task-container'>
-                        <i class='bi bi-x'></i>
-                        <p class='confirm-task'>Add Task</p>
-                    </button>
-                    <button class='task-complete-container'>
-                        <i class='bi bi-check'></i>
-                        <p class='task-completion'>Mark as done</p>
-                    </button>
-                </div>
-            </div>
-        </div>`;
         const closeBtn = document.getElementById('close-task-popup');
-        const container = document.getElementById('task-modal')
-        closeBtn.addEventListener('click', () => {
-            container.style.display = 'none';
-        })
+        const taskTitle = document.getElementById('new-task-title');
+        const taskDetails = document.getElementById('new-task-details');
+        const taskDate = document.getElementById('new-task-date');
+        const acceptBtn = document.getElementById('accept-task-btn')
+        addBtn.addEventListener('click', Interface.openAddTaskModal);
+        closeBtn.addEventListener('click',Interface.closeAddTaskModal);
 
+    }
+    static openAddTaskModal(){
+        const addTaskForm = document.getElementById('task-modal');
+        Interface.closeAllForms();
+
+        addTaskForm.style.display = 'block';
+    }
+    static closeAddTaskModal(){
+        const addTaskForm = document.getElementById('task-modal');
+        const taskTitle = document.getElementById('new-task-title');
+        const taskDetails = document.getElementById('new-task-details');
+        const taskDate = document.getElementById('new-task-date');
+
+        addTaskForm.style.display = 'none';
+        taskTitle.value = '';
+        taskDetails.value = '';
+        taskDate.value = '';
+    }
+    static addTask(){
+        const projectName = document.querySelector('.project-title');
+        const taskTitle = document.getElementById('new-task-title');
+        const taskDate = document.getElementById('new-task-date');
+        if(taskTitle.textContent === ''){
+            alert('Enter task title');
+            return;
+        }
+        LocalStorage.addTask(projectName, new Task(taskTitle));
+       if(taskDate.value === ''){
+            Interface.createTask(taskTitle, 'No date');
+       }
+       else{
+        Interface.createTask(taskTitle, taskDate.value);
+       }
+       Interface.closeAddTaskModal();
+    }
+    /** -------------Event listeners for tasks---------------*/  
+    static initTaskButtons(){
+        const taskButtons = document.querySelectorAll('.task');
     }
 }
