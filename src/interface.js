@@ -1,5 +1,5 @@
 import Project from './project.js';
-import ProjectList from './projectList.js';
+import Task from './task.js';
 import LocalStorage from './localStorage.js';
 
 export default class Interface{
@@ -25,13 +25,13 @@ export default class Interface{
             Interface.createTask(task.name,task.date);
          })
         if(projectName !== 'Today' && projectName !== 'Upcoming'){
-            Interface.initTaskButtons();
+            Interface.initAddTaskButton();
         }
     }
     static loadProjectTasks(projectName){
         const projectTasks = document.getElementById('project-tasks');
         projectTasks.innerHTML = `
-            <h2 class="project-title">${projectName}</h2>
+            <h2 id='project-tasks-title' class="project-title">${projectName}</h2>
             <div id='task-list' class="task-list"></div>`;
         if(projectName !== 'Today' && projectName !== 'Upcoming'){
             projectTasks.innerHTML += `
@@ -194,41 +194,55 @@ export default class Interface{
     /** -------------Adding task content-------------*/
     static createTask(taskName, date){
         const taskList = document.getElementById('task-list');
-        const taskContainer = document.createElement('div');
+        const newTaskContainer = document.createElement('div');
+        newTaskContainer.classList.add('task');
+
         const checkBox = document.createElement('input');
-        const details = document.createElement('button');
-        const deleteBtn = document.createElement('button');
-        const name = document.createElement('p');
-        const dateText = document.createElement('p');
-        const dateInput = document.createElement('input');
+        checkBox.setAttribute('type','checkbox');
         
-        taskContainer.classList.add('task');
+        const details = document.createElement('button');
+        details.textContent = 'Edit';
+        details.classList.add('edit-task-details');
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('bi','bi-x-circle');
+        deleteBtn.setAttribute('id','del-task-btn');
+
+        const name = document.createElement('p');
+        name.classList.add('task-name');
         name.textContent = taskName;
-        dateText.textContent = date;
+
+        const dateText = document.createElement('p');
+        dateText.textContent = 'Due:';
+
+        const dateInput = document.createElement('input');
+        dateInput.classList.add('task-date');
         dateInput.setAttribute('type','date');
+        dateInput.value = date;
 
-        taskContainer.appendChild(checkBox);
-        taskContainer.appendChild(name);
-        taskContainer.appendChild(dateInput);
-        taskContainer.appendChild(dateText);
-        taskContainer.appendChild(details);
-        taskContainer.appendChild(deleteBtn);
+        newTaskContainer.appendChild(checkBox);
+        newTaskContainer.appendChild(name);
+        newTaskContainer.appendChild(dateText);
+        newTaskContainer.appendChild(dateInput);
+        newTaskContainer.appendChild(details);
+        newTaskContainer.appendChild(deleteBtn);
 
-        taskList.appendChild(taskContainer);
+        taskList.appendChild(newTaskContainer);
 
         Interface.initTaskButtons();
     }
     /** -------------Event listeners for task creation---------------*/    
     static initAddTaskButton(){
-        const addBtn = document.getElementById('add-task');
+        const addTaskBtn = document.getElementById('add-task');
         const closeBtn = document.getElementById('close-task-popup');
         const taskTitle = document.getElementById('new-task-title');
         const taskDetails = document.getElementById('new-task-details');
         const taskDate = document.getElementById('new-task-date');
         const acceptBtn = document.getElementById('accept-task-btn')
-        addBtn.addEventListener('click', Interface.openAddTaskModal);
+        addTaskBtn.addEventListener('click', Interface.openAddTaskModal);
         closeBtn.addEventListener('click',Interface.closeAddTaskModal);
-
+        acceptBtn.addEventListener('click',Interface.addTask);
+        
     }
     static openAddTaskModal(){
         const addTaskForm = document.getElementById('task-modal');
@@ -248,24 +262,25 @@ export default class Interface{
         taskDate.value = '';
     }
     static addTask(){
-        const projectName = document.querySelector('.project-title');
+        const projectName = document.getElementById('project-tasks-title').textContent;
         const taskTitle = document.getElementById('new-task-title');
         const taskDate = document.getElementById('new-task-date');
-        if(taskTitle.textContent === ''){
+        const taskDetails = document.getElementById('new-task-details');
+        if(taskTitle.value === ''){
             alert('Enter task title');
             return;
         }
-        LocalStorage.addTask(projectName, new Task(taskTitle));
-       if(taskDate.value === ''){
+        LocalStorage.addTask(projectName, new Task(taskTitle.value));
+        if(taskDate.value === ''){
             Interface.createTask(taskTitle, 'No date');
-       }
-       else{
-        Interface.createTask(taskTitle, taskDate.value);
-       }
-       Interface.closeAddTaskModal();
+        }
+        else{
+            Interface.createTask(taskTitle, taskDate.value);
+        }
+        Interface.closeAddTaskModal();
     }
     /** -------------Event listeners for tasks---------------*/  
     static initTaskButtons(){
-        const taskButtons = document.querySelectorAll('.task');
+        const tasks = document.querySelectorAll('.task');
     }
 }
