@@ -42,9 +42,9 @@ export default class LocalStorage{
         savedProjectList.deleteProject(projectName)
         LocalStorage.updateStorage(savedProjectList);
     }
-    static addTask(projectName, taskName){
+    static addTask(projectName, task){
         const savedProjectList = LocalStorage.getSavedProjectList();
-        savedProjectList.getProject(projectName).addTask(taskName);
+        savedProjectList.getProject(projectName).addTask(task);
         LocalStorage.updateStorage(savedProjectList);
     }
     static deleteTask(projectName,taskName){
