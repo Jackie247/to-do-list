@@ -302,8 +302,22 @@ export default class Interface{
             Interface.deleteTask(this);
             return;
         }
+        else if(e.target.classList.contains('edit-task-details')){
+            Interface.openEditTaskModal(this);
+            return;
+        }
+        else if(e.target.classList.contains('task-checkbox')){
+            Interface.setTaskCompleted(this);
+            return;
+        }
     }
     static setTaskDate(){
         
+    }
+    static openEditTaskModal(task){
+
+    }
+    static setTaskCompleted(task){
+
     }
 }
