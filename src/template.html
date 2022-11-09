@@ -31,7 +31,7 @@
                     </div>
                     <div class='modal-main'>
                         <div class='new-task-title-textarea'>
-                            <textarea placeholder="Title: New task" maxlength="40" id="new-task-title" required></textarea>
+                            <textarea id="new-task-title" placeholder="Title: New task" maxlength="40"  required></textarea>
                         </div>
                         <div class='new-task-details-textarea'>
                             <textarea id="new-task-details" placeholder='Details: e.g shopping, gym, deadlines'></textarea>
@@ -71,7 +71,7 @@
                         <h3>Upcoming</h3>
                     </button>
                 </div>
-                <h1 class="project-title">Projects</h1>
+                <h1 class="navbar-project-title">Projects</h1>
                 <!-- User Created Projects -->
                 <div id='project-list' class="project-list"></div>
                 <!-- Add Project Button -->
@@ -90,7 +90,7 @@
             </div>
         </section>
         <section id='project-tasks' class="tasks-container">
-            <h2 class="project-title"></h2>
+            <h2 id='project-tasks-title' class="project-title"></h2>
             <div id='task-list' class="task-list"></div>
             <button type="button" id='add-task' class="add-task-btn">
                 <i id='add-task-icon' class="bi bi-plus-square"></i>
