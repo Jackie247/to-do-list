@@ -18,11 +18,9 @@ export default class Project{
         return this.taskList;
     }
     // METHODS //
-    addTask(task){
-        if(this.taskListContains(task)){
-            return;
-        }
-        this.taskList.push(task);
+    addTask(newTask){
+        if(this.taskList.find((task) => task.getName() === newTask.name)) return;
+        this.taskList.push(newTask);
     }
     deleteTask(task){
         if(this.taskListContains(task)){
