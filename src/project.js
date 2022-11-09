@@ -1,3 +1,5 @@
+import { indexOf } from "lodash";
+
 export default class Project{
     constructor(name){
         this.name = name;
@@ -19,25 +21,23 @@ export default class Project{
     }
     // METHODS //
     addTask(newTask){
-        if(this.taskList.find((task) => task.getName() === newTask.name)) return;
+        if(this.taskList.find((task) => task.getTaskName() === newTask.name)) return;
         this.taskList.push(newTask);
     }
     deleteTask(task){
-        if(this.taskListContains(task)){
-            var index = this.getTaskIndex(task);
-            this.taskList.splice(index, 1);
-        }
+        var index = this.taskList.indexOf(this.getTask(task));
+        this.taskList.splice(index, 1);
         return;
     }
-    getTask(task){
-        if(this.taskListContains(task)){
-            return this.taskList[this.getTaskIndex(task)];
+    getTask(taskName){
+        if(this.taskListContains(taskName)){
+            return this.taskList.find((task) => task.getTaskName() === taskName);
         }
         return;
     } 
     // HELPER //
     taskListContains(taskName){
         // returns true if found, false if not.
-        return this.projectList.some(task => task.getName() === taskName);
+        return this.taskList.some(task => task.getTaskName() === taskName);
     }
 }

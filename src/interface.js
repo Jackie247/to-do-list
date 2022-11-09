@@ -160,6 +160,9 @@ export default class Interface{
         projectList.classList.toggle('active');
     }
     static handleUserProjects(e){
+        // Looks at the current object, since projects contain two divs. 'left' and 'right' div
+        // the project name is in the left div children[0] 
+        // its the second element children[1]
         const projectName = this.children[0].children[1].textContent;
         if(e.target.classList.contains('bi-x-circle')){
             Interface.deleteProject(projectName,this);
@@ -199,31 +202,27 @@ export default class Interface{
 
         const checkBox = document.createElement('input');
         checkBox.setAttribute('type','checkbox');
+        checkBox.classList.add('task-checkbox');
         
         const details = document.createElement('button');
         details.textContent = 'Edit';
         details.classList.add('edit-task-details');
 
         const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('bi','bi-x-circle');
         deleteBtn.setAttribute('id','del-task-btn');
+        deleteBtn.classList.add('del-task-btn','bi','bi-x-circle');
 
         const name = document.createElement('p');
         name.classList.add('task-name');
         name.textContent = taskName;
 
         const dateText = document.createElement('p');
-        dateText.textContent = 'Due:';
-
-        const dateInput = document.createElement('input');
-        dateInput.classList.add('task-date');
-        dateInput.setAttribute('type','date');
-        dateInput.value = date;
+        dateText.classList.add('task-date');
+        dateText.textContent = date;
 
         newTaskContainer.appendChild(checkBox);
         newTaskContainer.appendChild(name);
         newTaskContainer.appendChild(dateText);
-        newTaskContainer.appendChild(dateInput);
         newTaskContainer.appendChild(details);
         newTaskContainer.appendChild(deleteBtn);
 
@@ -237,7 +236,6 @@ export default class Interface{
         const closeBtn = document.getElementById('close-task-popup');
         const taskTitle = document.getElementById('new-task-title');
         const taskDetails = document.getElementById('new-task-details');
-        const taskDate = document.getElementById('new-task-date');
         const acceptBtn = document.getElementById('accept-task-btn')
         addTaskBtn.addEventListener('click', Interface.openAddTaskModal);
         closeBtn.addEventListener('click',Interface.closeAddTaskModal);
@@ -272,15 +270,40 @@ export default class Interface{
         }
         LocalStorage.addTask(projectName, new Task(taskTitle.value));
         if(taskDate.value === ''){
-            Interface.createTask(taskTitle, 'No date');
+            Interface.createTask(taskTitle.value, 'No date');
         }
         else{
-            Interface.createTask(taskTitle, taskDate.value);
+            Interface.createTask(taskTitle.value, taskDate.value);
         }
         Interface.closeAddTaskModal();
     }
     /** -------------Event listeners for tasks---------------*/  
     static initTaskButtons(){
         const tasks = document.querySelectorAll('.task');
+        const taskDelBtn = document.getElementById('del-task-btn');
+        tasks.forEach((task) => {
+            task.addEventListener('click', Interface.handleTaskEvents);
+        })
+
+    }
+    static deleteTask(task){
+        const project = document.getElementById('project-tasks-title').textContent;
+        const taskName = task.children[1].textContent;
+        if(project === 'Today' || project === 'Upcoming'){
+            const taskProjectParent = task.split('(')[1].split(')')[0];
+            LocalStorage.deleteTask(taskProjectParent,taskName);
+        }
+        LocalStorage.deleteTask(project,taskName);
+        Interface.clearTaskList();
+        Interface.loadProjectTasks(project);
+    }
+    static handleTaskEvents(e){
+        if(e.target.classList.contains('bi-x-circle')){
+            Interface.deleteTask(this);
+            return;
+        }
+    }
+    static setTaskDate(){
+        
     }
 }

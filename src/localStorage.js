@@ -57,6 +57,11 @@ export default class LocalStorage{
         savedProjectList.getProject(projectName).getTask(taskName).setTaskName(newName);
         LocalStorage.updateStorage(savedProjectList);
     }
+    static setTaskDate(projectName,taskName,date){
+        const savedProjectList = LocalStorage.getSavedProjectList();
+        savedProjectList.getProject(projectName).getTask(taskName).setDate(date);
+        LocalStorage.updateStorage(savedProjectList);
+    }
     static setTaskCompletion(projectName,taskName,boolean){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.getProject(projectName).getTask(taskName).setCompleted(boolean);
