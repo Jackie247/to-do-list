@@ -179,7 +179,7 @@ main{
         .project-list{
           display:flex;
           flex-flow:column;
-          .project{
+          .new-project{
             display:flex;
             justify-content: space-between;
             padding: 0 1rem;
@@ -250,6 +250,10 @@ main{
       .task-list{
         display:flex;
         flex-flow:column;
+        .task{
+          display:flex;
+          align-items: center;
+        }
       }
       .add-task-btn{
         display:flex;
@@ -272,7 +276,7 @@ footer{
  * Styling for popup modals.
  */
 .modal{
-  display:block;
+  display:none;
   position:fixed;
   z-index: 1;
   top:0;
