@@ -219,7 +219,7 @@ export default class Interface{
 
         const dateText = document.createElement('p');
         dateText.classList.add('task-date');
-        dateText.textContent = date;
+        dateText.textContent = format(new Date(date), 'dd/MM/yyyy');
 
         newTaskContainer.appendChild(checkBox);
         newTaskContainer.appendChild(name);
@@ -275,9 +275,9 @@ export default class Interface{
         }
         else{
             // create task to display on interface
-            Interface.createTask(taskTitle.value, format(new Date(taskDate.value),'dd/MM/yyyy'),taskDetails);
+            Interface.createTask(taskTitle.value, taskDate.value);
             // update task date in local storage
-            LocalStorage.setTaskDate(projectName,taskTitle.value,format(new Date(taskDate.value),'dd/MM/yyyy'));
+            LocalStorage.setTaskDate(projectName,taskTitle.value,taskDate.value);
         }
         LocalStorage.setTaskDetails(projectName,taskTitle.value,taskDetails.value);
         Interface.closeAddTaskModal();
@@ -319,6 +319,7 @@ export default class Interface{
         }
         if(e.target.classList.contains('edit-task-details')){
             Interface.openEditTaskModal(this);
+            Interface.populateEditForm(this);
             return;
         }
         if(e.target.classList.contains('task-checkbox')){
@@ -326,20 +327,30 @@ export default class Interface{
             return;
         }
     }
-
-    static openEditTaskModal(task){
-        // form elements
+    static openEditTaskModal(){
         const editForm = document.getElementById('edit-task-modal');
+        Interface.closeAllForms();
+        editForm.style.display = 'block';
+    }
+    static populateEditForm(task){
+        // form elements to update based on which task you edit.
         const taskTitle = document.getElementById('edit-task-title');
         const taskDetails = document.getElementById('edit-task-details');
-
-        // form data
-        const taskSavedTitle = task.children[1].textContent;
-        const taskSavedDetails = task.getDate();
-        Interface.closeAllForms();
-        taskTitle.value = taskName;
-        editForm.style.display = 'block';
-        Interface.initEditTaskButtons(task);
+        const taskDate = document.getElementById('edit-task-date');
+        // get the task object from local storage
+        const projectName = document.getElementById('project-tasks-title').textContent;
+        const taskName = task.children[1].textContent;
+        const taskObject = LocalStorage.getSavedProjectList()
+            .getProject(projectName)
+            .getTask(taskName);
+        // data to update form elements with
+        const savedTaskTitle = taskObject.getTaskName();
+        const savedTaskDetails = taskObject.getDetails();
+        const savedTaskDate = taskObject.getDate();
+        // update the form information
+        taskTitle.value = savedTaskTitle;
+        taskDetails.value = savedTaskDetails;
+        taskDate.value = savedTaskDate;
     }
     static closeEditTaskModal(){
         const editForm = document.getElementById('edit-task-modal');
