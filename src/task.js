@@ -15,7 +15,7 @@ export default class Task{
         this.date = newDate;
     }
     getDate(){
-        if(date !== null){
+        if(this.date !== null){
             return this.date;
         }
         return;
