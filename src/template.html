@@ -19,13 +19,44 @@
         </div>
     </header>
     <main id="main">
+            <!-- Edit Task Form -->
+        <section id="edit-task-popup">
+            <div class="modal" id="edit-task-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Edit task.</h2>
+                        <button id='close-edit-task-popup' class="close-btn">
+                        <i class="bi bi-x-circle"></i>
+                        </button>
+                    </div>
+                    <div class='modal-main'>
+                        <div class='edit-task-title-textarea'>
+                            <textarea id="edit-task-title" placeholder="Title: New title" maxlength="40"  required></textarea>
+                        </div>
+                        <div class='edit-task-details-textarea'>
+                            <textarea id="edit-task-details" placeholder='Details: e.g shopping, gym, deadlines'></textarea>
+                        </div>
+                        <div class='edit-task-due-date'>
+                            <h3>Due: </h3>
+                            <input id='edit-task-date' type='date' class='edit-task-date' required>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button id='confirm-edit-btn' class='edit-task-container'>
+                            <i class='bi bi-x'></i>
+                            <p class='confirm-task'>Confirm Edit</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
             <!-- Add Task Form -->
         <section id="task-popup">
             <div class="modal" id="task-modal">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Create task.</h2>
-                        <button id='close-task-popup' class="close-btn">
+                        <button id='close-new-task-popup' class="close-btn">
                         <i class="bi bi-x-circle"></i>
                         </button>
                     </div>
