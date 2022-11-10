@@ -1,7 +1,8 @@
 export default class Task{
-    constructor(name, dueDate = 'No date'){
+    constructor(name, dueDate = 'No date',details = ''){
         this.name = name;
         this.dueDate = dueDate;
+        this.details = details;
     }
     // GETTERS AND SETTERS //
     setTaskName(name){
