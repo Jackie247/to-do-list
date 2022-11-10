@@ -62,9 +62,9 @@ export default class LocalStorage{
         savedProjectList.getProject(projectName).getTask(taskName).setDate(date);
         LocalStorage.updateStorage(savedProjectList);
     }
-    static setTaskCompletion(projectName,taskName,boolean){
+    static setTaskDetails(projectName,taskName,details){
         const savedProjectList = LocalStorage.getSavedProjectList();
-        savedProjectList.getProject(projectName).getTask(taskName).setCompleted(boolean);
+        savedProjectList.getProject(projectName).getTask(taskName).setDetails(details);
         LocalStorage.updateStorage(savedProjectList);
     }
     static updateToday(){
