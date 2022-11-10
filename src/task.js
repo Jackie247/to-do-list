@@ -11,12 +11,6 @@ export default class Task{
     getTaskName(){
         return this.name;
     }
-    setCompleted(boolean){
-        this.completed = boolean;
-    }
-    getCompleted(){
-        return this.completed;
-    }
     setDate(newDate){
         this.date = newDate;
     }
@@ -25,6 +19,12 @@ export default class Task{
             return this.date;
         }
         return;
+    }
+    setDetails(details){
+        this.details = details;
+    }
+    getDetails(){
+        return this.details;
     }
     // METHODS //
     getFormattedDate(){
