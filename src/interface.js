@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 import Project from './project.js';
 import Task from './task.js';
 import LocalStorage from './localStorage.js';
@@ -233,7 +234,7 @@ export default class Interface{
     /** -------------Event listeners for task creation---------------*/    
     static initAddTaskButton(){
         const addTaskBtn = document.getElementById('add-task');
-        const closeBtn = document.getElementById('close-task-popup');
+        const closeBtn = document.getElementById('close-new-task-popup');
         const taskTitle = document.getElementById('new-task-title');
         const taskDetails = document.getElementById('new-task-details');
         const acceptBtn = document.getElementById('accept-task-btn')
@@ -273,18 +274,32 @@ export default class Interface{
             Interface.createTask(taskTitle.value, 'No date');
         }
         else{
-            Interface.createTask(taskTitle.value, taskDate.value);
+            // create task to display on interface
+            Interface.createTask(taskTitle.value, format(new Date(taskDate.value),'dd/MM/yyyy'),taskDetails);
+            // update task date in local storage
+            LocalStorage.setTaskDate(projectName,taskTitle.value,format(new Date(taskDate.value),'dd/MM/yyyy'));
         }
+        LocalStorage.setTaskDetails(projectName,taskTitle.value,taskDetails.value);
         Interface.closeAddTaskModal();
     }
     /** -------------Event listeners for tasks---------------*/  
     static initTaskButtons(){
         const tasks = document.querySelectorAll('.task');
-        const taskDelBtn = document.getElementById('del-task-btn');
+        const closeEditTaskFormBtn = document.getElementById('close-edit-task-popup');
+        const taskDate = document.querySelectorAll('.edit-task-date');
+        const taskTitleInputs = document.querySelectorAll('.edit-task-title');
+        const confirmEdit = document.getElementById('confirm-edit-btn')
         tasks.forEach((task) => {
             task.addEventListener('click', Interface.handleTaskEvents);
         })
-
+        taskDate.forEach((dateInput) => {
+            dateInput.addEventListener('change',Interface.setTaskDate);
+        });
+        taskTitleInputs.forEach((titleInput) => {
+            titleInput.addEventListener('keypress',Interface.renameTask);
+        })
+        closeEditTaskFormBtn.addEventListener('click',Interface.closeEditTaskModal);
+        //confirmEdit.addEventListener('click',Interface.)
     }
     static deleteTask(task){
         const project = document.getElementById('project-tasks-title').textContent;
@@ -302,22 +317,62 @@ export default class Interface{
             Interface.deleteTask(this);
             return;
         }
-        else if(e.target.classList.contains('edit-task-details')){
+        if(e.target.classList.contains('edit-task-details')){
             Interface.openEditTaskModal(this);
             return;
         }
-        else if(e.target.classList.contains('task-checkbox')){
-            Interface.setTaskCompleted(this);
+        if(e.target.classList.contains('task-checkbox')){
+            Interface.updateTaskCompleted(this);
             return;
         }
     }
-    static setTaskDate(){
+
+    static openEditTaskModal(task){
+        // form elements
+        const editForm = document.getElementById('edit-task-modal');
+        const taskTitle = document.getElementById('edit-task-title');
+        const taskDetails = document.getElementById('edit-task-details');
+
+        // form data
+        const taskSavedTitle = task.children[1].textContent;
+        const taskSavedDetails = task.getDate();
+        Interface.closeAllForms();
+        taskTitle.value = taskName;
+        editForm.style.display = 'block';
+        Interface.initEditTaskButtons(task);
+    }
+    static closeEditTaskModal(){
+        const editForm = document.getElementById('edit-task-modal');
+        editForm.style.display = 'none';
+    }
+    static updateTaskCompleted(task){
+        const taskName = task.children[1];
+        if(taskName.style.textDecoration = 'line-through'){
+            taskName.style.textDecoration = 'none';
+        }else{
+            taskName.style.textDecoration = 'line-through';
+        }
         
     }
-    static openEditTaskModal(task){
-
+    static renameTask(){
+        
     }
-    static setTaskCompleted(task){
+    static setTaskDate(){
+        const task = this.parentNode;
+        const projectName = document.getElementById('project-tasks-title').textContent;
+        const taskName = task.children[1].textContent;
+        const newDueDate = format(new Date(this.value), 'dd/MM/yyyy');
 
+        if(projectName === 'Today' || projectName === 'Upcoming'){
+            // Since task in today or upcomign is formatted as '(Project) TaskName'
+            // 
+            const taskProjectParent = taskName.split(')')[0].replace('(','');
+            const dateTaskParent = taskName.split(' ')[1];
+            LocalStorage.setTaskDate(projectName, taskName, newDueDate);
+            LocalStorage.setTaskDate()
+        }
+        Interface.clearTaskList();
+        Interface.loadProjectTasks(projectName);
+        Interface.closeInputs();
     }
 }
