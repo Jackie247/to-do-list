@@ -12,11 +12,11 @@ export default class Task{
         return this.name;
     }
     setDate(newDate){
-        this.date = newDate;
+        this.dueDate = newDate;
     }
     getDate(){
-        if(this.date !== null){
-            return this.date;
+        if(this.dueDate !== null){
+            return this.dueDate;
         }
         return;
     }
