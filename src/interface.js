@@ -23,7 +23,7 @@ export default class Interface{
         LocalStorage.getSavedProjectList()
          .getProject(projectName).getTaskList()
          .forEach(task => {
-            Interface.createTask(task.name,task.date);
+            Interface.createTask(task.name,task.dueDate);
          })
         if(projectName !== 'Today' && projectName !== 'Upcoming'){
             Interface.initAddTaskButton();
@@ -284,22 +284,16 @@ export default class Interface{
     }
     /** -------------Event listeners for tasks---------------*/  
     static initTaskButtons(){
+        // init task buttons for every single created task
         const tasks = document.querySelectorAll('.task');
         const closeEditTaskFormBtn = document.getElementById('close-edit-task-popup');
-        const taskDate = document.querySelectorAll('.edit-task-date');
-        const taskTitleInputs = document.querySelectorAll('.edit-task-title');
-        const confirmEdit = document.getElementById('confirm-edit-btn')
+        
+        // Event handlers for task buttons, and the buttons on edit task form modal.
         tasks.forEach((task) => {
             task.addEventListener('click', Interface.handleTaskEvents);
         })
-        taskDate.forEach((dateInput) => {
-            dateInput.addEventListener('change',Interface.setTaskDate);
-        });
-        taskTitleInputs.forEach((titleInput) => {
-            titleInput.addEventListener('keypress',Interface.renameTask);
-        })
         closeEditTaskFormBtn.addEventListener('click',Interface.closeEditTaskModal);
-        //confirmEdit.addEventListener('click',Interface.)
+        
     }
     static deleteTask(task){
         const project = document.getElementById('project-tasks-title').textContent;
@@ -319,7 +313,6 @@ export default class Interface{
         }
         if(e.target.classList.contains('edit-task-details')){
             Interface.openEditTaskModal(this);
-            Interface.populateEditForm(this);
             return;
         }
         if(e.target.classList.contains('task-checkbox')){
@@ -327,10 +320,17 @@ export default class Interface{
             return;
         }
     }
-    static openEditTaskModal(){
-        const editForm = document.getElementById('edit-task-modal');
+    static openEditTaskModal(task){
+        Interface.populateEditForm(task);
+
+        const editTaskModal = document.getElementById('edit-task-modal');
         Interface.closeAllForms();
-        editForm.style.display = 'block';
+        editTaskModal.style.display = 'block';
+
+        const taskName = task.children[1].textContent;
+        const confirmEditBtn = document.getElementById('confirm-edit-btn')
+
+        confirmEditBtn.addEventListener('click',() => {Interface.updateTask(taskName)});
     }
     static populateEditForm(task){
         // form elements to update based on which task you edit.
@@ -363,10 +363,21 @@ export default class Interface{
         }else{
             taskName.style.textDecoration = 'line-through';
         }
-        
     }
-    static renameTask(){
-        
+    static updateTask(taskName){
+        const projectName = document.getElementById('project-tasks-title').textContent;
+        // form elements values to update task object
+        const newTaskTitle = document.getElementById('edit-task-title').value;
+        const newTaskDetails = document.getElementById('edit-task-details').value;
+        const newTaskDate = document.getElementById('edit-task-date').value;
+
+        LocalStorage.setTaskDate(projectName,taskName,newTaskDate);
+        LocalStorage.setTaskDetails(projectName,taskName,newTaskDetails);
+        LocalStorage.renameTask(projectName,taskName,newTaskTitle);
+
+        Interface.clearTaskList();
+        Interface.loadProjectTasks(projectName);
+        Interface.closeEditTaskModal();
     }
     static setTaskDate(){
         const task = this.parentNode;
