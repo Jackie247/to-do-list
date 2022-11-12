@@ -2,7 +2,7 @@
 
 <h2> Overview </h2>
 
-Live Preview:
+Live Preview: 
 
 This is my take on the final project for <a href='https://www.theodinproject.com/lessons/node-path-javascript-todo-list'>The Odin Project Todo List</a>.
 
@@ -20,6 +20,10 @@ The following topics were covered in this project:
 * HTML
     * Increasing my semantic HTML usage, beginning to use elements such as section, textarea.
     * Attributes
+* JavaScript
+    * Classes
+    * Modules
+    * DOM Manipulation
 * CSS/SASS
     * First time implementing an animation for navbar
     * SASS usage to keep code readable and easily manageable. 
