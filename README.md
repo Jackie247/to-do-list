@@ -5,11 +5,8 @@ To Do List Application.
 Main Features:
 
     - View all projects
-
     - View all tasks in each project.
-
     - Expand tasks to see/edit its name, details and due date.
-
     - Delete tasks and projects
     
 Other Development Notes:
