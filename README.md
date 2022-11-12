@@ -6,7 +6,7 @@ Live Preview:
 
 This is my take on the final project for <a href='https://www.theodinproject.com/lessons/node-path-javascript-todo-list'>The Odin Project: 'Organizing your JavaScript Code'</a> chapter.
 
-This is the culmination of all the foundational topics of their JS lessons, mainly focusing on dynamically creating objects using either factories or in my case constructors/classes. Tasks within the app should have a title, description, due date and priority. Other features such as a checklist were optional. 
+This is the culmination of all the foundational topics of their JS lessons, mainly focusing on creating objects using either factories or in my case constructors/classes and using webpack to dynamically load the webpage. Tasks within the app should have a title, description, due date and priority. Other features such as a checklist were optional. 
 
 Users should be able to create their own projects and create their own tasks for each seperate project. This is also the first time that localStorage has been introduced within the course which expanded on previous JSON lessons. 
 
