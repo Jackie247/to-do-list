@@ -4,7 +4,7 @@
 
 Live Preview: 
 
-This is my take on the final project for <a href='https://www.theodinproject.com/lessons/node-path-javascript-todo-list'>The Odin Project: 'Organizing your JavaScript Code' chapter</a>.
+This is my take on the final project for <a href='https://www.theodinproject.com/lessons/node-path-javascript-todo-list'>The Odin Project: 'Organizing your JavaScript Code '</a>chapter.
 
 This is the culmination of all the foundational topics of their JS lessons, mainly focusing on dynamically creating objects using either factories or in my case constructors/classes. Tasks within the app should have a title, description, due date and priority. Other features such as a checklist were optional. 
 
