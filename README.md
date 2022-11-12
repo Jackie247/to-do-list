@@ -11,6 +11,7 @@ Main Features:
     
 Other Development Notes:
  
+    - SASS
     - Mobile first development. 
     - Modules in JS 
     - Webpack used for code splitting and dynamically loading assets.
