@@ -1,23 +1,21 @@
 # to-do-list
 
-To do list application. 
+To Do List Application. 
 
-Usage:
+Main Features:
 
-Create projects which hold seperate tasks.
+    - View all projects
 
-Delete tasks and projects.
+    - View all tasks in each project.
 
-Edit tasks by updating tasks details, task due dates and task completion.
+    - Expand tasks to see/edit its name, details and due date.
 
-
-Features:
-
-    - view all projects
-
-    - view all todos in each project (probably just the title and duedate… perhaps changing color for different priorities)
-
-    - expand a single todo to see/edit its details
-
-    - delete a todo
+    - Delete tasks and projects
+    
+Other Development Notes:
+ 
+    - Mobile first development. 
+    - Modules in JS 
+    - Webpack used for code splitting and dynamically loading assets.
+    
 
