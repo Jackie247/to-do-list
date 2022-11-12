@@ -1,6 +1,6 @@
 # To-Do-List Application
 
-<h3> Overview </h3>
+<h2> Overview </h2>
 <hr>
 This is my take on the final project for <a href='https://www.theodinproject.com/lessons/node-path-javascript-todo-list'>The Odin Project Todo List</a>.
 
@@ -8,7 +8,7 @@ This is the culmination of all the foundational topics of their JS lessons, main
 
 Users should be able to create their own projects and create their own tasks for each seperate project. This is also the first time that localStorage has been introduced within the course which expanded on previous JSON lessons. 
 
-<h3> Key Topics </h3>
+<h2> Key Topics </h2>
 <hr>
 The following topics were covered in this project:
 
@@ -32,7 +32,7 @@ The following topics were covered in this project:
     * git push
     * git pull
 
-<h3> Learning Objectives </h3>
+<h2> Learning Objectives </h2>
 <hr>
 * Becoming more comfortable in developing a full application using objects, classes and modules in JS
 
@@ -40,10 +40,12 @@ The following topics were covered in this project:
 
 * Familiarity with webpack and NPM packages that are useful in development. 
 
-<h3> Helpful Links </h3>
+<h2> Helpful Links </h2>
 <hr>
 * <a href ='https://developer.mozilla.org/en-US/'>Mozilla Docs</a>
+
 * <a href='https://www.w3schools.com/js/default.asp'>W3C JS</a>
+
 * <a href='https://unsplash.com/'>Unsplash</a>
 
 
