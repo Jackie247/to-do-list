@@ -1,6 +1,8 @@
-# to-do-list
+# To-Do-List Application
 
-To Do List Application. 
+<h3> Overview </h3>
+
+This is my take on the final project for <a href='https://www.theodinproject.com/lessons/node-path-javascript-todo-list'>The Odin Project javascript</a> chapter. 
 
 Main Features:
 
