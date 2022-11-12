@@ -1,6 +1,13 @@
 # to-do-list
 
-To do list app
+To do list application. 
+
+Usage:
+
+Create projects which hold seperate tasks.
+Delete tasks and projects.
+Edit tasks by updating tasks details, task due dates and task completion.
+
 
 Features:
 
