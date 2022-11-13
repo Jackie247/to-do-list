@@ -1,5 +1,5 @@
 export default class Task{
-    constructor(name, dueDate = 'No date',details = ''){
+    constructor(name, dueDate, details){
         this.name = name;
         this.dueDate = dueDate;
         this.details = details;
@@ -7,12 +7,14 @@ export default class Task{
     // GETTERS AND SETTERS //
     setTaskName(name){
         this.name = name;
+        return
     }
     getTaskName(){
         return this.name;
     }
     setDate(newDate){
         this.dueDate = newDate;
+        return
     }
     getDate(){
         if(this.dueDate !== null){
@@ -22,19 +24,9 @@ export default class Task{
     }
     setDetails(details){
         this.details = details;
+        return
     }
     getDetails(){
         return this.details;
     }
-    // METHODS //
-    getFormattedDate(){
-        if(date !== null){
-            const day = this.dueDate.split('-')[0];
-            const month = this.dueDate.split('-')[1];
-            const year = this.dueDate.split('-')[2];
-            return `${day}/${month}/${year}`;
-        }        
-        return;
-    }
-
 }
