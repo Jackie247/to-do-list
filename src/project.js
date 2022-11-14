@@ -28,10 +28,7 @@ export default class Project{
         return;
     }
     getTask(taskName){
-        if(this.taskListContains(taskName)){
-            return this.taskList.find((task) => task.getTaskName() === taskName);
-        }
-        return;
+        return this.taskList.find((task) => task.getTaskName() === taskName);
     } 
     // HELPER //
     taskListContains(taskName){
