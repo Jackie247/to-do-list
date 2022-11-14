@@ -23,7 +23,7 @@ export default class Interface{
         LocalStorage.getSavedProjectList()
          .getProject(projectName).getTaskList()
          .forEach(task => {
-            Interface.createTask(task.name,task.dueDate);
+            Interface.createTask(projectName,task.name,task.dueDate);
          })
         if(projectName !== 'Today' && projectName !== 'Upcoming'){
             Interface.initAddTaskButton();
@@ -204,7 +204,6 @@ export default class Interface{
         details.textContent = 'Edit';
         details.classList.add('edit-task');
 
-
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('id','del-task-btn');
         deleteBtn.classList.add('del-task-btn','bi','bi-x-circle');
@@ -228,10 +227,6 @@ export default class Interface{
         let tasks = taskList.querySelectorAll('.task');
         newTaskContainer.setAttribute('data-project',`${project}`);
         newTaskContainer.setAttribute('data-index',tasks.length);
-        details.addEventListener('click', (e) => {
-            Interface.populateEditForm(e);
-            Interface.openEditTaskModal();
-        });
 
         Interface.initTaskButtons();
     }
@@ -292,15 +287,10 @@ export default class Interface{
     static initTaskButtons(){
         // init task buttons for every single created task
         const tasks = document.querySelectorAll('.task');
-        const closeEditTaskFormBtn = document.getElementById('close-edit-task-popup');
         // Event handlers for task buttons, and the buttons on edit task form modal.
         tasks.forEach((task) => {
             task.addEventListener('click',Interface.handleTaskEvents);
-            task.children[3].addEventListener('click',(e) => {
-                renderTaskDetails(e,tasks);
-            })
         })
-        closeEditTaskFormBtn.addEventListener('click',Interface.closeEditTaskModal);
     }
     static deleteTask(task){
         const project = document.getElementById('project-tasks-title').textContent;
@@ -314,25 +304,118 @@ export default class Interface{
         Interface.loadProjectTasks(project);
     }
     static handleTaskEvents(e){
+        const project = document.getElementById('project-tasks-title').textContent;
+        const listOfTaskObjects = LocalStorage.getSavedProjectList()
+            .getProject(project)
+            .getTaskList();
         if(e.target.classList.contains('bi-x-circle')){
             Interface.deleteTask(this);
+        }
+        if(e.target.classList.contains('edit-task')){
+            Interface.renderTaskDetails(this,listOfTaskObjects);
         }
         if(e.target.classList.contains('task-checkbox')){
             Interface.updateTaskCompleted(this);
         }
     }
-    static renderTaskDetails(e,taskNodeList){
-        const index = e.target.parentElement.dataset.index;
-        
+    static renderTaskDetails(task,listOfTaskObjects){
+        let i = task.dataset.index;
+        let taskObject = listOfTaskObjects[i-1];
+
         Interface.closeAllForms();
         const editForm = document.getElementById('edit-task-popup');
+        // Body of popup form
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+        modal.setAttribute('id','edit-task-modal');
+        
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('modal-content');
+        
+        const modalHeader = document.createElement('div');
+        modalHeader.classList.add('modal-header');
+
+        const headerText = document.createElement('h2');
+        headerText.textContent = 'Edit task.';
+
+        const closeFormBtn = document.createElement('button');
+        closeFormBtn.setAttribute('id','close-edit-task-popup');
+        closeFormBtn.classList.add('close-btn');
+        closeFormBtn.addEventListener('click',() => editForm.innerHTML = '');
+        const closeFormBtnIcon = document.createElement('i');
+        closeFormBtnIcon.classList.add('bi','bi-x-circle');
+
+        const modalMain = document.createElement('div');
+        modalMain.classList.add('modal-main');
+
+        const taskTitleContainer = document.createElement('div');
+        taskTitleContainer.classList.add('edit-task-title-textarea');
+        const taskTitle = document.createElement('textarea');
+        taskTitle.setAttribute('id','edit-task-title');
+        taskTitle.setAttribute('placeholder','Title: New title');
+        taskTitle.setAttribute('maxlength','40');
+        taskTitle.classList.add('edit-task-title');
+        taskTitle.required = true;
+        taskTitle.value = taskObject.name;
+
+        const taskDetailsContainer = document.createElement('div');
+        taskDetailsContainer.classList.add('edit-task-title-textarea');
+        const taskDetails = document.createElement('textarea');
+        taskDetails.setAttribute('id','edit-task-details');
+        taskDetails.setAttribute('placeholder','Details: e.g shopping, gym, deadlines');
+        taskDetails.classList.add('edit-task-details');
+        taskDetails.value = taskObject.details;
+
+        const taskDateContainer = document.createElement('div');
+        taskDateContainer.classList.add('edit-task-due-date')
+        const taskDateText = document.createElement('h3');
+        taskDateText.textContent = 'Due:';
+        const taskDateInput = document.createElement('input');
+        taskDateInput.setAttribute('id','edit-task-date');
+        taskDateInput.setAttribute('type','date');
+        taskDateInput.classList.add('edit-task-date');
+        taskDateInput.value = taskObject.dueDate;
+
+        const modalFooter = document.createElement('div');
+        modalFooter.classList.add('modal-footer');
+
+        const confirmEditBtn = document.createElement('button');
+        confirmEditBtn.setAttribute('id','confirm-edit-btn');
+        confirmEditBtn.classList.add('confirm-edit-btn');
+
+        const confirmEditBtnIcon = document.createElement('i');
+        confirmEditBtnIcon.classList.add('bi','bi-x');
+        
+        const confirmEditBtnText = document.createElement('p');
+        confirmEditBtnText.classList.add('confirm-task');
+        confirmEditBtnText.textContent = 'Confirm Edit';
+
+        editForm.appendChild(modal);
+        modal.appendChild(modalContent);
+        modalContent.appendChild(modalHeader);
+        modalHeader.appendChild(headerText);
+        modalHeader.appendChild(closeFormBtn);
+        closeFormBtn.appendChild(closeFormBtnIcon);
+        
+        modalContent.appendChild(modalMain);
+        modalMain.appendChild(taskTitleContainer);
+        modalMain.appendChild(taskDetailsContainer);
+        modalMain.appendChild(taskDateContainer);
+        taskTitleContainer.appendChild(taskTitle);
+        taskDetailsContainer.appendChild(taskDetails);
+        taskDateContainer.appendChild(taskDateText);
+        taskDateContainer.appendChild(taskDateInput);
+    
+        modalContent.appendChild(modalFooter);
+        modalFooter.appendChild(confirmEditBtn);
+        confirmEditBtn.appendChild(confirmEditBtnIcon);
+        confirmEditBtn.appendChild(confirmEditBtnText);
     }
     static openEditTaskModal(){
-        
         const editTaskModal = document.getElementById('edit-task-modal');
         editTaskModal.style.display = 'block';
     }
-    static populateEditForm(e){
+    /*static populateEditForm(e){
         const projectName = e.target.parentElement.dataset.project;
         const taskNode = e.target.parentElement;
         const taskName = e.target.parentElement.children[1].textContent;
@@ -352,11 +435,12 @@ export default class Interface{
         confirmBtn.addEventListener('click', ()=>{
             Interface.updateTask(taskNode);
         });
-    }
+    }*/
     static closeEditTaskModal(){
         const editForm = document.getElementById('edit-task-modal');    
         editForm.style.display = 'none';
     }
+    /*
     static updateTask(taskNode){
         // Get current task details
         const projectName = taskNode.target.parentElement.dataset.project;
@@ -391,8 +475,5 @@ export default class Interface{
         Interface.clearTaskList();
         Interface.loadProjectTasks(projectName);
         Interface.closeEditTaskModal();
-    }
-    static getTaskFromTaskList(index){
-        return document.querySelectorAll('.tasks')[index - 1];
-    }
+    }*/
 }
