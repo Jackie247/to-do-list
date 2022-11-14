@@ -108,6 +108,10 @@ select {
     opacity: 1;
   }
 }
+
+.modal.popup-active{
+  display:block;
+}
 // ** Base Styles ** //
 /** 
  * Main page content 
@@ -265,7 +269,7 @@ main{
           .task-checkbox{
             margin: 0 0.5rem;
           }
-          .edit-task-details{
+          .edit-task{
             margin:0 0.5rem;
             background-color: transparent;
             border:none;
@@ -275,7 +279,7 @@ main{
             background-color: inherit;
             border:none;
           }
-          .edit-task-details:hover,.del-task-btn:hover,.task-checkbox:hover{
+          .edit-task:hover,.del-task-btn:hover,.task-checkbox:hover{
             cursor: pointer;
           }
         }
@@ -435,7 +439,7 @@ footer{
           font-size:24px;
         }
       }
-      .edit-task-container{
+      .confirm-edit-btn{
         display:flex;
         justify-content: center;
         align-items: center;
@@ -447,7 +451,7 @@ footer{
           font-size:24px;
         }
       }
-      .edit-task-container:hover{
+      .confirm-edit-btn:hover{
         background-color:var(--primary);
         color:#fff;
         cursor:pointer;
