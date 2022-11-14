@@ -7,6 +7,7 @@ export default class LocalStorage{
         // updates the object array with current project list objects
         // stringify maintains the data's formatting, instead of just turning data into strings.
         localStorage.setItem('Projects',JSON.stringify(data));
+        return;
     }
     static getSavedProjectList(){
         // parse the array from local memory into a variable
@@ -36,45 +37,54 @@ export default class LocalStorage{
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.addProject(project);
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
     static deleteProject(projectName){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.deleteProject(projectName)
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
     static addTask(projectName, task){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.getProject(projectName).addTask(task);
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
     static deleteTask(projectName,taskName){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.getProject(projectName).deleteTask(taskName);
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
     static renameTask(projectName, taskName, newName){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.getProject(projectName).getTask(taskName).setTaskName(newName);
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
     static setTaskDate(projectName,taskName,date){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.getProject(projectName).getTask(taskName).setDate(date);
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
     static setTaskDetails(projectName,taskName,details){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.getProject(projectName).getTask(taskName).setDetails(details);
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
     static updateToday(){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.updateToday();
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
     static updateUpcoming(){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.updateUpcoming();
         LocalStorage.updateStorage(savedProjectList);
+        return;
     }
 }
