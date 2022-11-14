@@ -74,12 +74,6 @@ export default class Interface{
         if(document.getElementById('add-task')){
             Interface.closeTaskPopupModal();
         }
-        if(document.getElementById('task-list') && document.getElementById('task-list').innerHTML !== ''){
-            Interface.closeInputs();
-        }
-    }
-    static closeInputs(){
-
     }
     /** -------------Adding project content--------------- */
     static createProject(projectName){
@@ -196,18 +190,20 @@ export default class Interface{
         addProjectTitleInput.value = '';
     }
     /** -------------Adding task content-------------*/
-    static createTask(taskName, date){
+    static createTask(project,taskName, date){
         const taskList = document.getElementById('task-list');
+        
         const newTaskContainer = document.createElement('div');
         newTaskContainer.classList.add('task');
-
+        
         const checkBox = document.createElement('input');
         checkBox.setAttribute('type','checkbox');
         checkBox.classList.add('task-checkbox');
         
         const details = document.createElement('button');
         details.textContent = 'Edit';
-        details.classList.add('edit-task-details');
+        details.classList.add('edit-task');
+
 
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('id','del-task-btn');
@@ -219,7 +215,7 @@ export default class Interface{
 
         const dateText = document.createElement('p');
         dateText.classList.add('task-date');
-        dateText.textContent = format(new Date(date), 'dd/MM/yyyy');
+        dateText.textContent = date;
 
         newTaskContainer.appendChild(checkBox);
         newTaskContainer.appendChild(name);
@@ -229,19 +225,24 @@ export default class Interface{
 
         taskList.appendChild(newTaskContainer);
 
+        let tasks = taskList.querySelectorAll('.task');
+        newTaskContainer.setAttribute('data-project',`${project}`);
+        newTaskContainer.setAttribute('data-index',tasks.length);
+        details.addEventListener('click', (e) => {
+            Interface.populateEditForm(e);
+            Interface.openEditTaskModal();
+        });
+
         Interface.initTaskButtons();
     }
     /** -------------Event listeners for task creation---------------*/    
     static initAddTaskButton(){
         const addTaskBtn = document.getElementById('add-task');
         const closeBtn = document.getElementById('close-new-task-popup');
-        const taskTitle = document.getElementById('new-task-title');
-        const taskDetails = document.getElementById('new-task-details');
         const acceptBtn = document.getElementById('accept-task-btn')
         addTaskBtn.addEventListener('click', Interface.openAddTaskModal);
         closeBtn.addEventListener('click',Interface.closeAddTaskModal);
         acceptBtn.addEventListener('click',Interface.addTask);
-        
     }
     static openAddTaskModal(){
         const addTaskForm = document.getElementById('task-modal');
@@ -262,38 +263,44 @@ export default class Interface{
     }
     static addTask(){
         const projectName = document.getElementById('project-tasks-title').textContent;
-        const taskTitle = document.getElementById('new-task-title');
-        const taskDate = document.getElementById('new-task-date');
-        const taskDetails = document.getElementById('new-task-details');
-        if(taskTitle.value === ''){
+        const taskTitle = document.getElementById('new-task-title').value;
+        const taskDate = document.getElementById('new-task-date').value;
+        const taskDetails = document.getElementById('new-task-details').value;
+        if(taskTitle === ''){
             alert('Enter task title');
             return;
         }
-        LocalStorage.addTask(projectName, new Task(taskTitle.value));
-        if(taskDate.value === ''){
-            Interface.createTask(taskTitle.value, 'No date');
+        if(LocalStorage.getSavedProjectList().getProject(projectName).taskListContains(taskTitle)){
+            alert('Task names must be different');
+            return;
+        }
+        if(taskDate === ''){
+            Interface.createTask(projectName, taskTitle, 'No date');
         }
         else{
             // create task to display on interface
-            Interface.createTask(taskTitle.value, taskDate.value);
-            // update task date in local storage
-            LocalStorage.setTaskDate(projectName,taskTitle.value,taskDate.value);
+            Interface.createTask(projectName, taskTitle, taskDate);
         }
-        LocalStorage.setTaskDetails(projectName,taskTitle.value,taskDetails.value);
+        LocalStorage.addTask(projectName, new Task(taskTitle));
+        // update task date and details in local storage
+        LocalStorage.setTaskDate(projectName,taskTitle,taskDate);
+        LocalStorage.setTaskDetails(projectName,taskTitle,taskDetails);
+
         Interface.closeAddTaskModal();
     }
-    /** -------------Event listeners for tasks---------------*/  
+    /** -------------Event listeners for created tasks buttons---------------*/  
     static initTaskButtons(){
         // init task buttons for every single created task
         const tasks = document.querySelectorAll('.task');
         const closeEditTaskFormBtn = document.getElementById('close-edit-task-popup');
-        
         // Event handlers for task buttons, and the buttons on edit task form modal.
         tasks.forEach((task) => {
-            task.addEventListener('click', Interface.handleTaskEvents);
+            task.addEventListener('click',Interface.handleTaskEvents);
+            task.children[3].addEventListener('click',(e) => {
+                renderTaskDetails(e,tasks);
+            })
         })
         closeEditTaskFormBtn.addEventListener('click',Interface.closeEditTaskModal);
-        
     }
     static deleteTask(task){
         const project = document.getElementById('project-tasks-title').textContent;
@@ -309,92 +316,83 @@ export default class Interface{
     static handleTaskEvents(e){
         if(e.target.classList.contains('bi-x-circle')){
             Interface.deleteTask(this);
-            return;
-        }
-        if(e.target.classList.contains('edit-task-details')){
-            Interface.openEditTaskModal(this);
-            return;
         }
         if(e.target.classList.contains('task-checkbox')){
             Interface.updateTaskCompleted(this);
-            return;
         }
     }
-    static openEditTaskModal(task){
-        Interface.populateEditForm(task);
-
-        const editTaskModal = document.getElementById('edit-task-modal');
+    static renderTaskDetails(e,taskNodeList){
+        const index = e.target.parentElement.dataset.index;
+        
         Interface.closeAllForms();
-        editTaskModal.style.display = 'block';
-
-        const taskName = task.children[1].textContent;
-        const confirmEditBtn = document.getElementById('confirm-edit-btn')
-
-        confirmEditBtn.addEventListener('click',() => {Interface.updateTask(taskName)});
+        const editForm = document.getElementById('edit-task-popup');
     }
-    static populateEditForm(task){
-        // form elements to update based on which task you edit.
-        const taskTitle = document.getElementById('edit-task-title');
-        const taskDetails = document.getElementById('edit-task-details');
-        const taskDate = document.getElementById('edit-task-date');
+    static openEditTaskModal(){
+        
+        const editTaskModal = document.getElementById('edit-task-modal');
+        editTaskModal.style.display = 'block';
+    }
+    static populateEditForm(e){
+        const projectName = e.target.parentElement.dataset.project;
+        const taskNode = e.target.parentElement;
+        const taskName = e.target.parentElement.children[1].textContent;
         // get the task object from local storage
-        const projectName = document.getElementById('project-tasks-title').textContent;
-        const taskName = task.children[1].textContent;
         const taskObject = LocalStorage.getSavedProjectList()
             .getProject(projectName)
             .getTask(taskName);
-        // data to update form elements with
-        const savedTaskTitle = taskObject.getTaskName();
-        const savedTaskDetails = taskObject.getDetails();
-        const savedTaskDate = taskObject.getDate();
         // update the form information
-        taskTitle.value = savedTaskTitle;
-        taskDetails.value = savedTaskDetails;
-        taskDate.value = savedTaskDate;
+        document.getElementById('edit-task-title').value = taskObject.getTaskName();
+        document.getElementById('edit-task-details').value = taskObject.getDetails();
+        if(document.getElementById('edit-task-date').value === 'No date'){
+            return;
+        }else{
+            document.getElementById('edit-task-date').value = taskObject.getDate();
+        }
+        const confirmBtn = document.getElementById('confirm-edit-btn');
+        confirmBtn.addEventListener('click', ()=>{
+            Interface.updateTask(taskNode);
+        });
     }
     static closeEditTaskModal(){
-        const editForm = document.getElementById('edit-task-modal');
+        const editForm = document.getElementById('edit-task-modal');    
         editForm.style.display = 'none';
     }
-    static updateTaskCompleted(task){
-        const taskName = task.children[1];
-        if(taskName.style.textDecoration = 'line-through'){
-            taskName.style.textDecoration = 'none';
-        }else{
-            taskName.style.textDecoration = 'line-through';
-        }
-    }
-    static updateTask(taskName){
-        const projectName = document.getElementById('project-tasks-title').textContent;
-        // form elements values to update task object
-        const newTaskTitle = document.getElementById('edit-task-title').value;
-        const newTaskDetails = document.getElementById('edit-task-details').value;
+    static updateTask(taskNode){
+        // Get current task details
+        const projectName = taskNode.target.parentElement.dataset.project;
+        const newTaskName = document.getElementById('edit-task-title').value;
         const newTaskDate = document.getElementById('edit-task-date').value;
-
-        LocalStorage.setTaskDate(projectName,taskName,newTaskDate);
-        LocalStorage.setTaskDetails(projectName,taskName,newTaskDetails);
-        LocalStorage.renameTask(projectName,taskName,newTaskTitle);
-
+        const newTaskDetails = document.getElementById('edit-task-details').value;
+        if(document.getElementById('edit-task-title').value === ''){
+            alert('Name cannot be empty');
+            return;
+        }
+        // Rename the task object name in storage.
+        if(LocalStorage.getSavedProjectList().getProject(projectName).taskListContains(newTaskName)){
+            document.getElementById('edit-task-title').value = '';
+            alert('Task name already exists');
+            return;
+        }
+        LocalStorage.renameTask(projectName,taskNode.children[1].textContent,newTaskName);
+        // Update the name display for the task. 
+        taskNode.children[1].innerHTML = newTaskName;
+        // Reassign the task object since its name has been changed. 
+        let taskObject = LocalStorage.getSavedProjectList()
+            .getProject(projectName)
+            .getTask(taskNode.children[1].textContent);
+        // If the current displayed date text is not the same as new date. Update the task object date.
+        if(taskObject.getDate() !== newTaskDate){
+            LocalStorage.setTaskDate(projectName,taskObject.getTaskName(),newTaskDate);
+            taskNode.children[2].innerHTML = newTaskDate;
+        }
+        if(taskObject.getDetails() !== newTaskDetails){
+            LocalStorage.setTaskDetails(projectName,taskObject.getTaskName(),newTaskDetails);
+        }
         Interface.clearTaskList();
         Interface.loadProjectTasks(projectName);
         Interface.closeEditTaskModal();
     }
-    static setTaskDate(){
-        const task = this.parentNode;
-        const projectName = document.getElementById('project-tasks-title').textContent;
-        const taskName = task.children[1].textContent;
-        const newDueDate = format(new Date(this.value), 'dd/MM/yyyy');
-
-        if(projectName === 'Today' || projectName === 'Upcoming'){
-            // Since task in today or upcomign is formatted as '(Project) TaskName'
-            // 
-            const taskProjectParent = taskName.split(')')[0].replace('(','');
-            const dateTaskParent = taskName.split(' ')[1];
-            LocalStorage.setTaskDate(projectName, taskName, newDueDate);
-            LocalStorage.setTaskDate()
-        }
-        Interface.clearTaskList();
-        Interface.loadProjectTasks(projectName);
-        Interface.closeInputs();
+    static getTaskFromTaskList(index){
+        return document.querySelectorAll('.tasks')[index - 1];
     }
 }
