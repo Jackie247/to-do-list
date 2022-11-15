@@ -22,10 +22,10 @@
             <!-- Edit Task Form -->
         <section id="edit-task-popup">
             <div class="modal" id="edit-task-modal">
-                <div class="modal-content">
+                <form class="modal-content">
                     <div class="modal-header">
                         <h2>Edit task.</h2>
-                        <button id='close-edit-task-popup' class="close-btn">
+                        <button type='button' id='close-edit-task-popup' class="close-btn">
                         <i class="bi bi-x-circle"></i>
                         </button>
                     </div>
@@ -42,12 +42,12 @@
                         </div>
                     </div>
                     <div class='modal-footer'>
-                        <button id='confirm-edit-btn' class='confirm-edit-btn'>
+                        <input id='confirm-edit-btn' class='confirm-edit-btn' type="submit">
                             <i class='bi bi-x'></i>
                             <p class='confirm-task'>Confirm Edit</p>
-                        </button>
+                        </input>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
             <!-- Add Task Form -->
@@ -56,7 +56,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Create task.</h2>
-                        <button id='close-new-task-popup' class="close-btn">
+                        <button type='button' id='close-new-task-popup' class="close-btn">
                         <i class="bi bi-x-circle"></i>
                         </button>
                     </div>
@@ -70,14 +70,14 @@
                         <div class='new-task-due-date'>
                             <h3>Due: </h3>
                             <input id='new-task-date' type='date' class='new-task-date' required>
-                        </div>
+                        </div>wwwww
                     </div>
                     <div class='modal-footer'>
-                        <button id='accept-task-btn' class='add-task-container'>
+                        <button type='button' id='accept-task-btn' class='add-task-container'>
                             <i class='bi bi-x'></i>
                             <p class='confirm-task'>Add Task</p>
                         </button>
-                        <button class='task-complete-container'>
+                        <button type='button' class='task-complete-container'>
                             <i class='bi bi-check'></i>
                             <p class='task-completion'>Mark as done</p>
                         </button>
@@ -89,15 +89,15 @@
             <!-- Inbox, Today, Upcoming Projects -->
             <div class="navbar-projects slide-in-left">
                 <div class="default-projects">
-                    <button id='inbox' class="default-project project-h">
+                    <button type='button' id='inbox' class="default-project project-h">
                         <i class="bi bi-inbox"></i>
                         <h3>Inbox</h3>
                     </button>
-                    <button id='today' class="default-project project-h">
+                    <button type='button' id='today' class="default-project project-h">
                         <i class="bi bi-calendar-event"></i>
                         <h3>Today</h3>
                     </button>
-                    <button id='upcoming' class="default-project project-h">
+                    <button type='button' id='upcoming' class="default-project project-h">
                         <i class="bi bi-calendar-week"></i>
                         <h3>Upcoming</h3>
                     </button>
@@ -114,8 +114,8 @@
                 <div id='add-project-form' class="add-project-form">
                     <input id='add-project-title' class='add-project-title' placeholder="Project Title" maxlength="30">
                     <div class="add-project-buttons">
-                        <button id='project-form-accept' class="add-project-accept">Add</button>
-                        <button id='project-form-cancel' class="add-project-cancel">Cancel</button>
+                        <button type='button' id='project-form-accept' class="add-project-accept">Add</button>
+                        <button type='button' id='project-form-cancel' class="add-project-cancel">Cancel</button>
                     </div>
                 </div>
             </div>

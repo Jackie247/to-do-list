@@ -203,10 +203,12 @@ export default class Interface{
         const details = document.createElement('button');
         details.textContent = 'Edit';
         details.classList.add('edit-task');
+        details.setAttribute('type','button');
 
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('id','del-task-btn');
         deleteBtn.classList.add('del-task-btn','bi','bi-x-circle');
+        deleteBtn.setAttribute('type','button');
 
         const name = document.createElement('p');
         name.classList.add('task-name');
@@ -324,12 +326,13 @@ export default class Interface{
 
         Interface.closeAllForms();
         const editForm = document.getElementById('edit-task-popup');
+        editForm.innerHTML = '';
         // Body of popup form
         const modal = document.createElement('div');
-        modal.classList.add('modal');
+        modal.classList.add('modal','popup-active');
         modal.setAttribute('id','edit-task-modal');
         
-        const modalContent = document.createElement('div');
+        const modalContent = document.createElement('form');
         modalContent.classList.add('modal-content');
         
         const modalHeader = document.createElement('div');
@@ -341,7 +344,8 @@ export default class Interface{
         const closeFormBtn = document.createElement('button');
         closeFormBtn.setAttribute('id','close-edit-task-popup');
         closeFormBtn.classList.add('close-btn');
-        closeFormBtn.addEventListener('click',() => editForm.innerHTML = '');
+        closeFormBtn.addEventListener('click',() => modal.classList.toggle('popup-active'));
+        closeFormBtn.setAttribute('type','button');
         const closeFormBtnIcon = document.createElement('i');
         closeFormBtnIcon.classList.add('bi','bi-x-circle');
 
@@ -357,9 +361,11 @@ export default class Interface{
         taskTitle.classList.add('edit-task-title');
         taskTitle.required = true;
         taskTitle.value = taskObject.name;
+        taskTitle.dataset.index = i;
+        taskTitle.dataset.project = task.dataset.project;
 
         const taskDetailsContainer = document.createElement('div');
-        taskDetailsContainer.classList.add('edit-task-title-textarea');
+        taskDetailsContainer.classList.add('edit-task-details-textarea');
         const taskDetails = document.createElement('textarea');
         taskDetails.setAttribute('id','edit-task-details');
         taskDetails.setAttribute('placeholder','Details: e.g shopping, gym, deadlines');
@@ -379,8 +385,9 @@ export default class Interface{
         const modalFooter = document.createElement('div');
         modalFooter.classList.add('modal-footer');
 
-        const confirmEditBtn = document.createElement('button');
+        const confirmEditBtn = document.createElement('input');
         confirmEditBtn.setAttribute('id','confirm-edit-btn');
+        confirmEditBtn.setAttribute('type','submit');
         confirmEditBtn.classList.add('confirm-edit-btn');
 
         const confirmEditBtnIcon = document.createElement('i');
@@ -411,42 +418,19 @@ export default class Interface{
         confirmEditBtn.appendChild(confirmEditBtnIcon);
         confirmEditBtn.appendChild(confirmEditBtnText);
     }
-    static openEditTaskModal(){
-        const editTaskModal = document.getElementById('edit-task-modal');
-        editTaskModal.style.display = 'block';
-    }
-    /*static populateEditForm(e){
-        const projectName = e.target.parentElement.dataset.project;
-        const taskNode = e.target.parentElement;
-        const taskName = e.target.parentElement.children[1].textContent;
-        // get the task object from local storage
-        const taskObject = LocalStorage.getSavedProjectList()
-            .getProject(projectName)
-            .getTask(taskName);
-        // update the form information
-        document.getElementById('edit-task-title').value = taskObject.getTaskName();
-        document.getElementById('edit-task-details').value = taskObject.getDetails();
-        if(document.getElementById('edit-task-date').value === 'No date'){
-            return;
-        }else{
-            document.getElementById('edit-task-date').value = taskObject.getDate();
-        }
-        const confirmBtn = document.getElementById('confirm-edit-btn');
-        confirmBtn.addEventListener('click', ()=>{
-            Interface.updateTask(taskNode);
-        });
-    }*/
-    static closeEditTaskModal(){
-        const editForm = document.getElementById('edit-task-modal');    
-        editForm.style.display = 'none';
-    }
-    /*
-    static updateTask(taskNode){
+    static updateTask(e,editForm){
+        e.preventDefault();
+        const i = e.target.children[1].firstElementChild.firstElementChild.dataset.index;
+        console.log(i);
+        const project = e.target.firstElementChild.dataset.project;
+        const listOfTaskObjects = LocalStorage.getSavedProjectList()
+        .getProject(project)
+        .getTaskList();
         // Get current task details
-        const projectName = taskNode.target.parentElement.dataset.project;
-        const newTaskName = document.getElementById('edit-task-title').value;
-        const newTaskDate = document.getElementById('edit-task-date').value;
-        const newTaskDetails = document.getElementById('edit-task-details').value;
+        listOfTaskObjects[i].name = document.getElementById('edit-task-title').value;
+        listOfTaskObjects[i].dueDate = document.getElementById('edit-task-date').value;
+        listOfTaskObjects[i].details = document.getElementById('edit-task-details').value;
+
         if(document.getElementById('edit-task-title').value === ''){
             alert('Name cannot be empty');
             return;
@@ -474,6 +458,6 @@ export default class Interface{
         }
         Interface.clearTaskList();
         Interface.loadProjectTasks(projectName);
-        Interface.closeEditTaskModal();
-    }*/
+        editForm.classList.toggle('popup-active');
+    }
 }

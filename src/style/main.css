@@ -1,10 +1,3 @@
-:root {
-  --primary:#3b82f6;
-  --secondary:#d4d4d4;
-  --buttonBg: ;
-  --buttonText: ;
-}
-
 /* Box sizing rules */
 *,
 *::before,
@@ -37,6 +30,7 @@ html, body {
 body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  font-family: "NotoSans";
 }
 
 /* A elements that don't have a class get default styles */
@@ -77,151 +71,289 @@ select {
     scroll-behavior: auto !important;
   }
 }
-.hidden {
-  display: none;
+:root {
+  --primary:#3b82f6;
+  --secondary:#d4d4d4;
+  --confirmBtn: ;
+  --buttonBg: ;
+  --buttonText: ;
 }
 
-.btn-h:hover {
-  text-decoration: underline;
+@font-face {
+  font-family: "NotoSans";
+  src: url("../assets/NotoSerif-Regular.ttf");
+  font-weight: 600;
+  font-style: normal;
+}
+.projects-tab.active {
+  display: block;
 }
 
-button:hover {
-  color: #60a5fa;
+/** Animation for navbar */
+.slide-in-left {
+  -webkit-animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
+@-webkit-keyframes slide-in-left {
+  0% {
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+/** 
+ * Main page content 
+ */
 header {
-  background-color: var(--primary);
-  width: 100%;
-  height: 100px;
+  height: 50px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
 header .container {
   display: flex;
   flex-flow: row;
   align-items: center;
+  padding: 0 1em;
 }
 header .container h1 {
+  display: flex;
+  justify-content: center;
   flex-grow: 2;
 }
 header .container i {
-  font-size: 24px;
-  padding: 0 0.5em;
+  font-size: 30px;
+}
+header .container button {
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+}
+header .container button i {
+  font-size: 30px;
 }
 
 main {
   display: flex;
   flex-flow: column;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 75px);
+  background-image: url("../assets/alex-shutin-kKvQJ6rK6S4-unsplash.webp");
+  background-size: cover;
+  background-position: center;
 }
 main .projects-tab {
-  display: block;
-  height: auto;
-  padding: 0 1em;
+  display: none;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+main .projects-tab .navbar-projects {
+  padding: 0 1rem;
+}
+main .projects-tab .navbar-projects .default-projects button {
+  display: flex;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  width: 100%;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.4);
+}
+main .projects-tab .navbar-projects .default-projects button i {
+  margin: 0 1em;
+}
+main .projects-tab .navbar-projects .default-projects button:hover {
+  border-radius: 0.5rem;
   background-color: var(--secondary);
 }
-main .projects-tab .default-projects {
+main .projects-tab .navbar-projects .default-projects button:nth-child(n) {
+  margin-right: 1em;
+}
+main .projects-tab .navbar-projects .project-title {
+  padding-left: 1rem;
+  margin: 1rem 0;
+}
+main .projects-tab .navbar-projects .project-list {
   display: flex;
   flex-flow: column;
 }
-main .projects-tab .default-projects button {
+main .projects-tab .navbar-projects .project-list .new-project {
   display: flex;
-  flex-flow: row;
-  border: none;
-  background-color: inherit;
-  align-items: flex-start;
-  cursor: pointer;
-}
-main .projects-tab .default-projects button i {
-  margin-right: 1em;
-}
-main .projects-tab .default-projects button:nth-child(n) {
-  margin-right: 1em;
-}
-main .projects-tab .project-list {
-  display: flex;
-  flex-flow: column;
-}
-main .projects-tab .project-list button:hover {
-  text-decoration: underline;
-}
-main .projects-tab .add-project-btn {
-  display: flex;
-  flex-flow: row;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 20px;
   border: none;
   background-color: inherit;
   cursor: pointer;
 }
-main .projects-tab .add-project-btn i {
+main .projects-tab .navbar-projects .project-list .new-project .left-div {
+  display: flex;
+}
+main .projects-tab .navbar-projects .project-list .new-project .left-div p {
+  margin-left: 1rem;
+}
+main .projects-tab .navbar-projects .project-list button:hover {
+  border-radius: 0.5rem;
+  background-color: var(--secondary);
+}
+main .projects-tab .navbar-projects .add-project-btn {
+  display: flex;
+  border: none;
+  background-color: inherit;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  font-size: 18px;
+}
+main .projects-tab .navbar-projects .add-project-btn i {
   margin-right: 1em;
+}
+main .projects-tab .navbar-projects .add-project-form {
+  display: none;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+main .projects-tab .navbar-projects .add-project-form .add-project-title {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 7.5px 5px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+main .projects-tab .navbar-projects .add-project-form .add-project-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+main .projects-tab .navbar-projects .add-project-form .add-project-buttons button {
+  width: 100%;
+  padding: 5px 10px;
 }
 main .tasks-container {
   display: flex;
   flex-flow: column;
   align-items: center;
 }
+main .tasks-container .project-title {
+  margin: 0 1rem;
+}
+main .tasks-container .task-list {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+main .tasks-container .task-list .task {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 1rem;
+  padding: 0.5em;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 0.5rem;
+}
+main .tasks-container .task-list .task .task-name {
+  flex-grow: 2;
+}
+main .tasks-container .task-list .task .task-checkbox {
+  margin: 0 0.5rem;
+}
+main .tasks-container .task-list .task .edit-task {
+  margin: 0 0.5rem;
+  background-color: transparent;
+  border: none;
+}
+main .tasks-container .task-list .task .del-task-btn {
+  margin-right: 0.5rem;
+  background-color: inherit;
+  border: none;
+}
+main .tasks-container .task-list .task .edit-task:hover, main .tasks-container .task-list .task .del-task-btn:hover, main .tasks-container .task-list .task .task-checkbox:hover {
+  cursor: pointer;
+}
 main .tasks-container .add-task-btn {
   display: flex;
-  flex-flow: row;
   border: none;
   background-color: inherit;
   cursor: pointer;
-}
-main .tasks-container .add-task-btn button:hover {
-  text-decoration: underline;
 }
 main .tasks-container .add-task-btn i {
   margin-right: 1em;
 }
 
 footer {
-  height: 50px;
-  background-color: var(--primary);
+  display: flex;
+  height: 25px;
+  justify-content: center;
 }
 
+/** 
+ * Styling for popup modals.
+ */
 .modal {
-  display: block;
+  display: none;
   position: fixed;
   z-index: 1;
-  left: 0;
   top: 0;
   width: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 }
 .modal .modal-content {
   display: flex;
   flex-flow: column;
   margin: 15% auto; /* 15% from the top and centered */
-  width: 80%;
-  background-color: #fff;
-  border-radius: 1rem 1rem 1rem 1rem;
+  width: clamp(300px, 40%, 500px);
 }
 .modal .modal-content .modal-header {
   display: flex;
-  flex-flow: row;
   justify-content: space-between;
+  align-items: center;
   background-color: var(--primary);
-  border-radius: 1rem 1rem 0 0;
 }
 .modal .modal-content .modal-header h2 {
-  padding-left: 0.5rem;
+  color: #fff;
+  padding-left: 1rem;
 }
 .modal .modal-content .modal-header .close-btn {
+  color: #fff;
   font-size: 24px;
   border: none;
   background-color: inherit;
-  margin-right: 0.5rem;
+  margin-right: 1rem;
 }
 .modal .modal-content .modal-header .close-btn:hover,
 .modal .modal-content .modal-header .close-btn:focus {
-  color: black;
   text-decoration: none;
   cursor: pointer;
 }
-.modal .modal-content .modal-main {
-  padding: 0 0.5rem;
+.modal .modal-content .new-project-title-textarea textarea {
+  font-size: 1.6rem;
+  outline: none;
+  width: 100%;
+  resize: none;
+  border: none;
 }
-.modal .modal-content .modal-main .new-task-title-textarea textarea {
+.modal .modal-content .modal-main {
+  background-color: #fff;
+}
+.modal .modal-content .modal-main .new-task-title-textarea, .modal .modal-content .modal-main .edit-task-title-textarea {
+  padding: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed black;
+}
+.modal .modal-content .modal-main .new-task-title-textarea textarea, .modal .modal-content .modal-main .edit-task-title-textarea textarea {
   font-size: 1.4rem;
   height: 2rem;
   outline: none;
@@ -230,48 +362,95 @@ footer {
   border: none;
   overflow: hidden;
 }
-.modal .modal-content .modal-main .new-task-details-textarea textarea {
-  height: 12rem;
+.modal .modal-content .modal-main .new-task-details-textarea, .modal .modal-content .modal-main .edit-task-details-textarea {
+  padding: 1rem;
+}
+.modal .modal-content .modal-main .new-task-details-textarea textarea, .modal .modal-content .modal-main .edit-task-details-textarea textarea {
+  height: 10rem;
   outline: none;
   width: 100%;
   resize: none;
   border: none;
 }
-.modal .modal-content .modal-main .new-task-due-date {
+.modal .modal-content .modal-main .new-task-due-date, .modal .modal-content .modal-main .edit-task-due-date {
   display: flex;
-  flex-flow: row;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 1rem;
 }
-.modal .modal-content .modal-main .new-task-due-date p {
+.modal .modal-content .modal-main .new-task-due-date h3, .modal .modal-content .modal-main .edit-task-due-date h3 {
   margin-right: 1rem;
 }
-.modal .modal-content .modal-main .new-task-due-date input {
-  color: #3b82f6;
-  border-radius: 1rem;
+.modal .modal-content .modal-main .new-task-due-date input, .modal .modal-content .modal-main .edit-task-due-date input {
+  border-radius: 0.5rem;
+  padding: 0 0.5rem;
 }
 .modal .modal-content .modal-footer {
   display: flex;
-  flex-flow: row;
-  padding: 0;
+  border-top: 1px solid black;
+  background-color: #fff;
+}
+.modal .modal-content .modal-footer .add-project-container {
+  display: flex;
   width: 100%;
+  padding: 0;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  height: auto;
+}
+.modal .modal-content .modal-footer .add-project-container:hover {
+  background-color: var(--secondary);
 }
 .modal .modal-content .modal-footer .add-task-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
   width: 50%;
   background-color: transparent;
   border: none;
-  padding: 1rem 0;
+  border-right: 1px solid black;
+}
+.modal .modal-content .modal-footer .add-task-container i {
+  font-size: 24px;
 }
 .modal .modal-content .modal-footer .add-task-container:hover {
-  border-radius: 0 0 0 1rem;
-  background-color: var(--secondary);
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
+}
+.modal .modal-content .modal-footer .task-complete-container:hover {
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
 }
 .modal .modal-content .modal-footer .task-complete-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
   width: 50%;
   background-color: transparent;
   border: none;
-  margin: 1rem 0;
+}
+.modal .modal-content .modal-footer .task-complete-container i {
+  font-size: 24px;
+}
+.modal .modal-content .modal-footer .edit-task-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+}
+.modal .modal-content .modal-footer .edit-task-container i {
+  font-size: 24px;
+}
+.modal .modal-content .modal-footer .edit-task-container:hover {
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */
