@@ -22,7 +22,7 @@
             <!-- Edit Task Form -->
         <section id="edit-task-popup">
             <div class="modal" id="edit-task-modal">
-                <form class="modal-content">
+                <div class="modal-content">
                     <div class="modal-header">
                         <h2>Edit task.</h2>
                         <button type='button' id='close-edit-task-popup' class="close-btn">
@@ -42,12 +42,11 @@
                         </div>
                     </div>
                     <div class='modal-footer'>
-                        <input id='confirm-edit-btn' class='confirm-edit-btn' type="submit">
-                            <i class='bi bi-x'></i>
-                            <p class='confirm-task'>Confirm Edit</p>
-                        </input>
+                        <button id='confirm-edit-btn' class='confirm-edit-btn' type="button">
+                            Confirm Edit
+                        </button>
                     </div>
-                </form>
+                </div>
             </div>
         </section>
             <!-- Add Task Form -->
@@ -70,7 +69,7 @@
                         <div class='new-task-due-date'>
                             <h3>Due: </h3>
                             <input id='new-task-date' type='date' class='new-task-date' required>
-                        </div>wwwww
+                        </div>
                     </div>
                     <div class='modal-footer'>
                         <button type='button' id='accept-task-btn' class='add-task-container'>
