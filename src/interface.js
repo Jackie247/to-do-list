@@ -60,7 +60,7 @@ export default class Interface{
     }
     static clearTaskList(){
         const taskList = document.getElementById('task-list');
-        taskList.textContent = '';
+        taskList.innerHTML = '';
     }
     static closeTaskPopupModal(){
         const container = document.getElementById('task-popup')
@@ -228,7 +228,7 @@ export default class Interface{
 
         let tasks = taskList.querySelectorAll('.task');
         newTaskContainer.setAttribute('data-project',`${project}`);
-        newTaskContainer.setAttribute('data-index',tasks.length);
+        newTaskContainer.setAttribute('data-index',(tasks.length)-1);
 
         Interface.initTaskButtons();
     }
@@ -321,8 +321,9 @@ export default class Interface{
         }
     }
     static renderTaskDetails(task,listOfTaskObjects){
+        const savedProjectList = LocalStorage.getSavedProjectList();
         let i = task.dataset.index;
-        let taskObject = listOfTaskObjects[i-1];
+        let taskObject = listOfTaskObjects[i];
 
         Interface.closeAllForms();
         const editForm = document.getElementById('edit-task-popup');
@@ -332,7 +333,7 @@ export default class Interface{
         modal.classList.add('modal','popup-active');
         modal.setAttribute('id','edit-task-modal');
         
-        const modalContent = document.createElement('form');
+        const modalContent = document.createElement('div');
         modalContent.classList.add('modal-content');
         
         const modalHeader = document.createElement('div');
@@ -385,17 +386,14 @@ export default class Interface{
         const modalFooter = document.createElement('div');
         modalFooter.classList.add('modal-footer');
 
-        const confirmEditBtn = document.createElement('input');
+        const confirmEditBtn = document.createElement('button');
         confirmEditBtn.setAttribute('id','confirm-edit-btn');
-        confirmEditBtn.setAttribute('type','submit');
+        confirmEditBtn.setAttribute('type','button');
         confirmEditBtn.classList.add('confirm-edit-btn');
-
-        const confirmEditBtnIcon = document.createElement('i');
-        confirmEditBtnIcon.classList.add('bi','bi-x');
-        
-        const confirmEditBtnText = document.createElement('p');
-        confirmEditBtnText.classList.add('confirm-task');
-        confirmEditBtnText.textContent = 'Confirm Edit';
+        confirmEditBtn.textContent = 'Confirm Edit';
+        confirmEditBtn.addEventListener('click', () => {
+            Interface.updateTask(modalContent,savedProjectList,modal);
+        })
 
         editForm.appendChild(modal);
         modal.appendChild(modalContent);
@@ -415,49 +413,23 @@ export default class Interface{
     
         modalContent.appendChild(modalFooter);
         modalFooter.appendChild(confirmEditBtn);
-        confirmEditBtn.appendChild(confirmEditBtnIcon);
-        confirmEditBtn.appendChild(confirmEditBtnText);
     }
-    static updateTask(e,editForm){
-        e.preventDefault();
-        const i = e.target.children[1].firstElementChild.firstElementChild.dataset.index;
+    static updateTask(e,savedProjectList,editForm){
+        const i = e.children[1].firstElementChild.firstElementChild.dataset.index;
         console.log(i);
-        const project = e.target.firstElementChild.dataset.project;
-        const listOfTaskObjects = LocalStorage.getSavedProjectList()
-        .getProject(project)
-        .getTaskList();
-        // Get current task details
-        listOfTaskObjects[i].name = document.getElementById('edit-task-title').value;
-        listOfTaskObjects[i].dueDate = document.getElementById('edit-task-date').value;
-        listOfTaskObjects[i].details = document.getElementById('edit-task-details').value;
+        const project = e.children[1].firstElementChild.firstElementChild.dataset.project;
+        const listOfTaskObjects = savedProjectList
+            .getProject(project)
+            .getTaskList();
 
-        if(document.getElementById('edit-task-title').value === ''){
-            alert('Name cannot be empty');
-            return;
-        }
-        // Rename the task object name in storage.
-        if(LocalStorage.getSavedProjectList().getProject(projectName).taskListContains(newTaskName)){
-            document.getElementById('edit-task-title').value = '';
-            alert('Task name already exists');
-            return;
-        }
-        LocalStorage.renameTask(projectName,taskNode.children[1].textContent,newTaskName);
-        // Update the name display for the task. 
-        taskNode.children[1].innerHTML = newTaskName;
-        // Reassign the task object since its name has been changed. 
-        let taskObject = LocalStorage.getSavedProjectList()
-            .getProject(projectName)
-            .getTask(taskNode.children[1].textContent);
-        // If the current displayed date text is not the same as new date. Update the task object date.
-        if(taskObject.getDate() !== newTaskDate){
-            LocalStorage.setTaskDate(projectName,taskObject.getTaskName(),newTaskDate);
-            taskNode.children[2].innerHTML = newTaskDate;
-        }
-        if(taskObject.getDetails() !== newTaskDetails){
-            LocalStorage.setTaskDetails(projectName,taskObject.getTaskName(),newTaskDetails);
-        }
+        // Get current task details
+        LocalStorage.setTaskDate(project,listOfTaskObjects[i].name,document.getElementById('edit-task-date').value);
+        LocalStorage.setTaskDetails(project,listOfTaskObjects[i].name,document.getElementById('edit-task-details').value);
+        LocalStorage.renameTask(project,listOfTaskObjects[i].name,document.getElementById('edit-task-title').value);
+
         Interface.clearTaskList();
-        Interface.loadProjectTasks(projectName);
+        Interface.loadProjectTasks(project);
         editForm.classList.toggle('popup-active');
+
     }
 }
