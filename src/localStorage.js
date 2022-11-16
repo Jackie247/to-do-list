@@ -6,7 +6,7 @@ export default class LocalStorage{
     static updateStorage(data){
         // updates the object array with current project list objects
         // stringify maintains the data's formatting, instead of just turning data into strings.
-        localStorage.setItem('Projects',JSON.stringify(data));
+        localStorage.setItem('ProjectData',JSON.stringify(data));
         return;
     }
     static getSavedProjectList(){
@@ -15,7 +15,7 @@ export default class LocalStorage{
         // in this case, a new project list. 
         const projectList = Object.assign(
             new ProjectList(),
-            JSON.parse(localStorage.getItem('Projects'))
+            JSON.parse(localStorage.getItem('ProjectData'))
         )
         // since the parsed objects are just in string form. we need to turn them back into objects.
         // repeat this for the projects in the project list and for each task within each project
