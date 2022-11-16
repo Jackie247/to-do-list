@@ -447,9 +447,6 @@ footer{
         width:100%;
         border:none;
         background-color: transparent;
-        i{
-          font-size:24px;
-        }
       }
       .confirm-edit-btn:hover{
         background-color:var(--primary);
@@ -459,3 +456,31 @@ footer{
     }
   }
 }
+ @media screen and (min-width:1024px){
+  header{
+    .container{
+      button{
+        display:none;
+      }
+    }
+  }
+    main{
+      display:grid;
+      grid-template-columns: minmax(min-content,300px) 1fr;
+      #edit-task-popup{
+        position:absolute;
+      }
+      #task-popup{
+        position:absolute;
+      }
+      .projects-tab{
+        display:block;
+        .navbar-projects.slide-in-left{
+          -webkit-animation: none;
+	        animation: none;
+        }
+
+      }
+
+    }
+ }
