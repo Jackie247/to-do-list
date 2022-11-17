@@ -248,6 +248,7 @@ main{
       display:flex;
       flex-flow:column;
       align-items: center;
+      overflow:auto;
       .project-title{
         margin:0 1rem;
       }
@@ -263,6 +264,7 @@ main{
           background-color: #fff;
           border:1px solid #aaa;
           border-radius: 0.5rem;
+          font-size:clamp(2vh,18px,2vw);
           .task-name{
             flex-grow:2;
           }
