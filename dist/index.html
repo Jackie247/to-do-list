@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./style/main.css"></link>
+<script defer src="index.807aaba6b0d85f173c96.js"></script><script defer src="interface.3e0ccb227c9ac657d6a7.js"></script><script defer src="project.182a5ac8ed5d14a777cd.js"></script><script defer src="task.e2e35a6134ca8b8dcd6b.js"></script><script defer src="app.a7a945e3c93604f64ba6.js"></script><script defer src="shared.6ef05c781a894c1b9a71.js"></script></head>
+<body>
+    <header id="header">
+        <div class="container">
+            <i class="bi bi-card-text"></i>
+            <h1>To Do List</h1>
+            <button type="button" id='nav-dropdown' class="dropdown">
+                <i class="bi bi-list"></i>
+            </button>
+        </div>
+    </header>
+    <main id="main">
+        <!-- Edit Task Form -->
+        <section id="edit-task-popup">
+            <div class="modal" id="edit-task-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Edit task.</h2>
+                        <button type='button' id='close-edit-task-popup' class="close-btn">
+                        <i class="bi bi-x-circle"></i>
+                        </button>
+                    </div>
+                    <div class='modal-main'>
+                        <div class='edit-task-title-textarea'>
+                            <textarea id="edit-task-title" class='edit-task-title' placeholder="Title: New title" maxlength="40"  required></textarea>
+                        </div>
+                        <div class='edit-task-details-textarea'>
+                            <textarea id="edit-task-details" placeholder='Details: e.g shopping, gym, deadlines'></textarea>
+                        </div>
+                        <div class='edit-task-due-date'>
+                            <h3>Due: </h3>
+                            <input id='edit-task-date' type='date' class='edit-task-date' required>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button id='confirm-edit-btn' class='confirm-edit-btn' type="button">
+                            Confirm Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Add Task Form -->
+        <section id="task-popup">
+            <div class="modal" id="task-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Create task.</h2>
+                        <button type='button' id='close-new-task-popup' class="close-btn">
+                        <i class="bi bi-x-circle"></i>
+                        </button>
+                    </div>
+                    <div class='modal-main'>
+                        <div class='new-task-title-textarea'>
+                            <textarea id="new-task-title" placeholder="Title: New task" maxlength="40"  required></textarea>
+                        </div>
+                        <div class='new-task-details-textarea'>
+                            <textarea id="new-task-details" placeholder='Details: e.g shopping, gym, deadlines'></textarea>
+                        </div>
+                        <div class='new-task-due-date'>
+                            <h3>Due: </h3>
+                            <input id='new-task-date' type='date' class='new-task-date' required>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' id='accept-task-btn' class='add-task-container'>
+                            <i class='bi bi-x'></i>
+                            <p class='confirm-task'>Add Task</p>
+                        </button>
+                        <button type='button' class='task-complete-container'>
+                            <i class='bi bi-check'></i>
+                            <p class='task-completion'>Mark as done</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Navbar -->
+        <section id='navbar' class="projects-tab">
+            <!-- Inbox, Today, Upcoming Projects -->
+            <div class="navbar-projects slide-in-left">
+                <div class="default-projects">
+                    <button type='button' id='inbox' class="default-project project-h">
+                        <i class="bi bi-inbox"></i>
+                        <h3>Inbox</h3>
+                    </button>
+                    <button type='button' id='today' class="default-project project-h">
+                        <i class="bi bi-calendar-event"></i>
+                        <h3>Today</h3>
+                    </button>
+                    <button type='button' id='upcoming' class="default-project project-h">
+                        <i class="bi bi-calendar-week"></i>
+                        <h3>Upcoming</h3>
+                    </button>
+                </div>
+                <h1 class="navbar-project-title">Projects</h1>
+                <!-- User Created Projects -->
+                <div id='project-list' class="project-list"></div>
+                <!-- Add Project Button -->
+                <button type='button' id='add-project-btn' class="add-project-btn">
+                    <i id='add-project-icon'class="bi bi-plus-square"></i>
+                    <p id='add-project-text'>Add Project</p>
+                </button>
+                <!-- Add Project Form -->
+                <div id='add-project-form' class="add-project-form">
+                    <input id='add-project-title' class='add-project-title' placeholder="Project Title" maxlength="30">
+                    <div class="add-project-buttons">
+                        <button type='button' id='project-form-accept' class="add-project-accept">Add</button>
+                        <button type='button' id='project-form-cancel' class="add-project-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Project Tasks View -->
+        <section id='project-tasks' class="tasks-container">
+            <h2 id='project-tasks-title' class="project-title"></h2>
+            <div id='task-list' class="task-list"></div>
+            <button type="button" id='add-task' class="add-task-btn">
+                <i id='add-task-icon' class="bi bi-plus-square"></i>
+                <p id='add-task-text'>Add Task</p>
+            </button>
+        </section>
+    </main>
+    <footer id="footer">
+        <div class="container">
+            <h4>Created by Jackie247</h4>
+        </div>
+    </footer>
+</body>
+</html>
