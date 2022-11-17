@@ -68,7 +68,7 @@ export default class ProjectList{
             }
             // create new tasks for upcoming. 
             this.getProject('Upcoming').getTaskList().forEach((task) => {
-                const newTask = `${project.getProjectName()} ${task.getTaskName()}`;
+                const newTask = `(${project.getProjectName()}) ${task.getTaskName()}`;
                 this.getProject('Upcoming').addTask(new Task(newTask, task.getDate()));
             })
         })
