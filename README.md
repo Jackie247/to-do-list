@@ -2,7 +2,7 @@
 
 <h2> Overview </h2>
 
-Live Preview: 
+Live Preview: <a href='https://jackie247.github.io/to-do-list/'>To Do App</a>
 
 This is my take on the final project for <a href='https://www.theodinproject.com/lessons/node-path-javascript-todo-list'>The Odin Project: 'Organizing your JavaScript Code'</a> chapter.
 
