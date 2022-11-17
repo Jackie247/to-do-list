@@ -75,6 +75,12 @@ export default class LocalStorage{
         LocalStorage.updateStorage(savedProjectList);
         return;
     }
+    static setTaskProjectParent(projectName,taskName){
+        const savedProjectList = LocalStorage.getSavedProjectList();
+        savedProjectList.getProject(projectName).getTask(taskName).setParentProject(projectName);
+        LocalStorage.updateStorage(savedProjectList);
+        return;
+    }
     static updateToday(){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.updateToday();
