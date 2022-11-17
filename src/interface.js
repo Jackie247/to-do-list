@@ -20,11 +20,20 @@ export default class Interface{
         Interface.initAddProjectBtn();
     }
     static loadTasks(projectName){
-        LocalStorage.getSavedProjectList()
-         .getProject(projectName).getTaskList()
-         .forEach(task => {
+        if(projectName === 'Inbox'){
+            LocalStorage.getSavedProjectList().getProjects().forEach((project) => {
+                project.getTaskList().forEach((task) => {
+                    Interface.createTask(projectName,task.name,task.dueDate);
+                })
+            })
+        }
+        else{
+            LocalStorage.getSavedProjectList()
+            .getProject(projectName).getTaskList()
+            .forEach(task => {
             Interface.createTask(projectName,task.name,task.dueDate);
-         })
+        })
+        }
         if(projectName !== 'Today' && projectName !== 'Upcoming'){
             Interface.initAddTaskButton();
         }
@@ -417,7 +426,8 @@ export default class Interface{
     static updateTask(e,savedProjectList,editForm){
         const i = e.children[1].firstElementChild.firstElementChild.dataset.index;
         console.log(i);
-        const project = e.children[1].firstElementChild.firstElementChild.dataset.project;
+        const currOpenProject = document.getElementById('project-tasks-title').textContent;
+        const taskProject = e.children[1].firstElementChild.firstElementChild.dataset.project;
         const listOfTaskObjects = savedProjectList
             .getProject(project)
             .getTaskList();
@@ -425,6 +435,9 @@ export default class Interface{
         // Get current task details
         LocalStorage.setTaskDate(project,listOfTaskObjects[i].name,document.getElementById('edit-task-date').value);
         LocalStorage.setTaskDetails(project,listOfTaskObjects[i].name,document.getElementById('edit-task-details').value);
+        if(currOpenProject === 'Today' || currOpenProject === 'This week'){
+
+        }
         LocalStorage.renameTask(project,listOfTaskObjects[i].name,document.getElementById('edit-task-title').value);
 
         Interface.clearTaskList();
