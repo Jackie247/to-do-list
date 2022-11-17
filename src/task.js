@@ -3,6 +3,7 @@ export default class Task{
         this.name = name;
         this.dueDate = dueDate;
         this.details = details;
+        this.parentProject;
     }
     // GETTERS AND SETTERS //
     setTaskName(name){
@@ -28,5 +29,11 @@ export default class Task{
     }
     getDetails(){
         return this.details;
+    }
+    setParentProject(projectName){
+        this.parentProject = projectName;
+    }
+    getParentProject(){
+        return this.parentProject;
     }
 }
