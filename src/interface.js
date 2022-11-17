@@ -23,7 +23,7 @@ export default class Interface{
         if(projectName === 'Inbox'){
             LocalStorage.getSavedProjectList().getProjects().forEach((project) => {
                 project.getTaskList().forEach((task) => {
-                    Interface.createTask(projectName,task.name,task.dueDate);
+                    Interface.createTask(task.name,task.dueDate,task);
                 })
             })
         }
@@ -31,7 +31,7 @@ export default class Interface{
             LocalStorage.getSavedProjectList()
             .getProject(projectName).getTaskList()
             .forEach(task => {
-            Interface.createTask(projectName,task.name,task.dueDate);
+                Interface.createTask(task.name,task.dueDate,task);
         })
         }
         if(projectName !== 'Today' && projectName !== 'Upcoming'){
@@ -199,9 +199,13 @@ export default class Interface{
         addProjectTitleInput.value = '';
     }
     /** -------------Adding task content-------------*/
-    static createTask(project,taskName, date){
+    static createTask(taskName, date,taskObject){
+        // Since this function gets called whenever a new project is loaded
+        // The current open project might be different from the project that the task was 
+        // created in. Therefore we need to have the task Object and the current open project title
+        const currOpenProject = document.getElementById('project-tasks-title');
         const taskList = document.getElementById('task-list');
-        
+
         const newTaskContainer = document.createElement('div');
         newTaskContainer.classList.add('task');
         
@@ -221,8 +225,16 @@ export default class Interface{
 
         const name = document.createElement('p');
         name.classList.add('task-name');
-        name.textContent = taskName;
-
+        // If the task is within its project that is its parent project (project it was created in)
+        // Then we just render its name normally.
+        if(taskObject.getParentProject() === currOpenProject){
+            name.textContent = taskName;
+        }
+        else{
+            // If the task is being displayed in another project, such as inbox,today,upcoming.
+            // We want to show the parent project of the task in brackets.
+            name.textContent = `(${taskObject.getParentProject()}) ${taskName}`;
+        }
         const dateText = document.createElement('p');
         dateText.classList.add('task-date');
         dateText.textContent = date;
@@ -236,7 +248,7 @@ export default class Interface{
         taskList.appendChild(newTaskContainer);
 
         let tasks = taskList.querySelectorAll('.task');
-        newTaskContainer.setAttribute('data-project',`${project}`);
+        newTaskContainer.setAttribute('data-project',`${taskObject.getParentProject()}`);
         newTaskContainer.setAttribute('data-index',(tasks.length)-1);
 
         Interface.initTaskButtons();
@@ -268,6 +280,8 @@ export default class Interface{
         taskDate.value = '';
     }
     static addTask(){
+        // Called when you create a task in a project. 
+        // Task information to save.
         const projectName = document.getElementById('project-tasks-title').textContent;
         const taskTitle = document.getElementById('new-task-title').value;
         const taskDate = document.getElementById('new-task-date').value;
@@ -280,18 +294,25 @@ export default class Interface{
             alert('Task names must be different');
             return;
         }
+        // Adds the task to localStorage
+        LocalStorage.addTask(projectName, new Task(taskTitle));
+        // Save the task information in localStorage.
+        LocalStorage.setTaskDate(projectName,taskTitle,taskDate);
+        LocalStorage.setTaskDetails(projectName,taskTitle,taskDetails);
+        LocalStorage.setTaskProjectParent(projectName,taskTitle);
+        // When rendering the task to display, if not in the parent project that the task was created in.
+        // We want to display in () which project the task belongs to.
+        // So need to pass in object to createTask so we can get the parent project
+        const taskObject = LocalStorage.getSavedProjectList()
+            .getProject(projectName)
+            .getTask(taskTitle);
         if(taskDate === ''){
-            Interface.createTask(projectName, taskTitle, 'No date');
+            Interface.createTask(taskTitle, 'No date',taskObject);
         }
         else{
             // create task to display on interface
-            Interface.createTask(projectName, taskTitle, taskDate);
+            Interface.createTask(taskTitle, taskDate,taskObject);
         }
-        LocalStorage.addTask(projectName, new Task(taskTitle));
-        // update task date and details in local storage
-        LocalStorage.setTaskDate(projectName,taskTitle,taskDate);
-        LocalStorage.setTaskDetails(projectName,taskTitle,taskDetails);
-
         Interface.closeAddTaskModal();
     }
     /** -------------Event listeners for created tasks buttons---------------*/  
@@ -304,18 +325,18 @@ export default class Interface{
         })
     }
     static deleteTask(task){
-        const project = document.getElementById('project-tasks-title').textContent;
+        const openProject = document.getElementById('project-tasks-title').textContent;
         const taskName = task.children[1].textContent;
-        if(project === 'Today' || project === 'Upcoming'){
+        if(openProject === 'Today' || openProject === 'Upcoming'){
             const taskProjectParent = task.split('(')[1].split(')')[0];
             LocalStorage.deleteTask(taskProjectParent,taskName);
         }
-        LocalStorage.deleteTask(project,taskName);
+        LocalStorage.deleteTask(openProject,taskName);
         Interface.clearTaskList();
-        Interface.loadProjectTasks(project);
+        Interface.loadProjectTasks(openProject);
     }
     static handleTaskEvents(e){
-        const project = document.getElementById('project-tasks-title').textContent;
+        const project = e.currentTarget.dataset.project;
         const listOfTaskObjects = LocalStorage.getSavedProjectList()
             .getProject(project)
             .getTaskList();
@@ -424,24 +445,25 @@ export default class Interface{
         modalFooter.appendChild(confirmEditBtn);
     }
     static updateTask(e,savedProjectList,editForm){
+        // Get the tasks index and project attributes.
         const i = e.children[1].firstElementChild.firstElementChild.dataset.index;
-        console.log(i);
-        const currOpenProject = document.getElementById('project-tasks-title').textContent;
         const taskProject = e.children[1].firstElementChild.firstElementChild.dataset.project;
+        // If we edit tasks within Inbox, Today, or Upcoming.
+        // We want to be able to edit the tasks without having to use the title element
+        const currOpenProject = document.getElementById('project-tasks-title').textContent;
+        // Get the currently saved task list from the parent project of the task we are editing
+        // So for instance, if editing in Inbox a task that belongs to another project,
+        // Get all the task list of project and NOT inbox.
         const listOfTaskObjects = savedProjectList
-            .getProject(project)
+            .getProject(taskProject)
             .getTaskList();
-
         // Get current task details
-        LocalStorage.setTaskDate(project,listOfTaskObjects[i].name,document.getElementById('edit-task-date').value);
-        LocalStorage.setTaskDetails(project,listOfTaskObjects[i].name,document.getElementById('edit-task-details').value);
-        if(currOpenProject === 'Today' || currOpenProject === 'This week'){
-
-        }
-        LocalStorage.renameTask(project,listOfTaskObjects[i].name,document.getElementById('edit-task-title').value);
+        LocalStorage.setTaskDate(taskProject,listOfTaskObjects[i].name,document.getElementById('edit-task-date').value);
+        LocalStorage.setTaskDetails(taskProject,listOfTaskObjects[i].name,document.getElementById('edit-task-details').value);
+        LocalStorage.renameTask(taskProject,listOfTaskObjects[i].name,document.getElementById('edit-task-title').value);
 
         Interface.clearTaskList();
-        Interface.loadProjectTasks(project);
+        Interface.loadProjectTasks(currOpenProject);
         editForm.classList.toggle('popup-active');
 
     }
