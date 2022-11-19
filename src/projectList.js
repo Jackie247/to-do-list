@@ -1,3 +1,4 @@
+import { compareAsc, toDate} from "date-fns";
 import Project from "./project.js";
 import Task from "./task.js";
 
@@ -38,10 +39,7 @@ export default class ProjectList{
         return;
     }
     updateToday(){
-        // clear the tasks from today project list
-        while(this.getProject('Today').getTaskList().length > 0){
-            this.getProject('Today').pop();
-        }
+        this.getProject('Today').taskList = [];
         // update the today list with only tasks that have todays date
         // check every project for tasks that have due date today
         this.projectList.forEach((project) => {
@@ -49,17 +47,16 @@ export default class ProjectList{
             if(project.getName() === 'Today' || project.getName() === 'Upcoming'){
                 return;
             }
-            this.getProject('Today').getTaskList().forEach((task)=>{
+            const todayTasks = project.getTodaysTasks();
+            todayTasks.forEach((task)=>{
                 const newTask = `(${project.getProjectName()}) ${task.getTaskName()}`;
-                this.getProject('Today').addTask(new Task(newTask, task.getDate()));
+                this.getProject('Today').addTask(new Task(newTask, task.getDate(),task.getDetails()));
             })
         })
         
     }
     updateUpcoming(){
-        while(this.getProject('Upcoming').getTaskList().length > 0){
-            this.getProject('Upcoming').pop();
-        }
+        this.getProject('Upcoming').taskList = [];
         // update incoming with only tasks that are within a week range.
         this.projectList.forEach((project)=>{
             // skip today since they will be in today inbox and skip upcoming since empty list.
@@ -67,17 +64,18 @@ export default class ProjectList{
                 return;
             }
             // create new tasks for upcoming. 
-            this.getProject('Upcoming').getTaskList().forEach((task) => {
-                const newTask = `(${project.getProjectName()}) ${task.getTaskName()}`;
-                this.getProject('Upcoming').addTask(new Task(newTask, task.getDate()));
+            const upcomingTasks = project.getUpcomingTasks()
+            upcomingTasks.forEach((task) => {
+                const taskName = `(${project.getProjectName()}) ${task.getTaskName()}`;
+                this.getProject('Upcoming').addTask(new Task(taskName, task.getDate(),task.getDetails()));
             })
         })
         this.getProject('Upcoming').setTaskList(
-            this.getProject('Upcoming').getTaskList().sort((taskOne,taskTwo) =>{
-                const first = new Date(taskOne);
-                const second = new Date(taskTwo);
-                return first - second;
-        }))
+            this.getProject('Upcoming').getTaskList().sort((taskOne,taskTwo) => 
+                compareAsc(
+                    toDate(new Date(taskOne.returnDateFormatted())),
+                    toDate(new Date(taskTwo.returnDateFormatted()))
+                )))
     }
     // HELPERS // 
     projectListContains(projectName){
