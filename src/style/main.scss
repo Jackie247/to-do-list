@@ -183,12 +183,13 @@ main{
         .project-list{
           display:flex;
           flex-flow:column;
+          overflow:auto;
           .new-project{
             display:flex;
             justify-content: space-between;
             padding: 0 1rem;
             margin-bottom:0.5rem;
-            font-size:20px;
+            font-size:clamp(1vh,20px,3vw);
             border:none;
             background-color: inherit;
             cursor:pointer;
@@ -294,6 +295,9 @@ main{
         i{
           margin-right:1em;
         }
+      }
+      .add-task-btn:hover{
+        color:#fff;
       }
 
     }
