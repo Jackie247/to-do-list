@@ -36,4 +36,11 @@ export default class Task{
     getParentProject(){
         return this.parentProject;
     }
+    // METHODS
+    returnDateFormatted(){
+        const day = this.dueDate.split('/')[0];
+        const month = this.dueDate.split('/')[1];
+        const year = this.dueDate.split('/')[2];
+        return `${day}/${month}/${year}`;
+    }
 }
