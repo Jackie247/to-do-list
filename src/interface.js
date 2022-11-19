@@ -230,7 +230,7 @@ export default class Interface{
         name.classList.add('task-name');
         // If the task is within its project that is its parent project (project it was created in)
         // Then we just render its name normally.
-        if(taskObject.getParentProject() === currOpenProject){
+        if(currOpenProject.textContent  === taskObject.getParentProject()){
             name.textContent = taskName;
         }
         else{
@@ -303,14 +303,7 @@ export default class Interface{
             return;
         }
         // Adds the task object to localStorage
-        if(projectName === 'Today'){
-            LocalStorage.addTask(projectName, new Task(taskTitle));
-        }
-        else{
-            LocalStorage.addTask(projectName, new Task(taskTitle));
-            LocalStorage.addTask('Today', new Task(taskTitle));
-        }
-        
+        LocalStorage.addTask(projectName, new Task(taskTitle));
         // If task date is not provided, we just set an empty task date for the task object
         if(taskDate === ''){
             LocalStorage.setTaskDate(projectName,taskTitle,taskDate);
