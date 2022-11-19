@@ -20,8 +20,11 @@ export default class Interface{
         Interface.initAddProjectBtn();
     }
     static loadTasks(projectName){
+        const savedProjectList = LocalStorage.getSavedProjectList();
         if(projectName === 'Inbox'){
-            LocalStorage.getSavedProjectList().getProjects().forEach((project) => {
+            // For every project,
+            savedProjectList.getProjects().forEach((project) => {
+                // For every task within the project
                 project.getTaskList().forEach((task) => {
                     Interface.createTask(task.name,task.dueDate,task);
                 })
@@ -237,8 +240,12 @@ export default class Interface{
         }
         const dateText = document.createElement('p');
         dateText.classList.add('task-date');
-        dateText.textContent = date;
-
+        if(date === ''){
+            dateText.textContent = 'No date';
+        }
+        else{
+            dateText.textContent = date;
+        }
         newTaskContainer.appendChild(checkBox);
         newTaskContainer.appendChild(name);
         newTaskContainer.appendChild(dateText);
@@ -280,24 +287,43 @@ export default class Interface{
         taskDate.value = '';
     }
     static addTask(){
-        // Called when you create a task in a project. 
-        // Task information to save.
+        // Task information to save to local storage.
         const projectName = document.getElementById('project-tasks-title').textContent;
         const taskTitle = document.getElementById('new-task-title').value;
         const taskDate = document.getElementById('new-task-date').value;
         const taskDetails = document.getElementById('new-task-details').value;
+        // If task title is empty, prompt user to enter.
         if(taskTitle === ''){
             alert('Enter task title');
             return;
         }
+        // If task already exists within the project, alert user to change name.
         if(LocalStorage.getSavedProjectList().getProject(projectName).taskListContains(taskTitle)){
             alert('Task names must be different');
             return;
         }
-        // Adds the task to localStorage
-        LocalStorage.addTask(projectName, new Task(taskTitle));
-        // Save the task information in localStorage.
-        LocalStorage.setTaskDate(projectName,taskTitle,taskDate);
+        // Adds the task object to localStorage
+        if(projectName === 'Today'){
+            LocalStorage.addTask(projectName, new Task(taskTitle));
+        }
+        else{
+            LocalStorage.addTask(projectName, new Task(taskTitle));
+            LocalStorage.addTask('Today', new Task(taskTitle));
+        }
+        
+        // If task date is not provided, we just set an empty task date for the task object
+        if(taskDate === ''){
+            LocalStorage.setTaskDate(projectName,taskTitle,taskDate);
+        }
+        else{
+            // If task is provided, we can set the task object date 
+            // to a formatted string.
+            const newTaskDate = format(new Date(taskDate),'dd/MM/yyyy');
+            LocalStorage.setTaskDate(projectName,taskTitle,newTaskDate);
+            // Update both Today and Upcoming projects if the date is within these ranges
+            LocalStorage.updateToday();
+            LocalStorage.updateUpcoming();
+        }
         LocalStorage.setTaskDetails(projectName,taskTitle,taskDetails);
         LocalStorage.setTaskProjectParent(projectName,taskTitle);
         // When rendering the task to display, if not in the parent project that the task was created in.
@@ -306,13 +332,8 @@ export default class Interface{
         const taskObject = LocalStorage.getSavedProjectList()
             .getProject(projectName)
             .getTask(taskTitle);
-        if(taskDate === ''){
-            Interface.createTask(taskTitle, 'No date',taskObject);
-        }
-        else{
-            // create task to display on interface
-            Interface.createTask(taskTitle, taskDate,taskObject);
-        }
+        // Create task to display on interface
+        Interface.createTask(taskTitle, taskDate,taskObject);
         Interface.closeAddTaskModal();
     }
     /** -------------Event listeners for created tasks buttons---------------*/  
@@ -326,9 +347,9 @@ export default class Interface{
     }
     static deleteTask(task){
         const openProject = document.getElementById('project-tasks-title').textContent;
+        const taskProjectParent = task.dataset.project;
         const taskName = task.children[1].textContent;
         if(openProject === 'Today' || openProject === 'Upcoming'){
-            const taskProjectParent = task.split('(')[1].split(')')[0];
             LocalStorage.deleteTask(taskProjectParent,taskName);
         }
         LocalStorage.deleteTask(openProject,taskName);
@@ -457,6 +478,7 @@ export default class Interface{
         const listOfTaskObjects = savedProjectList
             .getProject(taskProject)
             .getTaskList();
+        // Add certain tasks to Today or Upcoming based off dates
         // Get current task details
         LocalStorage.setTaskDate(taskProject,listOfTaskObjects[i].name,document.getElementById('edit-task-date').value);
         LocalStorage.setTaskDetails(taskProject,listOfTaskObjects[i].name,document.getElementById('edit-task-details').value);
