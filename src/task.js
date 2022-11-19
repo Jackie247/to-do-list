@@ -41,6 +41,6 @@ export default class Task{
         const day = this.dueDate.split('/')[0];
         const month = this.dueDate.split('/')[1];
         const year = this.dueDate.split('/')[2];
-        return `${day}/${month}/${year}`;
+        return `${month}/${day}/${year}`;
     }
 }

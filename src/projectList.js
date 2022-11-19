@@ -39,18 +39,21 @@ export default class ProjectList{
         return;
     }
     updateToday(){
+        // Clear current today projeck task list.
         this.getProject('Today').taskList = [];
-        // update the today list with only tasks that have todays date
-        // check every project for tasks that have due date today
+        // Check through every single project for tasks that have dates corresponding to today.
         this.projectList.forEach((project) => {
-            // skip project today since its empty, and skip upcoming so we dont get duplicates
+            // We have emptied out today project already and Upcoming tasks will have duplicates for today.
             if(project.getName() === 'Today' || project.getName() === 'Upcoming'){
                 return;
             }
+            // For every project, get all tasks that have dates today.
             const todayTasks = project.getTodaysTasks();
+            // For the tasks found, add them to Today project tasklist.
             todayTasks.forEach((task)=>{
-                const newTask = `(${project.getProjectName()}) ${task.getTaskName()}`;
-                this.getProject('Today').addTask(new Task(newTask, task.getDate(),task.getDetails()));
+                const newTaskObj = new Task(task.getTaskName(), task.getDate(), task.getDetails());
+                newTaskObj.setParentProject(project.getName());
+                this.getProject('Today').addTask(newTaskObj);
             })
         })
         
@@ -66,16 +69,19 @@ export default class ProjectList{
             // create new tasks for upcoming. 
             const upcomingTasks = project.getUpcomingTasks()
             upcomingTasks.forEach((task) => {
-                const taskName = `(${project.getProjectName()}) ${task.getTaskName()}`;
-                this.getProject('Upcoming').addTask(new Task(taskName, task.getDate(),task.getDetails()));
+                const newTaskObj = new Task(task.getTaskName(), task.getDate(), task.getDetails());
+                newTaskObj.setParentProject(project.getName());
+                this.getProject('Upcoming').addTask(newTaskObj);
             })
         })
         this.getProject('Upcoming').setTaskList(
-            this.getProject('Upcoming').getTaskList().sort((taskOne,taskTwo) => 
-                compareAsc(
-                    toDate(new Date(taskOne.returnDateFormatted())),
-                    toDate(new Date(taskTwo.returnDateFormatted()))
-                )))
+            this.getProject('Upcoming')
+                .getTaskList()
+                .sort((taskOne,taskTwo) => 
+                    compareAsc(
+                        toDate(new Date(taskOne.returnDateFormatted())),
+                        toDate(new Date(taskTwo.returnDateFormatted()))
+                    )))
     }
     // HELPERS // 
     projectListContains(projectName){

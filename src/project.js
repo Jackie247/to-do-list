@@ -39,8 +39,7 @@ export default class Project{
     }
     getTodaysTasks(){
         return this.taskList.filter((task) => {
-            const taskDueDate = new Date(task.returnDateFormatted())
-            return isToday(toDate(taskDueDate));
+            return isToday(toDate(new Date(task.returnDateFormatted())));
         })
     }
     getUpcomingTasks(){
