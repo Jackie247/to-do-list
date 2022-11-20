@@ -244,7 +244,7 @@ export default class Interface{
             dateText.textContent = 'No date';
         }
         else{
-            dateText.textContent = date;
+            dateText.textContent = date
         }
         newTaskContainer.appendChild(checkBox);
         newTaskContainer.appendChild(name);
@@ -327,6 +327,8 @@ export default class Interface{
             .getTask(taskTitle);
         // Create task to display on interface
         Interface.createTask(taskTitle, taskDate,taskObject);
+        Interface.clearTaskList();
+        Interface.loadProjectTasks(projectName);
         Interface.closeAddTaskModal();
     }
     /** -------------Event listeners for created tasks buttons---------------*/  
@@ -425,7 +427,8 @@ export default class Interface{
         taskDateInput.setAttribute('id','edit-task-date');
         taskDateInput.setAttribute('type','date');
         taskDateInput.classList.add('edit-task-date');
-        taskDateInput.value = taskObject.dueDate;
+        const [day,month,year] = taskObject.returnDateFormatted().split('/');
+        taskDateInput.value = `${year}-${month}-${day}`;
 
         const modalFooter = document.createElement('div');
         modalFooter.classList.add('modal-footer');
