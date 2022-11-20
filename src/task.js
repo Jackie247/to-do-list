@@ -1,9 +1,12 @@
+import { daysInWeek } from "date-fns/fp";
+
 export default class Task{
     constructor(name, dueDate, details){
         this.name = name;
         this.dueDate = dueDate;
         this.details = details;
         this.parentProject;
+        this.index;
     }
     // GETTERS AND SETTERS //
     setTaskName(name){
@@ -41,6 +44,7 @@ export default class Task{
         const day = this.dueDate.split('/')[0];
         const month = this.dueDate.split('/')[1];
         const year = this.dueDate.split('/')[2];
+        // date-fns uses this format to check if date is today or within this week.
         return `${month}/${day}/${year}`;
     }
 }
