@@ -24,6 +24,9 @@ export default class Interface{
         if(projectName === 'Inbox'){
             // For every project,
             savedProjectList.getProjects().forEach((project) => {
+                if(project.getName() === 'Today' || project.getName() === 'Upcoming'){
+                    return;
+                }
                 // For every task within the project
                 project.getTaskList().forEach((task) => {
                     Interface.createTask(task.name,task.dueDate,task);
