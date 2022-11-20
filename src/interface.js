@@ -244,7 +244,7 @@ export default class Interface{
             dateText.textContent = 'No date';
         }
         else{
-            dateText.textContent = date
+            dateText.textContent = date;
         }
         newTaskContainer.appendChild(checkBox);
         newTaskContainer.appendChild(name);
@@ -427,7 +427,7 @@ export default class Interface{
         taskDateInput.setAttribute('id','edit-task-date');
         taskDateInput.setAttribute('type','date');
         taskDateInput.classList.add('edit-task-date');
-        const [day,month,year] = taskObject.returnDateFormatted().split('/');
+        const [month,day,year] = taskObject.returnDateFormatted().split('/');
         taskDateInput.value = `${year}-${month}-${day}`;
 
         const modalFooter = document.createElement('div');
@@ -484,6 +484,8 @@ export default class Interface{
         }
         else{
             LocalStorage.setTaskDate(taskProject,listOfTaskObjects[i].name,format(new Date(newDate),'dd/MM/yyyy'));
+            LocalStorage.updateToday();
+            LocalStorage.updateUpcoming();
         }
         LocalStorage.setTaskDetails(taskProject,listOfTaskObjects[i].name,newDetails);
         LocalStorage.renameTask(taskProject,listOfTaskObjects[i].name,newName);
