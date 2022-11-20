@@ -476,9 +476,17 @@ export default class Interface{
             .getTaskList();
         // Add certain tasks to Today or Upcoming based off dates
         // Get current task details
-        LocalStorage.setTaskDate(taskProject,listOfTaskObjects[i].name,document.getElementById('edit-task-date').value);
-        LocalStorage.setTaskDetails(taskProject,listOfTaskObjects[i].name,document.getElementById('edit-task-details').value);
-        LocalStorage.renameTask(taskProject,listOfTaskObjects[i].name,document.getElementById('edit-task-title').value);
+        const newDate = document.getElementById('edit-task-date').value;
+        const newDetails = document.getElementById('edit-task-details').value;
+        const newName = document.getElementById('edit-task-title').value;
+        if(newDate === ''){
+            LocalStorage.setTaskDate(taskProject,listOfTaskObjects[i].name,newDate);
+        }
+        else{
+            LocalStorage.setTaskDate(taskProject,listOfTaskObjects[i].name,format(new Date(newDate),'dd/MM/yyyy'));
+        }
+        LocalStorage.setTaskDetails(taskProject,listOfTaskObjects[i].name,newDetails);
+        LocalStorage.renameTask(taskProject,listOfTaskObjects[i].name,newName);
 
         Interface.clearTaskList();
         Interface.loadProjectTasks(currOpenProject);
