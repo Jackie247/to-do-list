@@ -355,7 +355,7 @@ export default class Interface{
         // Event handlers for task buttons, and the buttons on edit task form modal.
         tasks.forEach((task) => {
             task.addEventListener('click',Interface.handleTaskEvents);
-            task.lastElementChild.addEventListener('keypress',Interface.deleteTask);
+            task.addEventListener('keydown',Interface.handleTaskEventsInput);
         })
     }
     static deleteTask(task){
@@ -381,6 +381,11 @@ export default class Interface{
         }
         if(e.target.classList.contains('task-checkbox')){
             Interface.updateTaskCompleted(this);
+        }
+    }
+    static handleTaskEventsInput(e){
+        if(e.target.classList.contains('bi-x-circle')){
+            Interface.deleteTask(this);
         }
     }
     static renderTaskDetails(task,projectObj){
