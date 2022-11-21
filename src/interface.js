@@ -196,6 +196,10 @@ export default class Interface{
         addProjectBtn.addEventListener('click', Interface.openAddProjectForm);
         cancelBtn.addEventListener('click', Interface.closeAddProjectForm);
         acceptBtn.addEventListener('click',Interface.addProjectToList);
+        acceptBtn.addEventListener('keypress',Interface.handleAddProjectInput);
+    }
+    static handleAddProjectInput(e){
+        if(e.key === 'Enter') Interface.addProject();
     }
     static openAddProjectForm(){
         const addProjectForm = document.getElementById('add-project-form');
