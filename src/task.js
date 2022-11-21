@@ -39,6 +39,12 @@ export default class Task{
     getParentProject(){
         return this.parentProject;
     }
+    setIndex(index){
+        this.index = index;
+    }
+    getIndex(){
+        return this.index;
+    }
     // METHODS
     returnDateFormatted(){
         const day = this.dueDate.split('/')[0];
