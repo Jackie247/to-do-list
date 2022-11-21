@@ -9,6 +9,7 @@ export default class Interface{
         Interface.loadSavedProjects();
         Interface.initProjectButtons();
         Interface.openProject('Inbox',document.getElementById('inbox'));
+        document.addEventListener('keydown',Interface.handleCloseFormInput)
     }
     static loadSavedProjects(){
         LocalStorage.getSavedProjectList()
@@ -77,18 +78,17 @@ export default class Interface{
         const taskList = document.getElementById('task-list');
         taskList.innerHTML = '';
     }
-    static closeTaskPopupModal(){
-        const container = document.getElementById('task-popup')
-        if(container.style.display == 'block'){
-            container.style.display == 'none';
+    static closeEditTaskPopupModal(){
+        const modal = document.getElementById('edit-task-modal')
+        if(modal.classList.contains('popup-active')){
+            modal.classList.remove('popup-active');
         }
         return;
     }
     static closeAllForms(){
         Interface.closeAddProjectForm();
-        if(document.getElementById('add-task')){
-            Interface.closeTaskPopupModal();
-        }
+        Interface.closeEditTaskPopupModal();
+        Interface.closeAddTaskModal();
     }
     /** -------------Adding project content--------------- */
     static createProject(projectName){
@@ -200,6 +200,9 @@ export default class Interface{
     }
     static handleAddProjectInput(e){
         if(e.key === 'Enter') Interface.addProject();
+    }
+    static handleCloseFormInput(e){
+        if(e.key === 'Escape') Interface.closeAllForms();
     }
     static openAddProjectForm(){
         const addProjectForm = document.getElementById('add-project-form');
@@ -352,13 +355,14 @@ export default class Interface{
         // Event handlers for task buttons, and the buttons on edit task form modal.
         tasks.forEach((task) => {
             task.addEventListener('click',Interface.handleTaskEvents);
+            task.lastElementChild.addEventListener('keypress',Interface.deleteTask);
         })
     }
     static deleteTask(task){
         const openProject = document.getElementById('project-tasks-title').textContent;
         const taskProjectParent = task.dataset.project;
         const taskName = task.children[1].textContent;
-        if(openProject === 'Today' || openProject === 'Upcoming'){
+        if(openProject === 'Inbox' || openProject === 'Today' || openProject === 'Upcoming'){
             LocalStorage.deleteTask(taskProjectParent,taskName);
         }
         LocalStorage.deleteTask(openProject,taskName);
