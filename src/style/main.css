@@ -71,24 +71,6 @@ select {
     scroll-behavior: auto !important;
   }
 }
-:root {
-  --primary:#3b82f6;
-  --secondary:#d4d4d4;
-  --confirmBtn: ;
-  --buttonBg: ;
-  --buttonText: ;
-}
-
-@font-face {
-  font-family: "NotoSans";
-  src: url("../assets/NotoSerif-Regular.ttf");
-  font-weight: 600;
-  font-style: normal;
-}
-.projects-tab.active {
-  display: block;
-}
-
 /** Animation for navbar */
 .slide-in-left {
   -webkit-animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
@@ -115,189 +97,6 @@ select {
     opacity: 1;
   }
 }
-/** 
- * Main page content 
- */
-header {
-  height: 50px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-}
-header .container {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  padding: 0 1em;
-}
-header .container h1 {
-  display: flex;
-  justify-content: center;
-  flex-grow: 2;
-}
-header .container i {
-  font-size: 30px;
-}
-header .container button {
-  cursor: pointer;
-  border: none;
-  background-color: inherit;
-}
-header .container button i {
-  font-size: 30px;
-}
-
-main {
-  display: flex;
-  flex-flow: column;
-  height: calc(100vh - 75px);
-  background-image: url("../assets/alex-shutin-kKvQJ6rK6S4-unsplash.webp");
-  background-size: cover;
-  background-position: center;
-}
-main .projects-tab {
-  display: none;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-}
-main .projects-tab .navbar-projects {
-  padding: 0 1rem;
-}
-main .projects-tab .navbar-projects .default-projects button {
-  display: flex;
-  border: none;
-  background-color: inherit;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  width: 100%;
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.4);
-}
-main .projects-tab .navbar-projects .default-projects button i {
-  margin: 0 1em;
-}
-main .projects-tab .navbar-projects .default-projects button:hover {
-  border-radius: 0.5rem;
-  background-color: var(--secondary);
-}
-main .projects-tab .navbar-projects .default-projects button:nth-child(n) {
-  margin-right: 1em;
-}
-main .projects-tab .navbar-projects .project-title {
-  padding-left: 1rem;
-  margin: 1rem 0;
-}
-main .projects-tab .navbar-projects .project-list {
-  display: flex;
-  flex-flow: column;
-}
-main .projects-tab .navbar-projects .project-list .new-project {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1rem;
-  margin-bottom: 0.5rem;
-  font-size: 20px;
-  border: none;
-  background-color: inherit;
-  cursor: pointer;
-}
-main .projects-tab .navbar-projects .project-list .new-project .left-div {
-  display: flex;
-}
-main .projects-tab .navbar-projects .project-list .new-project .left-div p {
-  margin-left: 1rem;
-}
-main .projects-tab .navbar-projects .project-list button:hover {
-  border-radius: 0.5rem;
-  background-color: var(--secondary);
-}
-main .projects-tab .navbar-projects .add-project-btn {
-  display: flex;
-  border: none;
-  background-color: inherit;
-  padding-left: 1rem;
-  margin: 1rem 0;
-  cursor: pointer;
-  font-size: 18px;
-}
-main .projects-tab .navbar-projects .add-project-btn i {
-  margin-right: 1em;
-}
-main .projects-tab .navbar-projects .add-project-form {
-  display: none;
-  margin-bottom: 1rem;
-  padding: 0 1rem;
-}
-main .projects-tab .navbar-projects .add-project-form .add-project-title {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 7.5px 5px;
-  border-radius: 5px;
-  border: 1px solid #aaa;
-}
-main .projects-tab .navbar-projects .add-project-form .add-project-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-main .projects-tab .navbar-projects .add-project-form .add-project-buttons button {
-  width: 100%;
-  padding: 5px 10px;
-}
-main .tasks-container {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-}
-main .tasks-container .project-title {
-  margin: 0 1rem;
-}
-main .tasks-container .task-list {
-  display: flex;
-  flex-flow: column;
-  width: 100%;
-}
-main .tasks-container .task-list .task {
-  display: flex;
-  align-items: center;
-  margin: 0.5rem 1rem;
-  padding: 0.5em;
-  background-color: #fff;
-  border: 1px solid #aaa;
-  border-radius: 0.5rem;
-}
-main .tasks-container .task-list .task .task-name {
-  flex-grow: 2;
-}
-main .tasks-container .task-list .task .task-checkbox {
-  margin: 0 0.5rem;
-}
-main .tasks-container .task-list .task .edit-task {
-  margin: 0 0.5rem;
-  background-color: transparent;
-  border: none;
-}
-main .tasks-container .task-list .task .del-task-btn {
-  margin-right: 0.5rem;
-  background-color: inherit;
-  border: none;
-}
-main .tasks-container .task-list .task .edit-task:hover, main .tasks-container .task-list .task .del-task-btn:hover, main .tasks-container .task-list .task .task-checkbox:hover {
-  cursor: pointer;
-}
-main .tasks-container .add-task-btn {
-  display: flex;
-  border: none;
-  background-color: inherit;
-  cursor: pointer;
-}
-main .tasks-container .add-task-btn i {
-  margin-right: 1em;
-}
-
-footer {
-  display: flex;
-  height: 25px;
-  justify-content: center;
-}
-
 /** 
  * Styling for popup modals.
  */
@@ -437,7 +236,7 @@ footer {
 .modal .modal-content .modal-footer .task-complete-container i {
   font-size: 24px;
 }
-.modal .modal-content .modal-footer .edit-task-container {
+.modal .modal-content .modal-footer .confirm-edit-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -446,11 +245,250 @@ footer {
   border: none;
   background-color: transparent;
 }
-.modal .modal-content .modal-footer .edit-task-container i {
-  font-size: 24px;
-}
-.modal .modal-content .modal-footer .edit-task-container:hover {
+.modal .modal-content .modal-footer .confirm-edit-btn:hover {
   background-color: var(--primary);
   color: #fff;
   cursor: pointer;
+}
+
+:root {
+  --primary:#3b82f6;
+  --secondary:#d4d4d4;
+  --confirmBtn: ;
+  --buttonBg: ;
+  --buttonText: ;
+}
+
+@font-face {
+  font-family: "NotoSans";
+  src: url("../assets/NotoSerif-Regular.ttf");
+  font-weight: 600;
+  font-style: normal;
+}
+.projects-tab.active {
+  display: block;
+}
+
+.modal.popup-active {
+  display: block;
+}
+
+header {
+  height: 50px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+header .container {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 0 1em;
+}
+header .container h1 {
+  display: flex;
+  justify-content: center;
+  flex-grow: 2;
+}
+header .container i {
+  font-size: 30px;
+}
+header .container button {
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+}
+header .container button i {
+  font-size: 30px;
+}
+
+main {
+  display: flex;
+  flex-flow: column;
+  height: calc(100vh - 75px);
+  background-image: url("../assets/alex-shutin-kKvQJ6rK6S4-unsplash.webp");
+  background-size: cover;
+  background-position: center;
+}
+main .projects-tab {
+  display: none;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+main .projects-tab .navbar-projects {
+  padding: 0 1rem;
+}
+main .projects-tab .navbar-projects .default-projects button {
+  display: flex;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  width: 100%;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.4);
+}
+main .projects-tab .navbar-projects .default-projects button i {
+  margin: 0 1em;
+}
+main .projects-tab .navbar-projects .default-projects button:hover {
+  border-radius: 0.5rem;
+  background-color: var(--secondary);
+}
+main .projects-tab .navbar-projects .default-projects button:nth-child(n) {
+  margin-right: 1em;
+}
+main .projects-tab .navbar-projects .project-title {
+  padding-left: 1rem;
+  margin: 1rem 0;
+}
+main .projects-tab .navbar-projects .project-list {
+  display: flex;
+  flex-flow: column;
+  overflow: auto;
+}
+main .projects-tab .navbar-projects .project-list .new-project {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+  font-size: clamp(1vh, 20px, 3vw);
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+main .projects-tab .navbar-projects .project-list .new-project .left-div {
+  display: flex;
+}
+main .projects-tab .navbar-projects .project-list .new-project .left-div p {
+  margin-left: 1rem;
+}
+main .projects-tab .navbar-projects .project-list button:hover {
+  border-radius: 0.5rem;
+  background-color: var(--secondary);
+}
+main .projects-tab .navbar-projects .add-project-btn {
+  display: flex;
+  border: none;
+  background-color: inherit;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  font-size: 18px;
+}
+main .projects-tab .navbar-projects .add-project-btn i {
+  margin-right: 1em;
+}
+main .projects-tab .navbar-projects .add-project-form {
+  display: none;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+main .projects-tab .navbar-projects .add-project-form .add-project-title {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 7.5px 5px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+main .projects-tab .navbar-projects .add-project-form .add-project-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+main .projects-tab .navbar-projects .add-project-form .add-project-buttons button {
+  width: 100%;
+  padding: 5px 10px;
+}
+main .tasks-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  overflow: auto;
+}
+main .tasks-container .project-title {
+  margin: 0 1rem;
+}
+main .tasks-container .task-list {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+main .tasks-container .task-list .task {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 1rem;
+  padding: 0.5em;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 0.5rem;
+  font-size: clamp(2vh, 18px, 2vw);
+}
+main .tasks-container .task-list .task .task-name {
+  flex-grow: 2;
+}
+main .tasks-container .task-list .task .task-checkbox {
+  margin: 0 0.5rem;
+}
+main .tasks-container .task-list .task .edit-task {
+  margin: 0 0.5rem;
+  background-color: transparent;
+  border: none;
+}
+main .tasks-container .task-list .task .del-task-btn {
+  margin-right: 0.5rem;
+  background-color: inherit;
+  border: none;
+}
+main .tasks-container .task-list .task .edit-task:hover, main .tasks-container .task-list .task .del-task-btn:hover, main .tasks-container .task-list .task .task-checkbox:hover {
+  cursor: pointer;
+}
+main .tasks-container .add-task-btn {
+  display: flex;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+main .tasks-container .add-task-btn i {
+  margin-right: 1em;
+}
+main .tasks-container .add-task-btn:hover {
+  color: #fff;
+}
+
+footer {
+  display: flex;
+  height: 25px;
+  justify-content: center;
+}
+
+@media screen and (min-width: 1024px) {
+  header .container h1 {
+    margin-left: 1rem;
+    justify-content: flex-start;
+  }
+  header .container button {
+    display: none;
+  }
+  main {
+    display: grid;
+    grid-template-columns: minmax(-webkit-min-content, 250px) 1fr;
+    grid-template-columns: minmax(min-content, 250px) 1fr;
+  }
+  main #edit-task-popup {
+    position: absolute;
+  }
+  main #task-popup {
+    position: absolute;
+  }
+  main .projects-tab {
+    display: block;
+  }
+  main .projects-tab .navbar-projects.slide-in-left {
+    -webkit-animation: none;
+    animation: none;
+  }
+  main .tasks-container {
+    padding: 20px;
+  }
+  main .tasks-container .task-list {
+    width: clamp(50%, 50vw, 75%);
+  }
 }/*# sourceMappingURL=main.css.map */

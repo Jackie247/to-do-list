@@ -22,7 +22,6 @@ export default class Project{
     // METHODS //
     addTask(newTask){
         if(this.taskList.find((task) => task.getTaskName() === newTask.name)) return;
-        newTask.setIndex(this.taskList.length);
         this.taskList.push(newTask);
     }
     deleteTask(task){
