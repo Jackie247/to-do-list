@@ -35,9 +35,9 @@ export default class Interface{
         }
         else{
             LocalStorage.getSavedProjectList()
-            .getProject(projectName).getTaskList()
-            .forEach(task => {
-                Interface.createTask(task.name,task.dueDate,task);
+                .getProject(projectName).getTaskList()
+                .forEach(task => {
+                    Interface.createTask(task.name,task.dueDate,task);
         })
         }
         if(projectName !== 'Today' && projectName !== 'Upcoming'){
@@ -214,7 +214,9 @@ export default class Interface{
 
         const newTaskContainer = document.createElement('div');
         newTaskContainer.classList.add('task');
-        
+        newTaskContainer.setAttribute('data-project',`${taskObject.getParentProject()}`);
+        newTaskContainer.setAttribute('data-index',taskObject.getIndex());
+
         const checkBox = document.createElement('input');
         checkBox.setAttribute('type','checkbox');
         checkBox.classList.add('task-checkbox');
@@ -254,12 +256,7 @@ export default class Interface{
         newTaskContainer.appendChild(dateText);
         newTaskContainer.appendChild(details);
         newTaskContainer.appendChild(deleteBtn);
-
         taskList.appendChild(newTaskContainer);
-
-        let tasks = taskList.querySelectorAll('.task');
-        newTaskContainer.setAttribute('data-project',`${taskObject.getParentProject()}`);
-        newTaskContainer.setAttribute('data-index',(tasks.length)-1);
 
         Interface.initTaskButtons();
     }
@@ -295,6 +292,8 @@ export default class Interface{
         const taskTitle = document.getElementById('new-task-title').value;
         const taskDate = document.getElementById('new-task-date').value;
         const taskDetails = document.getElementById('new-task-details').value;
+        const projectObject = LocalStorage.getSavedProjectList()
+            .getProject(projectName);    
         // If task title is empty, prompt user to enter.
         if(taskTitle === ''){
             alert('Enter task title');
@@ -322,14 +321,13 @@ export default class Interface{
         }
         LocalStorage.setTaskDetails(projectName,taskTitle,taskDetails);
         LocalStorage.setTaskProjectParent(projectName,taskTitle);
-        // When rendering the task to display, if not in the parent project that the task was created in.
-        // We want to display in () which project the task belongs to.
-        // So need to pass in object to createTask so we can get the parent project
+        LocalStorage.setTaskIndex(projectName,taskTitle,projectObject.getTaskList().length);
+        // Create task to display on interface
         const taskObject = LocalStorage.getSavedProjectList()
             .getProject(projectName)
             .getTask(taskTitle);
-        // Create task to display on interface
-        Interface.createTask(taskTitle, taskDate,taskObject);
+            
+        Interface.createTask(taskTitle,taskDate,taskObject);
         Interface.clearTaskList();
         Interface.loadProjectTasks(projectName);
         Interface.closeAddTaskModal();
@@ -356,23 +354,30 @@ export default class Interface{
     }
     static handleTaskEvents(e){
         const project = e.currentTarget.dataset.project;
-        const listOfTaskObjects = LocalStorage.getSavedProjectList()
+        const projectObject = LocalStorage.getSavedProjectList()
             .getProject(project)
-            .getTaskList();
         if(e.target.classList.contains('bi-x-circle')){
             Interface.deleteTask(this);
         }
         if(e.target.classList.contains('edit-task')){
-            Interface.renderTaskDetails(this,listOfTaskObjects);
+            Interface.renderTaskDetails(this,projectObject);
         }
         if(e.target.classList.contains('task-checkbox')){
             Interface.updateTaskCompleted(this);
         }
     }
-    static renderTaskDetails(task,listOfTaskObjects){
-        const savedProjectList = LocalStorage.getSavedProjectList();
-        let i = task.dataset.index;
-        let taskObject = listOfTaskObjects[i];
+    static renderTaskDetails(task,projectObj){
+        // listOfTaskObjects is the tasks parent project task list.
+        const currOpenProject = document.getElementById('project-tasks-title').textContent;
+        let taskName = task.children[1].textContent; // either 'task' or '(project) task'
+        // If not in parent project
+        if(projectObj.getName() !== currOpenProject){
+            var tempArr = task.children[1].textContent.split(' ');
+            const [, ...rest] = tempArr;
+            taskName = rest.join(" ");
+        }
+        let taskObject = projectObj.getTask(taskName);
+        let i = taskObject.getIndex();
 
         Interface.closeAllForms();
         const editForm = document.getElementById('edit-task-popup');
@@ -442,7 +447,7 @@ export default class Interface{
         confirmEditBtn.classList.add('confirm-edit-btn');
         confirmEditBtn.textContent = 'Confirm Edit';
         confirmEditBtn.addEventListener('click', () => {
-            Interface.updateTask(modalContent,savedProjectList,modal);
+            Interface.updateTask(taskName,projectObj,modal);
         })
 
         editForm.appendChild(modal);
@@ -464,35 +469,24 @@ export default class Interface{
         modalContent.appendChild(modalFooter);
         modalFooter.appendChild(confirmEditBtn);
     }
-    static updateTask(e,savedProjectList,editForm){
-        // Get the tasks index and project attributes.
-        const i = e.children[1].firstElementChild.firstElementChild.dataset.index;
-        const taskProject = e.children[1].firstElementChild.firstElementChild.dataset.project;
-        // If we edit tasks within Inbox, Today, or Upcoming.
-        // We want to be able to edit the tasks without having to use the title element
+    static updateTask(taskName,projectObj,editForm){
         const currOpenProject = document.getElementById('project-tasks-title').textContent;
-        // Get the currently saved task list from the parent project of the task we are editing
-        // So for instance, if editing in Inbox a task that belongs to another project,
-        // Get all the task list of project and NOT inbox.
-        const listOfTaskObjects = savedProjectList
-            .getProject(taskProject)
-            .getTaskList();
-        // Add certain tasks to Today or Upcoming based off dates
-        // Get current task details
+        const taskObj = projectObj.getTask(taskName);
+        // New task info to update.
         const newDate = document.getElementById('edit-task-date').value;
         const newDetails = document.getElementById('edit-task-details').value;
         const newName = document.getElementById('edit-task-title').value;
         if(newDate === ''){
-            LocalStorage.setTaskDate(taskProject,listOfTaskObjects[i].name,newDate);
+            LocalStorage.setTaskDate(projectObj.getName(),taskObj.getTaskName(),newDate);
         }
         else{
-            LocalStorage.setTaskDate(taskProject,listOfTaskObjects[i].name,format(new Date(newDate),'dd/MM/yyyy'));
+            LocalStorage.setTaskDate(projectObj.getName(),taskObj.getTaskName(),format(new Date(newDate),'dd/MM/yyyy'));
             LocalStorage.updateToday();
             LocalStorage.updateUpcoming();
         }
-        LocalStorage.setTaskDetails(taskProject,listOfTaskObjects[i].name,newDetails);
-        LocalStorage.renameTask(taskProject,listOfTaskObjects[i].name,newName);
-
+        LocalStorage.setTaskDetails(projectObj.getName(),taskObj.getTaskName(),newDetails);
+        LocalStorage.renameTask(projectObj.getName(),taskObj.getTaskName(),newName);
+        // Reset the interface.
         Interface.clearTaskList();
         Interface.loadProjectTasks(currOpenProject);
         editForm.classList.toggle('popup-active');
