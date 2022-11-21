@@ -152,7 +152,16 @@ export default class Interface{
         todayBtn.addEventListener('click',Interface.openToday);
         upcomingBtn.addEventListener('click',Interface.openUpcoming);
         dropDownBtn.addEventListener('click',Interface.toggleNavbarDisplay);
-        projectButtons.forEach((project) => project.addEventListener('click', Interface.handleUserProjects))
+        projectButtons.forEach((project) => {
+            project.addEventListener('click', Interface.handleUserProjects);
+            project.addEventListener('keydown',Interface.handleProjectBtnInput);
+        })
+    }
+    static handleProjectBtnInput(e){
+        const projectName = this.children[0].children[1].textContent;
+        if(e.key === 'Delete' || e.key === 'Backspace'){
+            Interface.deleteProject(projectName,this);
+        }
     }
     static openInbox(){
         Interface.openProject('Inbox',this);
