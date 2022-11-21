@@ -384,8 +384,10 @@ export default class Interface{
         }
     }
     static handleTaskEventsInput(e){
-        if(e.target.classList.contains('bi-x-circle')){
-            Interface.deleteTask(this);
+        if(e.key === 'Enter'){
+            if(e.target.classList.contains('bi-x-circle')){
+                Interface.deleteTask(this);
+            }
         }
     }
     static renderTaskDetails(task,projectObj){
