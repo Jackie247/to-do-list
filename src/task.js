@@ -7,6 +7,7 @@ export default class Task{
         this.details = details;
         this.parentProject;
         this.index;
+        this.checked;
     }
     // GETTERS AND SETTERS //
     setTaskName(name){
@@ -44,6 +45,12 @@ export default class Task{
     }
     getIndex(){
         return this.index;
+    }
+    setChecked(bool){
+        this.checked = bool;
+    }
+    getChecked(){
+        return this.checked;
     }
     // METHODS
     returnDateFormatted(){
