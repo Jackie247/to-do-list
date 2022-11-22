@@ -87,6 +87,11 @@ export default class LocalStorage{
         LocalStorage.updateStorage(savedProjectList);
         return;
     }
+    static setTaskChecked(projectName,taskName,bool){
+        const savedProjectList = LocalStorage.getSavedProjectList();
+        savedProjectList.getProject(projectName).getTask(taskName).setChecked(bool);
+        LocalStorage.updateStorage(savedProjectList);
+    }
     static updateToday(){
         const savedProjectList = LocalStorage.getSavedProjectList();
         savedProjectList.updateToday();
