@@ -273,6 +273,14 @@ export default class Interface{
         newTaskContainer.appendChild(deleteBtn);
         taskList.appendChild(newTaskContainer);
 
+        if(taskObject.getChecked()){
+            checkBox.classList.add('checked');
+            name.classList.add('checked');
+            dateText.classList.add('checked');
+            details.classList.add('checked');
+            deleteBtn.classList.add('checked');
+        }
+
         Interface.initTaskButtons();
     }
     /** -------------Event listeners for task creation---------------*/    
@@ -395,10 +403,11 @@ export default class Interface{
         const dateText = task.children[2];
         const editBtn = task.children[3];
         const delBtn = task.children[4];
-        let taskName = taskElem.textContent;
-        const currOpenProject = document.getElementById('project-tasks-title');
+        let taskName = task.children[1].textContent;
+        const currOpenProject = document.getElementById('project-tasks-title').textContent;
+
         if(projectObj.getName() !== currOpenProject){
-            var tempArr = task.children[1].textContent.split(' ');
+            var tempArr = taskName.split(' ');
             const [, ...rest] = tempArr;
             taskName = rest.join(" ");
         }
@@ -416,6 +425,7 @@ export default class Interface{
             LocalStorage.setTaskChecked(projectObj.getName(),taskName,true);
         }
     }
+
     static renderTaskDetails(task,projectObj){
         // listOfTaskObjects is the tasks parent project task list.
         const currOpenProject = document.getElementById('project-tasks-title').textContent;

@@ -101,7 +101,7 @@
         .add-project-container:hover{
           background-color:var(--secondary);
         }
-        .add-task-container{
+        .accept-task-btn{
           display:flex;
           justify-content: center;
           align-items: center;
@@ -114,17 +114,17 @@
             font-size:24px;
           }
         }
-        .add-task-container:hover{
+        .accept-task-btn:hover{
           background-color:var(--primary);
           color:#fff;
           cursor: pointer;
         }
-        .task-complete-container:hover{
+        .mark-task-btn:hover{
           background-color:var(--primary);
           color:#fff;
           cursor:pointer;
         }
-        .task-complete-container{
+        .mark-task-btn{
           display:flex;
           justify-content: center;
           align-items: center;

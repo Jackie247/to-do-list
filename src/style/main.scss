@@ -2,6 +2,13 @@
 @import "animation";
 @import "modal";
 
+@font-face{
+  font-family: 'NotoSans';
+  src:url('../assets/NotoSerif-Regular.ttf');
+  font-weight: 600;
+  font-style:normal;
+}
+
 :root{
   --primary:#3b82f6;
   --secondary:#d4d4d4;
@@ -9,12 +16,7 @@
   --buttonBg: ;
   --buttonText: ;
 }
-@font-face{
-  font-family: 'NotoSans';
-  src:url('../assets/NotoSerif-Regular.ttf');
-  font-weight: 600;
-  font-style:normal;
-}
+
 .projects-tab.active{
   display:block;
 }
@@ -22,9 +24,29 @@
 .modal.popup-active{
   display:block;
 }
+.task-checkbox.checked{
+  border:none !important; 
+  background: url('../assets/select.png');
+  background-size:contain;
+}
+.task-name.checked{
+  text-decoration: line-through;
+  opacity:0.5;
+}
+.task-date.checked{
+  text-decoration: line-through;
+  opacity:0.5;
+}
+.edit-task.checked{
+  opacity:0.5;
+}
+.del-task-btn.checked{
+  opacity:0.5;
+}
 // ** Base Styles ** //
 header{
     height:50px;
+    border-bottom:1px solid rgba(0,0,0,0.4);
     .container{
         display:flex;
         flex-flow:row;
@@ -47,7 +69,6 @@ header{
           }
         }
     }
-  border-bottom:1px solid rgba(0,0,0,0.4);
 }
 main{
     display:flex;
@@ -177,7 +198,10 @@ main{
             flex-grow:2;
           }
           .task-checkbox{
+            height:1em;
+            width:1em;
             margin: 0 0.5rem;
+            border:1px solid black;
           }
           .edit-task{
             margin:0 0.5rem;

@@ -201,7 +201,7 @@ select {
 .modal .modal-content .modal-footer .add-project-container:hover {
   background-color: var(--secondary);
 }
-.modal .modal-content .modal-footer .add-task-container {
+.modal .modal-content .modal-footer .accept-task-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -211,20 +211,20 @@ select {
   border: none;
   border-right: 1px solid black;
 }
-.modal .modal-content .modal-footer .add-task-container i {
+.modal .modal-content .modal-footer .accept-task-btn i {
   font-size: 24px;
 }
-.modal .modal-content .modal-footer .add-task-container:hover {
+.modal .modal-content .modal-footer .accept-task-btn:hover {
   background-color: var(--primary);
   color: #fff;
   cursor: pointer;
 }
-.modal .modal-content .modal-footer .task-complete-container:hover {
+.modal .modal-content .modal-footer .mark-task-btn:hover {
   background-color: var(--primary);
   color: #fff;
   cursor: pointer;
 }
-.modal .modal-content .modal-footer .task-complete-container {
+.modal .modal-content .modal-footer .mark-task-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -233,7 +233,7 @@ select {
   background-color: transparent;
   border: none;
 }
-.modal .modal-content .modal-footer .task-complete-container i {
+.modal .modal-content .modal-footer .mark-task-btn i {
   font-size: 24px;
 }
 .modal .modal-content .modal-footer .confirm-edit-btn {
@@ -251,6 +251,12 @@ select {
   cursor: pointer;
 }
 
+@font-face {
+  font-family: "NotoSans";
+  src: url("../assets/NotoSerif-Regular.ttf");
+  font-weight: 600;
+  font-style: normal;
+}
 :root {
   --primary:#3b82f6;
   --secondary:#d4d4d4;
@@ -259,18 +265,36 @@ select {
   --buttonText: ;
 }
 
-@font-face {
-  font-family: "NotoSans";
-  src: url("../assets/NotoSerif-Regular.ttf");
-  font-weight: 600;
-  font-style: normal;
-}
 .projects-tab.active {
   display: block;
 }
 
 .modal.popup-active {
   display: block;
+}
+
+.task-checkbox.checked {
+  border: none !important;
+  background: url("../assets/select.png");
+  background-size: contain;
+}
+
+.task-name.checked {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.task-date.checked {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.edit-task.checked {
+  opacity: 0.5;
+}
+
+.del-task-btn.checked {
+  opacity: 0.5;
 }
 
 header {
@@ -425,7 +449,10 @@ main .tasks-container .task-list .task .task-name {
   flex-grow: 2;
 }
 main .tasks-container .task-list .task .task-checkbox {
+  height: 1em;
+  width: 1em;
   margin: 0 0.5rem;
+  border: 1px solid black;
 }
 main .tasks-container .task-list .task .edit-task {
   margin: 0 0.5rem;
