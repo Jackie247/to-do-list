@@ -233,19 +233,8 @@ export default class Interface{
         newTaskContainer.setAttribute('data-project',`${taskObject.getParentProject()}`);
         newTaskContainer.setAttribute('data-index',taskObject.getIndex());
 
-        const checkBox = document.createElement('input');
-        checkBox.setAttribute('type','checkbox');
+        const checkBox = document.createElement('div');
         checkBox.classList.add('task-checkbox');
-        
-        const details = document.createElement('button');
-        details.textContent = 'Edit';
-        details.classList.add('edit-task');
-        details.setAttribute('type','button');
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.setAttribute('id','del-task-btn');
-        deleteBtn.classList.add('del-task-btn','bi','bi-x-circle');
-        deleteBtn.setAttribute('type','button');
 
         const name = document.createElement('p');
         name.classList.add('task-name');
@@ -267,6 +256,16 @@ export default class Interface{
         else{
             dateText.textContent = date;
         }
+        const details = document.createElement('button');
+        details.textContent = 'Edit';
+        details.classList.add('edit-task');
+        details.setAttribute('type','button');
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.setAttribute('id','del-task-btn');
+        deleteBtn.classList.add('del-task-btn','bi','bi-x-circle');
+        deleteBtn.setAttribute('type','button');
+
         newTaskContainer.appendChild(checkBox);
         newTaskContainer.appendChild(name);
         newTaskContainer.appendChild(dateText);
@@ -380,7 +379,7 @@ export default class Interface{
             Interface.renderTaskDetails(this,projectObject);
         }
         if(e.target.classList.contains('task-checkbox')){
-            Interface.updateTaskCompleted(this);
+            Interface.updateTaskCompleted(this,projectObject);
         }
     }
     static handleTaskEventsInput(e){
@@ -388,6 +387,33 @@ export default class Interface{
             if(e.target.classList.contains('bi-x-circle')){
                 Interface.deleteTask(this);
             }
+        }
+    }
+    static updateTaskCompleted(task,projectObj){
+        const checkBox = task.children[0];
+        const taskElem = task.children[1];
+        const dateText = task.children[2];
+        const editBtn = task.children[3];
+        const delBtn = task.children[4];
+        let taskName = taskElem.textContent;
+        const currOpenProject = document.getElementById('project-tasks-title');
+        if(projectObj.getName() !== currOpenProject){
+            var tempArr = task.children[1].textContent.split(' ');
+            const [, ...rest] = tempArr;
+            taskName = rest.join(" ");
+        }
+        const taskObj = projectObj.getTask(taskName);
+
+        checkBox.classList.toggle('checked');
+        taskElem.classList.toggle('checked');
+        dateText.classList.toggle('checked');
+        editBtn.classList.toggle('checked');
+        delBtn.classList.toggle('checked');
+
+        if(taskObj.getChecked()){
+            LocalStorage.setTaskChecked(projectObj.getName(),taskName,false);
+        }else{
+            LocalStorage.setTaskChecked(projectObj.getName(),taskName,true);
         }
     }
     static renderTaskDetails(task,projectObj){
