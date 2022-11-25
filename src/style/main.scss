@@ -2,276 +2,275 @@
 @import "animation";
 @import "modal";
 
-@font-face{
-  font-family: 'NotoSans';
-  src:url('../assets/NotoSerif-Regular.ttf');
+@font-face {
+  font-family: "NotoSans";
+  src: url("../assets/NotoSerif-Regular.ttf");
   font-weight: 600;
-  font-style:normal;
+  font-style: normal;
 }
 
-:root{
-  --primary:#3b82f6;
-  --secondary:#d4d4d4;
+:root {
+  --primary: #3b82f6;
+  --secondary: #d4d4d4;
   --confirmBtn: ;
   --buttonBg: ;
   --buttonText: ;
 }
 
-.projects-tab.active{
-  display:block;
+.projects-tab.active {
+  display: block;
 }
 
-.modal.popup-active{
-  display:block;
+.modal.popup-active {
+  display: block;
 }
-.task-checkbox.checked{
-  border:none !important; 
-  background: url('../assets/select.png');
-  background-size:contain;
+.task-checkbox.checked {
+  border: none !important;
+  background: url("../assets/select.png");
+  background-size: contain;
 }
-.task-name.checked{
+.task-name.checked {
   text-decoration: line-through;
-  opacity:0.5;
+  opacity: 0.5;
 }
-.task-date.checked{
+.task-date.checked {
   text-decoration: line-through;
-  opacity:0.5;
+  opacity: 0.5;
 }
-.edit-task.checked{
-  opacity:0.5;
+.edit-task.checked {
+  opacity: 0.5;
 }
-.del-task-btn.checked{
-  opacity:0.5;
+.del-task-btn.checked {
+  opacity: 0.5;
 }
 // ** Base Styles ** //
-header{
-    height:50px;
-    border-bottom:1px solid rgba(0,0,0,0.4);
-    .container{
-        display:flex;
-        flex-flow:row;
-        align-items:center;
-        padding:0 1em;
-        h1{
-            display:flex;
-            justify-content: center;
-            flex-grow:2;
-        }
-        i{
-            font-size:30px;
-        }
-        button{
-          cursor:pointer;
-          border:none;
-          background-color: inherit;
-          i{
-            font-size:30px;
-          }
-        }
+header {
+  height: 50px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  .container {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 0 1em;
+    h1 {
+      display: flex;
+      justify-content: center;
+      flex-grow: 2;
     }
-}
-main{
-    display:flex;
-    flex-flow:column;
-    height:calc(100vh - 75px);
-    background-image: url("../assets/alex-shutin-kKvQJ6rK6S4-unsplash.webp");
-    background-size: cover;
-    background-position: center;
-    .projects-tab{
-      display:none;
-      background-color: #fff; 
-      border-bottom: 1px solid rgba(0,0,0,0.4);
-      .navbar-projects{
-        padding: 0 1rem;
-        .default-projects{
-          button{
-            display:flex;
-            border:none;
-            background-color: inherit;
-            cursor: pointer;
-            margin-top:0.5rem;
-            width:100%;
-            border-bottom: 1px dashed rgba(0,0,0,0.4);
-            i{
-              margin:0 1em;
-            }
-          }
-          button:hover{
-            border-radius:0.5rem;
-            background-color:var(--secondary);
-          }
-          button:nth-child(n){
-            margin-right:1em;
-          }
-        }
-        .project-title{
-          padding-left:1rem;
-          margin: 1rem 0;
-        }
-        .project-list{
-          display:flex;
-          flex-flow:column;
-          overflow:auto;
-          .new-project{
-            display:flex;
-            justify-content: space-between;
-            padding: 0 1rem;
-            margin-bottom:0.5rem;
-            font-size:clamp(1vh,20px,3vw);
-            border:none;
-            background-color: inherit;
-            cursor:pointer;
-            .left-div{
-              display:flex;
-              p{
-                margin-left: 1rem;
-              }
-            }
-            .right-div{
-              i{
-                
-              }
-            }
-          }
-          button:hover{
-            border-radius:0.5rem;
-            background-color:var(--secondary);
-          }
-        }
-        .add-project-btn{
-          display:flex;
-          border:none;
-          background-color: inherit;
-          padding-left:1rem;
-          margin:1rem 0;
-          cursor: pointer;
-          i{
-            margin-right:1em;
-          }
-          font-size: 18px;
-        }
-        .add-project-form{
-          display:none;
-          margin-bottom:1rem;
-          padding:0 1rem;
-          .add-project-title{
-            width:100%;
-            margin-bottom:10px;
-            padding:7.5px 5px;
-            border-radius:5px;
-            border: 1px solid #aaa;
-          }
-          .add-project-buttons{
-            display:flex;
-            justify-content: center;
-            gap:20px;
-            button{
-              width:100%;
-              padding:5px 10px;
-            }
-          }
-        }
-      }
+    i {
+      font-size: 30px;
     }
-    .tasks-container{
-      display:flex;
-      flex-flow:column;
-      align-items: center;
-      overflow:auto;
-      .project-title{
-        margin:0 1rem;
-      }
-      .task-list{
-        display:flex;
-        flex-flow:column;
-        width:100%;
-        .task{
-          display:flex;
-          align-items: center;
-          margin: 0.5rem 1rem;
-          padding: 0.5em;
-          background-color: #fff;
-          border:1px solid #aaa;
-          border-radius: 0.5rem;
-          font-size:clamp(2vh,18px,2vw);
-          .task-name{
-            flex-grow:2;
-          }
-          .task-checkbox{
-            height:1em;
-            width:1em;
-            margin: 0 0.5rem;
-            border:1px solid black;
-          }
-          .edit-task{
-            margin:0 0.5rem;
-            background-color: transparent;
-            border:none;
-          }
-          .del-task-btn{
-            margin-right:0.5rem;
-            background-color: inherit;
-            border:none;
-          }
-          .edit-task:hover,.del-task-btn:hover,.task-checkbox:hover{
-            cursor: pointer;
-          }
-        }
-      }
-      .add-task-btn{
-        display:flex;
-        border:none;
-        background-color: inherit;
-        cursor: pointer;
-        i{
-          margin-right:1em;
-        }
-      }
-      .add-task-btn:hover{
-        color:#fff;
-      }
-
-    }
-}
-footer{
-  display:flex;
-  height:25px;
-  justify-content: center;
-}
- @media screen and (min-width:1024px){
-  header{
-    .container{
-      h1{
-        margin-left:1rem;
-        justify-content: flex-start;
-      }
-      button{
-        display:none;
+    button {
+      cursor: pointer;
+      border: none;
+      background-color: inherit;
+      i {
+        font-size: 30px;
       }
     }
   }
-    main{
-      display:grid;
-      grid-template-columns: minmax(min-content,250px) 1fr;
-      #edit-task-popup{
-        position:absolute;
-      }
-      #task-popup{
-        position:absolute;
-      }
-      .projects-tab{
-        display:block;
-        .navbar-projects.slide-in-left{
-          -webkit-animation: none;
-	        animation: none;
+}
+main {
+  display: flex;
+  flex-flow: column;
+  height: calc(100vh - 75px);
+  background-image: url("../assets/alex-shutin-kKvQJ6rK6S4-unsplash.webp");
+  background-size: cover;
+  background-position: center;
+  .projects-tab {
+    display: none;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    .navbar-projects {
+      padding: 0 1rem;
+      .default-projects {
+        button {
+          display: flex;
+          border: none;
+          background-color: inherit;
+          cursor: pointer;
+          margin-top: 0.5rem;
+          width: 100%;
+          border-bottom: 1px dashed rgba(0, 0, 0, 0.4);
+          i {
+            margin: 0 1em;
+          }
+        }
+        button:hover {
+          border-radius: 0.5rem;
+          background-color: var(--secondary);
+        }
+        button:nth-child(n) {
+          margin-right: 1em;
         }
       }
-      .tasks-container{
-        padding:20px;
-        .task-list{
-          width:clamp(50%,50vw, 75%);
+      .project-title {
+        padding-left: 1rem;
+        margin: 1rem 0;
+      }
+      .project-list {
+        display: flex;
+        flex-flow: column;
+        overflow: auto;
+        .new-project {
+          display: flex;
+          justify-content: space-between;
+          padding: 0 1rem;
+          margin-bottom: 0.5rem;
+          font-size: clamp(14px, 20px, 3vw);
+          border: none;
+          background-color: inherit;
+          cursor: pointer;
+          .left-div {
+            display: flex;
+            p {
+              margin-left: 1rem;
+            }
+          }
+          .right-div {
+            i {
+            }
+          }
+        }
+        button:hover {
+          border-radius: 0.5rem;
+          background-color: var(--secondary);
         }
       }
-
+      .add-project-btn {
+        display: flex;
+        border: none;
+        background-color: inherit;
+        padding-left: 1rem;
+        margin: 1rem 0;
+        cursor: pointer;
+        i {
+          margin-right: 1em;
+        }
+        font-size: 18px;
+      }
+      .add-project-form {
+        display: none;
+        margin-bottom: 1rem;
+        padding: 0 1rem;
+        .add-project-title {
+          width: 100%;
+          margin-bottom: 10px;
+          padding: 7.5px 5px;
+          border-radius: 5px;
+          border: 1px solid #aaa;
+        }
+        .add-project-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          button {
+            width: 100%;
+            padding: 5px 10px;
+          }
+        }
+      }
     }
- }
+  }
+  .tasks-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    overflow: auto;
+    .project-title {
+      margin: 0 1rem;
+    }
+    .task-list {
+      display: flex;
+      flex-flow: column;
+      width: 100%;
+      .task {
+        display: flex;
+        align-items: center;
+        margin: 0.5rem 1rem;
+        padding: 0.5em;
+        background-color: #fff;
+        border: 1px solid #aaa;
+        border-radius: 0.5rem;
+        font-size: clamp(2vh, 18px, 2vw);
+        .task-name {
+          flex-grow: 2;
+        }
+        .task-checkbox {
+          height: 1em;
+          width: 1em;
+          margin: 0 0.5rem;
+          border: 1px solid black;
+        }
+        .edit-task {
+          margin: 0 0.5rem;
+          background-color: transparent;
+          border: none;
+        }
+        .del-task-btn {
+          margin-right: 0.5rem;
+          background-color: inherit;
+          border: none;
+        }
+        .edit-task:hover,
+        .del-task-btn:hover,
+        .task-checkbox:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .add-task-btn {
+      display: flex;
+      border: none;
+      background-color: inherit;
+      cursor: pointer;
+      i {
+        margin-right: 1em;
+      }
+    }
+    .add-task-btn:hover {
+      color: #fff;
+    }
+  }
+}
+footer {
+  display: flex;
+  height: 25px;
+  justify-content: center;
+}
+@media screen and (min-width: 1024px) {
+  header {
+    .container {
+      h1 {
+        margin-left: 1rem;
+        justify-content: flex-start;
+      }
+      button {
+        display: none;
+      }
+    }
+  }
+  main {
+    display: grid;
+    grid-template-columns: minmax(min-content, 250px) 1fr;
+    #edit-task-popup {
+      position: absolute;
+    }
+    #task-popup {
+      position: absolute;
+    }
+    .projects-tab {
+      display: block;
+      .navbar-projects.slide-in-left {
+        -webkit-animation: none;
+        animation: none;
+      }
+    }
+    .tasks-container {
+      padding: 20px;
+      .task-list {
+        width: clamp(50%, 50vw, 75%);
+      }
+    }
+  }
+}
