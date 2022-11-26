@@ -519,8 +519,8 @@ export default class Interface {
 
     const taskDateContainer = document.createElement("div");
     taskDateContainer.classList.add("edit-task-due-date");
-    const taskDateText = document.createElement("h3");
-    taskDateText.textContent = "Due:";
+    const taskDateText = document.createElement("label");
+    taskDateText.textContent = "Due date:";
     const taskDateInput = document.createElement("input");
     taskDateInput.setAttribute("id", "edit-task-date");
     taskDateInput.setAttribute("type", "date");
