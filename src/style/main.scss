@@ -127,10 +127,6 @@ main {
               margin-left: 1rem;
             }
           }
-          .right-div {
-            i {
-            }
-          }
         }
         button:hover {
           border-radius: 0.5rem;
@@ -153,6 +149,9 @@ main {
         display: none;
         margin-bottom: 1rem;
         padding: 0 1rem;
+        label {
+          @include hideLabel();
+        }
         .add-project-title {
           width: 100%;
           margin-bottom: 10px;
