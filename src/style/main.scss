@@ -4,7 +4,8 @@
 
 @font-face {
   font-family: "NotoSans";
-  src: url("../assets/NotoSerif-Regular.ttf");
+  src: url("../assets/notoserif-regular-webfont.woff"),
+    url("../assets/notoserif-regular-webfont.woff2");
   font-weight: 600;
   font-style: normal;
 }
@@ -73,7 +74,7 @@ header {
 main {
   display: flex;
   flex-flow: column;
-  height: calc(100vh - 75px);
+  height: calc(100vh - 85px);
   background-image: url("../assets/alex-shutin-kKvQJ6rK6S4-unsplash.webp");
   background-size: cover;
   background-position: center;
@@ -139,11 +140,15 @@ main {
         background-color: inherit;
         padding-left: 1rem;
         margin: 1rem 0;
+        transition: transform 0.5s;
         cursor: pointer;
         i {
           margin-right: 1em;
         }
         font-size: 18px;
+      }
+      .add-project-btn:hover {
+        transform: scale(1.1);
       }
       .add-project-form {
         display: none;
@@ -192,6 +197,7 @@ main {
         border: 1px solid #aaa;
         border-radius: 0.5rem;
         font-size: clamp(2vh, 18px, 2vw);
+        transition: transform 0.5s;
         .task-name {
           flex-grow: 2;
         }
@@ -215,6 +221,7 @@ main {
         .del-task-btn:hover,
         .task-checkbox:hover {
           cursor: pointer;
+          transform: scale(1.1);
         }
       }
     }
@@ -222,6 +229,8 @@ main {
       display: flex;
       border: none;
       background-color: inherit;
+      margin: 1rem 0;
+      transition: transform 0.5s;
       cursor: pointer;
       i {
         margin-right: 1em;
@@ -229,13 +238,26 @@ main {
     }
     .add-task-btn:hover {
       color: #fff;
+      transform: scale(1.1);
     }
   }
 }
 footer {
-  display: flex;
-  height: 25px;
-  justify-content: center;
+  height: 35px;
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h4 {
+      margin-right: 1rem;
+    }
+    a {
+      i {
+        font-size: 24px;
+        color: black;
+      }
+    }
+  }
 }
 @media screen and (min-width: 1024px) {
   header {
