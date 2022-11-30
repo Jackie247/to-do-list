@@ -42,7 +42,7 @@ The following topics were covered in this project:
 
 <h2> Learning Objectives </h2>
 
-* Becoming more comfortable in developing a full application using objects, classes and modules in JS
+* Becoming more comfortable in developing a full application using classes and modules in JS
 
 * Expanding on my knowledge when it comes to mobile first development and responsive design.
 
